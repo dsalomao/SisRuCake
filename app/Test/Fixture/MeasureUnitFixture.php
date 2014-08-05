@@ -11,8 +11,9 @@ class MeasureUnitFixture extends CakeTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'unsigned' => true, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 45, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'int_only' => array('type' => 'boolean', 'null' => true, 'default' => null),
 		'created' => array('type' => 'date', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'date', 'null' => true, 'default' => null),
 		'indexes' => array(
@@ -30,8 +31,9 @@ class MeasureUnitFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created' => '2014-07-05',
-			'modified' => '2014-07-05'
+			'int_only' => 1,
+			'created' => '2014-08-05',
+			'modified' => '2014-08-05'
 		),
 	);
 

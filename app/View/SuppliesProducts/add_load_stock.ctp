@@ -45,10 +45,19 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                                     'quantity',
                                     array(
                                         'type' => 'text',
-                                        'div' => 'col-sm-9',
+                                        'div' => 'col-sm-1',
                                         'class' => 'input-mini'
                                     )
                                 ); ?>
+                                <div class="col-sm-8">
+                                    <?php echo $this->Html->tag(
+                                        'span',
+                                        $product['MeasureUnit']['name'],
+                                        array(
+                                            'class' => 'label label-lg label-info arrowed-right'
+                                        )
+                                    ); ?>
+                                </div>
 
                             </div>
 

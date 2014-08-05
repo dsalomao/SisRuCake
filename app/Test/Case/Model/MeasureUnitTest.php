@@ -17,9 +17,10 @@ class MeasureUnitTest extends CakeTestCase {
 		'app.product',
 		'app.restaurant',
 		'app.user',
-		'app.meal',
-		'app.recipe',
 		'app.products_for_recipe',
+		'app.recipe',
+		'app.products_for_recipes',
+		'app.recipes_for_meals',
 		'app.supplies_product',
 		'app.supplier'
 	);

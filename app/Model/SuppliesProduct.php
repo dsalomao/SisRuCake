@@ -22,14 +22,14 @@ class SuppliesProduct extends AppModel {
  */
 	public $validate = array(
 		'quantity' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+                'notEmpty' => array(
+                    'rule' => array('notEmpty'),
+                    //'message' => 'Your custom message here',
+                    //'allowEmpty' => false,
+                    //'required' => false,
+                    //'last' => false, // Stop validation after this rule
+                    //'on' => 'create', // Limit validation to 'create' or 'update' operations
+                ),
 		),
 		'price' => array(
 			'money' => array(
@@ -90,7 +90,7 @@ class SuppliesProduct extends AppModel {
             'first',
             array(
                 'conditions' => array('Product.id' => $id),
-                'recursive' => -1
+                'recursive' => 0
             )
         );
     }
@@ -105,5 +105,18 @@ class SuppliesProduct extends AppModel {
         $options = array('conditions' => array('SuppliesProduct.supplier_id' => $id), 'recursive' => 0);
         $related = $this->find('all', $options);
         return $related;
+    }
+
+    public function changeQuantityValidation(){
+        $this->validator()->add(
+            'quantity',
+            array(
+                'naturalNumber' => array(
+                    'rule'    => 'naturalNumber',
+                    'message' => 'Esta unidade de medida recebe apenas valores inteiros'
+                ),
+            )
+        );
+        return false;
     }
 }

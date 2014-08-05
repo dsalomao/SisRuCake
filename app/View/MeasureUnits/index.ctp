@@ -37,6 +37,7 @@ $this->Html->script('measure_units', array('inline' => false));
                     </th>
                     <td><?php echo $this->Paginator->sort('id'); ?>&nbsp;</td>
                     <td><?php echo $this->Paginator->sort('name', 'Nome'); ?>&nbsp;</td>
+                    <td><?php echo $this->Paginator->sort('int_only', 'Unitária'); ?>&nbsp;</td>
                     <th><?php echo $this->Paginator->sort('created', 'Criado'); ?>&nbsp;</th>
                     <th><?php echo $this->Paginator->sort('modified', 'Modificado'); ?>&nbsp;</th>
                     <th class="actions"><?php echo __('Ações'); ?>&nbsp;</th>
@@ -54,6 +55,28 @@ $this->Html->script('measure_units', array('inline' => false));
                         </td>
                         <td><?php echo h($measureUnit['MeasureUnit']['id']); ?>&nbsp;</td>
                         <td><?php echo h($measureUnit['MeasureUnit']['name']); ?>&nbsp;</td>
+                        <td>
+                            <?php
+                                if($measureUnit['MeasureUnit']['int_only'])
+                                    echo $this->Html->tag(
+                                        'span',
+                                        $this->Html->tag('i', '',array('class' => 'glyphicon glyphicon-ok')),
+                                        array(
+                                            'class' => 'label label-sm label-success',
+                                            'escape' => false
+                                        )
+                                    );
+                                else
+                                    echo $this->Html->tag(
+                                        'span',
+                                        $this->Html->tag('i', '',array('class' => 'glyphicon glyphicon-remove')),
+                                        array(
+                                            'class' => 'label label-sm label-inverse',
+                                            'escape' => false
+                                        )
+                                    );
+                            ?>&nbsp;
+                        </td>
                         <td><?php echo h(date("d-m-Y", strtotime($measureUnit['MeasureUnit']['created']))); ?>&nbsp;</td>
                         <td><?php echo h(date("d-m-Y", strtotime($measureUnit['MeasureUnit']['modified']))); ?>&nbsp;</td>
                         <td class="actions">

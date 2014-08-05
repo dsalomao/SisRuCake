@@ -71,12 +71,17 @@ class SuppliesProductsController extends AppController {
  * @return void
  */
     public function add_load_stock($id = null) {
+
+        $relatedProduct = $this->SuppliesProduct->getRelatedProduct($id);
+
+        if($relatedProduct['MeasureUnit']['int_only']){
+            $this->SuppliesProduct->changeQuantityValidation();
+        }
+
         if ($this->request->is('post')) {
             $this->SuppliesProduct->create();
-            $product = $this->SuppliesProduct->getRelatedProduct($id);
-            $this->SuppliesProduct->set('product_id', $product['Product']['id']);
+            $this->SuppliesProduct->set('product_id', $relatedProduct['Product']['id']);
             if ($this->SuppliesProduct->save($this->request->data)) {
-                $relatedProduct = $this->SuppliesProduct->getRelatedProduct($id);
                 $relatedProduct['Product']['load_stock'] = $relatedProduct['Product']['load_stock'] + $this->request->data['SuppliesProduct']['quantity'];
                 $this->SuppliesProduct->Product->id = $id;
                 $this->SuppliesProduct->Product->saveField('load_stock', $relatedProduct['Product']['load_stock']);
@@ -91,7 +96,7 @@ class SuppliesProductsController extends AppController {
                 'first',
                 array(
                     'conditions' => array('Product.id' => $id),
-                    'recursive' => -1
+                    'recursive' => 0
                 )
         );
         $suppliers = $this->SuppliesProduct->Supplier->find(

@@ -34,6 +34,18 @@
                                 ); ?>
 
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Somente números inteiros para a unidade? </label>
+
+                                <?php echo $this->Form->input(
+                                    'int_only',
+                                    array(
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
                         </fieldset>
 
                         <div class="form-actions center">

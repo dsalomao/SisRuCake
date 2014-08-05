@@ -78,13 +78,6 @@ class ProductsForRecipe extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-		'MeasureUnit' => array(
-			'className' => 'MeasureUnit',
-			'foreignKey' => 'measure_unit_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
 
