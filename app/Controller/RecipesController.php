@@ -40,7 +40,7 @@ class RecipesController extends AppController {
 		}
         $this->Recipe->recursive = -1;
         $recipe = $this->Recipe->findById($id);
-        $related = $this->ProductsForRecipe->testeJoin($id);
+        $related = $this->ProductsForRecipe->findByRecipeId($id);
         $this->set(array('recipe' => $recipe, 'related' => $related));
         $this->Paginator->paginate();
     }

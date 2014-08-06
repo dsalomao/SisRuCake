@@ -81,13 +81,13 @@ class ProductsForRecipe extends AppModel {
 		)
 	);
 
-    public function testeJoin($id = null){
-        $options = array('conditions' => array('ProductsForRecipe.recipe_id' => $id));
+    public function findByRecipeId($id = null){
+        $options = array(
+            'conditions' => array('ProductsForRecipe.recipe_id' => $id),
+            'recursive' => 2
+        );
         $related = $this->find('all', $options);
-        //$relatedProducts = $related['Products'];
-        //$relatedMeasureUnit = $related['MeasureUnits'];
         return $related;
-        //return compact('relatedProducts', 'relatedMeasureUnit');
     }
 
     public function getRelatedProduct($id = null) {
