@@ -73,8 +73,9 @@ class SuppliesProductsController extends AppController {
     public function add_load_stock($id = null) {
 
         $relatedProduct = $this->SuppliesProduct->getRelatedProduct($id);
-
+        //if product measure unit is an integer type measure unit
         if($relatedProduct['MeasureUnit']['int_only']){
+            //change validation to naturalNumber type
             $this->SuppliesProduct->changeQuantityValidation();
         }
 

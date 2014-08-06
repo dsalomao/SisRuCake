@@ -16,8 +16,8 @@ class ProductsForRecipe extends AppModel {
  */
 	public $validate = array(
         'quantity' => array(
-            'numeric' => array(
-                'rule' => array('numeric'),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
                 //'message' => 'Your custom message here',
                 //'allowEmpty' => false,
                 //'required' => false,
@@ -88,5 +88,38 @@ class ProductsForRecipe extends AppModel {
         //$relatedMeasureUnit = $related['MeasureUnits'];
         return $related;
         //return compact('relatedProducts', 'relatedMeasureUnit');
+    }
+
+    public function getRelatedProduct($id = null) {
+        return $this->Product->find(
+            'first',
+            array(
+                'conditions' => array('Product.id' => $id),
+                'recursive' => 0
+            )
+        );
+    }
+
+    public function getRelatedRecipe($id = null) {
+        return $this->Recipe->find(
+            'first',
+            array(
+                'conditions' => array('Recipe.id' => $id),
+                'recursive' => 0
+            )
+        );
+    }
+
+    public function changeQuantityValidation(){
+        $this->validator()->add(
+            'quantity',
+            array(
+                'naturalNumber' => array(
+                    'rule'    => 'naturalNumber',
+                    'message' => 'Esta unidade de medida recebe apenas valores inteiros'
+                ),
+            )
+        );
+        return false;
     }
 }

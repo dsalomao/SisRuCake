@@ -65,4 +65,11 @@ class MeasureUnit extends AppModel {
 		)
 	);
 
+    public function getMeasureUnits(){
+        $options = array(
+            'fields' => array('MeasureUnit.id', 'MeasureUnit.name', 'MeasureUnit.int_only'),
+            'recursive' => -1
+        );
+        return $this->find('all', $options);
+    }
 }

@@ -119,8 +119,23 @@ class ProductsForRecipesController extends AppController {
      * @return void
      */
     public function add_ingredient($id = null) {
+
+
+
         if ($this->request->is('post')) {
             $this->ProductsForRecipe->create();
+            //find the related product been posted
+            $relatedProductId = $this->request->data['ProductsForRecipe']['product_id'];
+            $relatedProduct = $this->ProductsForRecipe->getRelatedProduct($relatedProductId);
+            //if product measure unit is an integer type measure unit
+            if($relatedProduct['MeasureUnit']['int_only']){
+                //change validation to naturalNumber type
+                $this->ProductsForRecipe->changeQuantityValidation();
+            }
+            //find related recipe been posted
+            $thisRecipe = $this->ProductsForRecipe->getRelatedRecipe($id);
+            //this productsForRecipe object = recipe id
+            $this->ProductsForRecipe->set('recipe_id', $thisRecipe['Recipe']['id']);
             if ($this->ProductsForRecipe->save($this->request->data)) {
                 $this->Session->setFlash(__('Deu certo.'));
                 return $this->redirect(array('controller' => 'recipes','action' => 'view', $id));
@@ -129,17 +144,14 @@ class ProductsForRecipesController extends AppController {
             }
         }
 
+        $this->loadModel('MeasureUnit');
+        $measure_units = $this->MeasureUnit->getMeasureUnits();
+
         $products = $this->ProductsForRecipe->Product->find(
-            'list',
+            'all',
             array(
                 'conditions' => array('Product.status' => 1),
-                'recursive' => -1
-            )
-        );
-        $recipes = $this->ProductsForRecipe->Recipe->find(
-            'list',
-            array(
-                'conditions' => array('Recipe.id' => $id),
+                'fields' => array('Product.id', 'Product.name', 'Product.measure_unit_id'),
                 'recursive' => -1
             )
         );
@@ -151,7 +163,6 @@ class ProductsForRecipesController extends AppController {
                 'recursive' => -1
             )
         );
-        $measureUnits = $this->ProductsForRecipe->MeasureUnit->find('list');
-        $this->set(compact('thisRecipe','recipes', 'products', 'measureUnits'));
+        $this->set(compact('thisRecipe', 'products', 'measure_units'));
     }
 }
