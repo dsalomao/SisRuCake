@@ -46,9 +46,10 @@ class RecipesForMealsController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function add($id = null) {
 		if ($this->request->is('post')) {
 			$this->RecipesForMeal->create();
+            $this->RecipesForMeal->set('meal_id', $id);
 			if ($this->RecipesForMeal->save($this->request->data)) {
 				$this->Session->setFlash(__('The recipes for meal has been saved.'));
 				return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
@@ -56,9 +57,10 @@ class RecipesForMealsController extends AppController {
 				$this->Session->setFlash(__('The recipes for meal could not be saved. Please, try again.'));
 			}
 		}
-		$recipes = $this->RecipesForMeal->findActiveRecipes();
-		$meals = $this->RecipesForMeal->findActiveMeals();
-		$this->set(compact('recipes', 'meals'));
+        $this->RecipesForMeal->Meal->recursive = -1;
+		$meal = $this->RecipesForMeal->Meal->findById($id);
+		$recipes = $this->RecipesForMeal->Recipe->find('list');
+		$this->set(compact('meal', 'recipes'));
 	}
 
 /**

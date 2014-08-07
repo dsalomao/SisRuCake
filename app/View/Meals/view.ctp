@@ -83,32 +83,26 @@
 
 <div class="row">
     <h4 class="header smaller lighter blue"> Receitas </h4>
-    <?php foreach($related as $related): ?>
+    <?php foreach($relatedRecipes as $relatedRecipe): ?>
             <div class="col-sm-6">
                 <div class="tabbable">
                     <ul class="nav nav-tabs" id="myTab">
                         <li class="active">
-                            <a data-toggle="tab" href="#atributes<?php echo h('_for_'.$related['Recipe']['id'])?>">
+                            <a data-toggle="tab" href="#atributes<?php echo h('_for_'.$relatedRecipe['Recipe']['id'])?>">
                                 <i class="green ace-icon fa fa-home bigger-120"></i>
                                 Atributos &nbsp;
                             </a>
                         </li>
 
                         <li class="">
-                            <a data-toggle="tab" href="#description<?php echo h('_for_'.$related['Recipe']['id'])?>">
+                            <a data-toggle="tab" href="#description<?php echo h('_for_'.$relatedRecipe['Recipe']['id'])?>">
                                 Descrição &nbsp;
                             </a>
                         </li>
 
                         <li class="">
-                            <a data-toggle="tab" href="#instructions<?php echo h('_for_'.$related['Recipe']['id'])?>">
+                            <a data-toggle="tab" href="#instructions<?php echo h('_for_'.$relatedRecipe['Recipe']['id'])?>">
                                 Instru&ccedil;&otilde;es &nbsp;
-                            </a>
-                        </li>
-
-                        <li class="">
-                            <a data-toggle="tab" href="#ingredients<?php echo h('_for_'.$related['Recipe']['id'])?>">
-                                Ingredientes &nbsp;
                             </a>
                         </li>
 
@@ -120,21 +114,20 @@
 
                             <ul class="dropdown-menu dropdown-info">
                                 <li>
-                                    <?php echo $this->Form->postlink(
+                                    <?php echo $this->Html->link(
                                         $this->Html->tag(
                                             'i',
                                             '',
-                                            array('class' => 'glyphicon glyphicon-remove')
-                                        ).'&nbsp; Remover receita',
+                                            array('class' => 'ace-icon fa fa-search-plus')
+                                        ).'&nbsp; ver receita',
                                         array(
-                                            'controller' => 'Meals',
+                                            'controller' => 'Recipes',
                                             'action' => 'view',
-                                            $meal['Meal']['id']
+                                            $relatedRecipe['Recipe']['id']
                                         ),
                                         array(
                                             'escape' => false
-                                        ),
-                                        __('Esta operação irá apagar esta receita desta refeição, deseja continuar?')
+                                        )
                                     ); ?>
                                 </li>
                                 <li>
@@ -147,11 +140,29 @@
                                         array(
                                             'controller' => 'Recipes',
                                             'action' => 'edit',
-                                            $related['Recipe']['id']
+                                            $relatedRecipe['Recipe']['id']
                                         ),
                                         array(
                                             'escape' => false
                                         )
+                                    ); ?>
+                                </li>
+                                <li>
+                                    <?php echo $this->Form->postlink(
+                                        $this->Html->tag(
+                                            'i',
+                                            '',
+                                            array('class' => 'glyphicon glyphicon-remove')
+                                        ).'&nbsp; Remover receita',
+                                        array(
+                                            'controller' => 'RecipesForMeals',
+                                            'action' => 'delete',
+                                            $relatedRecipe['RecipesForMeal']['id']
+                                        ),
+                                        array(
+                                            'escape' => false
+                                        ),
+                                        __('Esta operação irá apagar esta receita desta refeição, deseja continuar?')
                                     ); ?>
                                 </li>
                             </ul>
@@ -159,7 +170,7 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div id="atributes<?php echo h('_for_'.$related['Recipe']['id'])?>" class="tab-pane active">
+                        <div id="atributes<?php echo h('_for_'.$relatedRecipe['Recipe']['id'])?>" class="tab-pane active">
                             <div class="profile-user-info profile-user-info-striped">
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> Nome </div>
@@ -167,11 +178,11 @@
                                     <div class="profile-info-value">
                                         <span class="" id="recipe_name">
                                             <?php echo $this->Html->link(
-                                                $related['Recipe']['name'],
+                                                $relatedRecipe['Recipe']['name'],
                                                 array(
                                                     'controller' => 'Recipes',
                                                     'action' => 'view',
-                                                    $related['Recipe']['id']
+                                                    $relatedRecipe['Recipe']['id']
                                                 ),
                                                 array(
                                                     'escape' => false
@@ -185,7 +196,15 @@
                                     <div class="profile-info-name"> C&oacute;digo </div>
 
                                     <div class="profile-info-value">
-                                        <span class="" id="recipe_code"><?php echo h($related['Recipe']['code']); ?>&nbsp;</span>
+                                        <span class="" id="recipe_code"><?php echo h($relatedRecipe['Recipe']['code']); ?>&nbsp;</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Porcionamento </div>
+
+                                    <div class="profile-info-value">
+                                        <span class="" id="recipe_code"><?php echo h('x '.$relatedRecipe['RecipesForMeal']['quantity']); ?>&nbsp;</span>
                                     </div>
                                 </div>
 
@@ -193,7 +212,7 @@
                                     <div class="profile-info-name"> Criado </div>
 
                                     <div class="profile-info-value">
-                                        <span class="" id="recipe_created"><?php echo h(date("d-m-Y", strtotime($related['Recipe']['created']))); ?>&nbsp;</span>
+                                        <span class="" id="recipe_created"><?php echo h(date("d-m-Y", strtotime($relatedRecipe['Recipe']['created']))); ?>&nbsp;</span>
                                     </div>
                                 </div>
 
@@ -201,7 +220,7 @@
                                     <div class="profile-info-name"> Modificado </div>
 
                                     <div class="profile-info-value">
-                                        <span class="" id="recipe_modified"><?php echo h(date("d-m-Y", strtotime($related['Recipe']['modified']))); ?>&nbsp;</span>
+                                        <span class="" id="recipe_modified"><?php echo h(date("d-m-Y", strtotime($relatedRecipe['Recipe']['modified']))); ?>&nbsp;</span>
                                     </div>
                                 </div>
 
@@ -209,109 +228,24 @@
                                     <div class="profile-info-name"> Status </div>
 
                                     <div class="profile-info-value">
-                                        <span class="label label-sm <?php echo $class = ($related['Recipe']['status'] == 1) ? 'label-success':'label-danger';?>" id="recipe_status"><?php echo $status = ($related['Recipe']['status'] == 1) ? 'Ativo': 'Desativado';?></span>
+                                        <span class="label label-sm <?php echo $class = ($relatedRecipe['Recipe']['status'] == 1) ? 'label-success':'label-danger';?>" id="recipe_status"><?php echo $status = ($relatedRecipe['Recipe']['status'] == 1) ? 'Ativo': 'Desativado';?></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="description<?php echo h('_for_'.$related['Recipe']['id'])?>" class="tab-pane">
-                            <p><?php echo h($related['Recipe']['description']); ?>&nbsp;</p>
+                        <div id="description<?php echo h('_for_'.$relatedRecipe['Recipe']['id'])?>" class="tab-pane">
+                            <p><?php echo h($relatedRecipe['Recipe']['description']); ?>&nbsp;</p>
                         </div>
 
-                        <div id="instructions<?php echo h('_for_'.$related['Recipe']['id'])?>" class="tab-pane">
-                            <p><?php echo h($related['Recipe']['instructions']); ?>&nbsp;</p>
+                        <div id="instructions<?php echo h('_for_'.$relatedRecipe['Recipe']['id'])?>" class="tab-pane">
+                            <p><?php echo h($relatedRecipe['Recipe']['instructions']); ?>&nbsp;</p>
                         </div>
 
-                        <div id="ingredients<?php echo h('_for_'.$related['Recipe']['id'])?>" class="tab-pane">
-                            <!-- <div class="table-responsive"> -->
-
-                            <!-- <div class="dataTables_borderWrap"> -->
-                            <div>
-                                <?php if (!empty($related['Recipe']['ProductsForRecipe'])): ?>
-                                    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="center">
-                                                <label class="position-relative">
-                                                    <input type="checkbox" class="ace" />
-                                                    <span class="lbl"></span>
-                                                </label>
-                                            </th>
-
-                                            <th><?php echo $this->Paginator->sort('quantity', 'Quantidade'); ?></th>
-                                            <th><?php echo $this->Paginator->sort('measure_unit_id', 'Unidade'); ?></th>
-                                            <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
-                                            <th class="actions"><?php echo __('Ações'); ?></th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        <?php foreach ($related['Recipe']['ProductsForRecipe'] as $relatedProductForRecipe): ?>
-                                            <tr>
-                                                <td class="center">
-                                                    <label class="position-relative">
-                                                        <input type="checkbox" class="ace" />
-                                                        <span class="lbl"></span>
-                                                    </label>
-                                                </td>
-
-                                                <td style="text-align: right"><?php echo $relatedProductForRecipe['quantity']; ?></td>
-                                                <td><?php echo $relatedProductForRecipe['measure_unit_id']; ?></td>
-                                                <td><?php echo $relatedProductForRecipe['product_id']; ?></td>
-                                                <td class="actions">
-                                                    <div class="hidden-xs action-buttons">
-                                                        <?php
-                                                        echo $this->Html->link(
-                                                            $this->Html->tag(
-                                                                'i',
-                                                                '',
-                                                                array('class' => 'ace-icon fa fa-pencil bigger-130')
-                                                            ),
-                                                            array(
-                                                                'controller' => 'ProductsForRecipes',
-                                                                'action' => 'edit',
-                                                                $relatedProductForRecipe['product_id']
-                                                            ),
-                                                            array(
-                                                                'escape' => false,
-                                                                'class' => 'orange'
-                                                            )
-                                                        );
-                                                        ?>
-                                                        &nbsp;
-                                                        <?php
-                                                        echo $this->Form->postlink(
-                                                            $this->Html->tag(
-                                                                'i',
-                                                                '',
-                                                                array('class' => 'glyphicon glyphicon-trash')
-                                                            ),
-                                                            array(
-                                                                'controller' => 'ProductsForRecipes',
-                                                                'action' => 'delete',
-                                                                $relatedProductForRecipe['product_id']
-                                                            ),
-                                                            array(
-                                                                'escape' => false,
-                                                                'class' => 'btn btn-xs btn-danger'
-                                                            ),
-                                                            __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
-                                                        );
-                                                        ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                <?php endif; ?>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+    <?php endforeach; ?>
 </div>
 
 <div class="row">

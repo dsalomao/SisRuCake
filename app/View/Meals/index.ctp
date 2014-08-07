@@ -126,6 +126,7 @@
                 array(
                     'controller' => 'meals',
                     'action' => 'add'
+
                 ),
                 array('class' => 'btn btn-lg btn-primary', 'escape' => false)
             );

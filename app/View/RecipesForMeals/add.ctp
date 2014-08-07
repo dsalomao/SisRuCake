@@ -8,6 +8,7 @@
 $this->html->css('chosen', array('inline' => false));
 
 $this->html->script('ace/chosen.jquery', array('inline' => false));
+$this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('recipesForMeals', array('inline' => false));
 ?>
 
@@ -19,7 +20,7 @@ $this->Html->script('recipesForMeals', array('inline' => false));
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title"></h4>
+                <h4 class="widget-title col-sm-6">Adicionar receita ao cardápio: <?php echo $meal['Meal']['code']; ?></h4>
             </div>
 
             <div class="widget-body">
@@ -37,20 +38,33 @@ $this->Html->script('recipesForMeals', array('inline' => false));
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Refeição </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductProductId"> Categoria </label>
 
 
                                 <?php echo $this->Form->input(
-                                    'meal_id',
+                                    'category',
                                     array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => ''
+                                        'div' => 'col-sm-9'
 
                                     )
                                 ); ?>
 
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductProductId"> Quantidade </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'quantity',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-1',
+                                        'class' => 'input-mini'
+                                    )
+                                ); ?>
+                                <div  class="col-sm-8">
+                                <h4><small><i class="ace-icon fa fa-angle-double-right"></i> multiplicador de porcionamento da receita</small></h4>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductProductId"> Receita </label>

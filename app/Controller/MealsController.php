@@ -34,14 +34,18 @@ class MealsController extends AppController {
  * @return void
  */
     public function view($id = null) {
-        $this->loadModel('RecipesForMeal');
+            $this->loadModel('Product');
+            $this->loadModel('ProductsForRecipe');
         if (!$this->Meal->exists($id)) {
             throw new NotFoundException(__('Invalid product'));
         }
+
         $this->Meal->recursive = 0;
         $meal = $this->Meal->findById($id);
-        $related = $this->RecipesForMeal->findRelatedByMeal($id);
-        $this->set(array('meal' => $meal, 'related' => $related));
+
+        $relatedRecipes = $this->Meal->RecipesForMeal->findRelatedByMeal($id);
+
+        $this->set(array('meal' => $meal, 'relatedRecipes' => $relatedRecipes));
         $this->Paginator->paginate();
 
     }

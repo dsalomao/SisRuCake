@@ -25,16 +25,26 @@ class RecipesForMeal extends AppModel {
 			),
 		),
 		'meal_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+            'numeric' => array(
+                'rule' => array('numeric'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
         'category' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'quantity' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
                 //'message' => 'Your custom message here',
@@ -71,7 +81,10 @@ class RecipesForMeal extends AppModel {
 	);
 
     public function findRelatedByMeal($id = null){
-        $options = array('conditions' => array('RecipesForMeal.meal_id' => $id), 'recursive' => 2);
+        $options = array(
+            'conditions' => array('RecipesForMeal.meal_id' => $id),
+            'recursive' => 2
+        );
         $related = $this->find('all', $options);
         return $related;
     }

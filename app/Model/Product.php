@@ -184,5 +184,12 @@ class Product extends AppModel {
         //this status been returned is a boolean retrieved before saveField
         return $product['Product']['status'];
     }
-
+    public function algumaCoisa($id = null){
+        $options = array(
+            'conditions' => array('Product.id' => $id),
+            'recursive' => 2
+        );
+        $related = $this->find('all', $options);
+        return $related;
+    }
 }
