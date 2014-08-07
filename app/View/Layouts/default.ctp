@@ -305,6 +305,24 @@
 
                                                             <b class="arrow"></b>
                                                         </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon fa fa-calendar')
+                                                                ).' Calendário',
+                                                                array(
+                                                                    'controller' => 'ServiceDates',
+                                                                    'action' => 'calendar'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+
+                                                            <b class="arrow"></b>
+                                                        </li>
                                                     </ul>
                                                 </li>
 

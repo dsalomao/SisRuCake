@@ -113,11 +113,11 @@ class MealsController extends AppController {
 	}
 
 /**
- * disabled_index method
+ * deleted_index method
  *
  * @return void
  */
-    public function disabled_index() {
+    public function deleted_index() {
         $this->Meal->recursive = 0;
         $this->set('meals', $this->Paginator->paginate('Meal', array('Meal.status' => 0)));
     }
@@ -137,7 +137,7 @@ class MealsController extends AppController {
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Meal->updateStatus($id)) {
             $this->Session->setFlash(__('O produto foi deletado'));
-            return $this->redirect(array('action' => 'disabled_index'));
+            return $this->redirect(array('action' => 'deleted_index'));
         } else {
             $this->Session->setFlash(__('O produto foi restaurado.'));
             return $this->redirect(array('action' => 'index'));

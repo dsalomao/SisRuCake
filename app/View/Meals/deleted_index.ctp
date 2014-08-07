@@ -1,3 +1,11 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: daniel
+ * Date: 07/08/14
+ * Time: 03:16
+ */
+?>
 <div class="page-header">
     <h1>Livro de refeições
         <small><i class="ace-icon fa fa-angle-double-right"></i></small>
@@ -10,8 +18,8 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="table-header">
-            Tabela de cardápios ativos
+        <div class="table-header" style="background-color: darkred">
+            Tabela de cardápios desativados
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -89,7 +97,7 @@
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'glyphicon glyphicon-remove')
+                                        array('class' => 'glyphicon glyphicon-ok')
                                     ),
                                     array(
                                         'action' => 'logical_delete',
@@ -97,9 +105,9 @@
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'btn btn-xs btn-inverse'
+                                        'class' => 'btn btn-xs btn-success'
                                     ),
-                                    __('Ao ser desativado esta refeição perderá qualquer informação sobre quantidade em receitas vinculadas. Deseja continuar com a operação?')
+                                    __('Esta operção iá restaurar o cardápio. Deseja continuar com a operação?', $meal['Meal']['id'])
                                 );
                                 ?>
                             </div>
@@ -137,10 +145,10 @@
                     'i',
                     '',
                     array('class' => 'fa fa-eye')
-                ).' Refeições desativadas',
+                ).' Refeições ativas',
                 array(
                     'controller' => 'meals',
-                    'action' => 'deleted_index'
+                    'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
             );
