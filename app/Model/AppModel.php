@@ -30,4 +30,10 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+    /**
+     * Containable Behavior
+     *
+     * @var string
+     */
+    public $actsAs = array('Containable');
 }

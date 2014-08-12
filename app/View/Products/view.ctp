@@ -209,7 +209,11 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                                         <td>
                                             <?php echo $this->Html->link($product['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product['MeasureUnit']['id'])); ?>
                                         </td>
-                                        <td><?php echo h($related['SuppliesProduct']['price']); ?>&nbsp;</td>
+                                        <td><?php
+                                            $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
+                                            echo $this->Number->currency($related['SuppliesProduct']['price'], 'BRL');
+                                            ?>&nbsp;
+                                        </td>
                                         <td>
                                             <?php echo $this->Html->link($related['Product']['name'], array('controller' => 'products', 'action' => 'view', $related['Product']['id'])); ?>
                                         </td>

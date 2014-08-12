@@ -125,7 +125,7 @@ $this->Html->script('suppliers_view', array('inline' => false));
                                 </thead>
 
                                 <tbody>
-                                <?php foreach ($related as $related): ?>
+                                <?php foreach ($suppliedProducts as $suppliedProduct): ?>
                                     <tr>
                                         <td class="center">
                                             <label class="position-relative">
@@ -133,12 +133,16 @@ $this->Html->script('suppliers_view', array('inline' => false));
                                                 <span class="lbl"></span>
                                             </label>
                                         </td>
-                                        <td><?php echo h($related['Product']['name']); ?>&nbsp;</td>
-                                        <td><?php echo h($related['Product']['code']); ?>&nbsp;</td>
-                                        <td style="text-align: right"><?php echo h($related['SuppliesProduct']['quantity']); ?>&nbsp;</td>
-                                        <td><?php echo h($related['MeasureUnit']['name']); ?>&nbsp;</td>
-                                        <td><?php echo h($related['SuppliesProduct']['price']); ?>&nbsp;R$</td>
-                                        <td><?php echo h(date("d-m-Y", strtotime($related['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
+                                        <td><?php echo h($suppliedProduct['Product']['name']); ?>&nbsp;</td>
+                                        <td><?php echo h($suppliedProduct['Product']['code']); ?>&nbsp;</td>
+                                        <td style="text-align: right"><?php echo h($suppliedProduct['SuppliesProduct']['quantity']); ?>&nbsp;</td>
+                                        <td><?php echo h($suppliedProduct['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
+                                        <td><?php
+                                            $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
+                                            echo $this->Number->currency($suppliedProduct['SuppliesProduct']['price'], 'BRL');
+                                            ?>&nbsp;
+                                        </td>
+                                        <td><?php echo h(date("d-m-Y", strtotime($suppliedProduct['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
                                         <td class="actions">
                                             <div class="hidden-xs action-buttons">
                                                 <?php
@@ -151,7 +155,7 @@ $this->Html->script('suppliers_view', array('inline' => false));
                                                         array(
                                                             'controller' => 'products',
                                                             'action' => 'view',
-                                                            $related['Product']['id']
+                                                            $suppliedProduct['Product']['id']
                                                         ),
                                                         array(
                                                             'escape' => false,
@@ -171,7 +175,7 @@ $this->Html->script('suppliers_view', array('inline' => false));
                                                         array(
                                                             'controller' => 'suppliesProducts',
                                                             'action' => 'add_load_stock',
-                                                            $related['Product']['id']
+                                                            $suppliedProduct['Product']['id']
                                                         ),
                                                         array(
                                                             'escape' => false,
@@ -217,7 +221,7 @@ $this->Html->script('suppliers_view', array('inline' => false));
             ?>
             &nbsp;
             <?php
-            echo $this->Html->postlink(
+            echo $this->Form->postlink(
                 $this->Html->tag(
                     'i',
                     '',

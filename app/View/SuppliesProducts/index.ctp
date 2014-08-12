@@ -37,7 +37,7 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                     <th><?php echo $this->Paginator->sort('id'); ?></th>
                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
                     <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
-                    <th><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
+                    <th><?php echo $this->Paginator->sort('price', 'Preço R$'); ?></th>
                     <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
                     <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
                     <th><?php echo $this->Paginator->sort('supplier_id', 'Fornecedor'); ?></th>
@@ -58,7 +58,12 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                         <td>
                             <?php echo $this->Html->link($suppliesProduct['Product']['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $suppliesProduct['Product']['MeasureUnit']['id'])); ?>
                         </td>
-                        <td><?php echo h($suppliesProduct['SuppliesProduct']['price']); ?>&nbsp;</td>
+                        <td>
+                            <?php
+                            $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
+                            echo $this->Number->currency($suppliesProduct['SuppliesProduct']['price'], 'BRL');
+                            ?>&nbsp;
+                        </td>
                         <td>
                             <?php echo $this->Html->link($suppliesProduct['Product']['name'], array('controller' => 'products', 'action' => 'view', $suppliesProduct['Product']['id'])); ?>
                         </td>

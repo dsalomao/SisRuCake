@@ -34,16 +34,20 @@ class SuppliersController extends AppController {
  * @return void
  */
     public function view($id = null) {
-        $this->loadModel('SuppliesProduct');
         if (!$this->Supplier->exists($id)) {
             throw new NotFoundException(__('Invalid supplier'));
         }
-        $this->Supplier->recursive = 0;
+        $this->Supplier->SuppliesProduct->recursive = -1;
+        $suppliedProducts = $this->Supplier->SuppliesProduct->findRelatedBySupplier($id);
+        //$related = $this->SuppliesProduct->findRelatedBySupplier($id);
+        /*foreach($supplier['SuppliesProduct'] as $suppliedProduct):
+            $this->Supplier->SuppliesProduct->Product->recursive = 0;
+            $supplier['RelatedProducts'][] = $this->Supplier->SuppliesProduct->Product->findById($suppliedProduct['product_id']);
+            $i = $i + 1;
+        endforeach;*/
         $supplier = $this->Supplier->findById($id);
-        $related = $this->SuppliesProduct->findRelatedBySupplier($id);
-        $this->set(array('supplier' => $supplier, 'related' => $related));
+        $this->set(array('suppliedProducts' => $suppliedProducts, 'supplier' => $supplier));
         $this->Paginator->paginate();
-
     }
 
 /**

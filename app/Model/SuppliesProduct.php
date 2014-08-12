@@ -102,7 +102,17 @@ class SuppliesProduct extends AppModel {
     }
 
     public function findRelatedBySupplier($id = null){
-        $options = array('conditions' => array('SuppliesProduct.supplier_id' => $id), 'recursive' => 0);
+        $options = array(
+            'conditions' => array('SuppliesProduct.supplier_id' => $id),
+            'contain' => array(
+                'Product' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name'
+                        )
+                    )
+                )
+            )
+        );
         $related = $this->find('all', $options);
         return $related;
     }

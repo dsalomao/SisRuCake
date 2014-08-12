@@ -17,6 +17,14 @@ class SuppliesProductsController extends AppController {
 	public $components = array('Paginator', 'Session');
 
 /**
+ * Components
+ *
+ * @var array
+ */
+public $helpers = array('Form', 'Html', 'Number');
+
+
+/**
  * index method
  *
  * @return void
