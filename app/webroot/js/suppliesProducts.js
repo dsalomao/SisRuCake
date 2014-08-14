@@ -24,6 +24,8 @@ jQuery(function($) {
         $('.chosen-select').siblings('.chosen-container').css({'width':w});
     }).triggerHandler('resize.chosen');
 
+
+   $('#SuppliesProductInvoice').mask('000.000.000.000');
 });
 
 

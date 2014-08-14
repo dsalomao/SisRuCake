@@ -9,7 +9,7 @@ $this->html->css('chosen', array('inline' => false));
 
 $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
-$this->Html->script('ace/bootstrap-datepicker', array('inline' => false));
+$this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliesProducts', array('inline' => false));
 ?>
 
@@ -39,25 +39,30 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
+                                <label class="col-sm-3 col-xs-12 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
 
                                 <?php echo $this->Form->input(
                                     'quantity',
                                     array(
                                         'type' => 'text',
-                                        'div' => 'col-sm-1',
+                                        'div' => 'col-sm-2 col-xs-12',
                                         'class' => 'input-mini'
                                     )
                                 ); ?>
-                                <div class="col-sm-8">
-                                    <?php echo $this->Html->tag(
+
+                                <?php echo $this->Html->tag(
+                                    'span',
+                                    $this->Html->tag(
                                         'span',
                                         $product['MeasureUnit']['name'],
                                         array(
                                             'class' => 'label label-lg label-info arrowed-right'
                                         )
-                                    ); ?>
-                                </div>
+                                    ),
+                                    array(
+                                        'class' => 'help-inline col-xs-12 col-sm-7'
+                                    )
+                                ); ?>
 
                             </div>
 
@@ -74,6 +79,7 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                                 ); ?>
 
                             </div>
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductDateOfEntryMonth"> dia </label>
 
@@ -86,6 +92,21 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                                     ); ?>
 
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductProductId"> Número da nota fiscal </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'invoice',
+                                    array(
+                                        'div' => 'col-sm-9',
+
+                                    )
+                                ); ?>
+
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Fornecedor </label>
 
