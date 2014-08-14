@@ -7,11 +7,8 @@
  * Time: 21:15
  */
 
-$this->Html->css('datepicker', array('inline' => false));
-$this->Html->script('ace/fuelux.spinner', array('inline' => false));
-$this->Html->script('suppliesProducts', array('inline' => false));
-$this->Html->script('ace/bootstrap-datepicker', array('inline' => false));
-
+$this->Html->script('libs/jquery.mask', array('inline' => false));
+$this->Html->script('suppliers_add', array('inline' => false));
 ?>
 
 <div class="page-header">
@@ -40,7 +37,19 @@ $this->Html->script('ace/bootstrap-datepicker', array('inline' => false));
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Nome </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Razão social </label>
+
+                                <?php echo $this->Form->input(
+                                    'Supplier.business_name',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Nome Fantasia </label>
 
                                 <?php echo $this->Form->input(
                                     'Supplier.name',
@@ -65,12 +74,24 @@ $this->Html->script('ace/bootstrap-datepicker', array('inline' => false));
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Status </label>
-
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> CNPJ </label>
 
                                 <?php echo $this->Form->input(
-                                    'Supplier.status',
+                                    'Supplier.cnpj',
                                     array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Número para contato </label>
+
+                                <?php echo $this->Form->input(
+                                    'Supplier.contact',
+                                    array(
+                                        'type' => 'text',
                                         'div' => 'col-sm-9'
                                     )
                                 ); ?>

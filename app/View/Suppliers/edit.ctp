@@ -5,6 +5,9 @@
  * Date: 07/07/14
  * Time: 21:15
  */
+
+$this->Html->script('libs/jquery.mask', array('inline' => false));
+$this->Html->script('suppliers_edit', array('inline' => false));
 ?>
 
 <div class="page-header">
@@ -36,7 +39,19 @@
                             <?php echo $this->Form->input('id'); ?>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Nome </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Razão social </label>
+
+                                <?php echo $this->Form->input(
+                                    'Supplier.business_name',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Nome Fantasia </label>
 
                                 <?php echo $this->Form->input(
                                     'Supplier.name',
@@ -56,6 +71,30 @@
                                     array(
                                         'div' => 'col-sm-9'
 
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> CNPJ </label>
+
+                                <?php echo $this->Form->input(
+                                    'Supplier.cnpj',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Número para contato </label>
+
+                                <?php echo $this->Form->input(
+                                    'Supplier.contact',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-9'
                                     )
                                 ); ?>
 

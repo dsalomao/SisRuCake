@@ -21,10 +21,18 @@ $this->Html->script('suppliers_view', array('inline' => false));
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name"> <?php echo __('Nome'); ?> </div>
+                <div class="profile-info-name"> <?php echo __('Nome fantasia'); ?> </div>
 
                 <div class="profile-info-value">
                     <span class="editable" id="product_name"><?php echo h($supplier['Supplier']['name']); ?>&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> <?php echo __('Razão social'); ?> </div>
+
+                <div class="profile-info-value">
+                    <span class="editable" id="product_name"><?php echo h($supplier['Supplier']['business_name']); ?>&nbsp;</span>
                 </div>
             </div>
 
@@ -45,7 +53,23 @@ $this->Html->script('suppliers_view', array('inline' => false));
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name"> Status </div>
+                <div class="profile-info-name"> <?php echo __('CNPJ'); ?> </div>
+
+                <div class="profile-info-value">
+                    <span class="editable" id="product_created"><?php echo h($supplier['Supplier']['cnpj']); ?></span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> <?php echo __('Contato'); ?> </div>
+
+                <div class="profile-info-value">
+                    <span class="editable" id="product_created"><?php echo h($supplier['Supplier']['contact']); ?></span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> <?php echo __('Status'); ?> </div>
 
                 <div class="profile-info-value">
                     <span class="label label-sm <?php echo $class = ($supplier['Supplier']['status'] == 1) ? 'label-success':'label-danger';?>" id="product_code"><?php echo $status = ($supplier['Supplier']['status'] == 1) ? 'Ativo': 'Desativado';?></span>

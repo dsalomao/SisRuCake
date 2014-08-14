@@ -18,11 +18,11 @@ class SupplierTest extends CakeTestCase {
 		'app.product',
 		'app.restaurant',
 		'app.user',
-		'app.meal',
-		'app.recipes_for_meal',
-		'app.recipe',
+		'app.measure_unit',
 		'app.products_for_recipe',
-		'app.measure_unit'
+		'app.recipe',
+		'app.products_for_recipes',
+		'app.recipes_for_meals'
 	);
 
 /**

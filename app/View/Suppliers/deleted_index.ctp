@@ -1,7 +1,9 @@
 <?php
-
-/*
- * @var $this view
+/**
+ * Created by PhpStorm.
+ * User: daniel
+ * Date: 13/08/14
+ * Time: 19:37
  */
 
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
@@ -17,8 +19,8 @@ $this->Html->script('suppliers_indexes', array('inline' => false));
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="table-header">
-            Lista de fornecedores.
+        <div class="table-header" style="background-color: darkred">
+            Lista de fornecedores desativados.
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -87,30 +89,27 @@ $this->Html->script('suppliers_indexes', array('inline' => false));
                                         'data-trigger' => 'hover'
                                     )
                                 );
-                                echo $this->Html->link(
+                                echo $this->Form->postLink(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-pencil bigger-130')
+                                        array('class' => 'ace-icon fa fa-trash-o bigger-130')
                                     ),
                                     array(
-                                        'action' => 'edit',
+                                        'action' => 'delete',
                                         $supplier['Supplier']['id']
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'orange actions-tooltip tooltip-warning',
-                                        'data-toggle' => 'tooltip',
-                                        'data-placement' => 'top',
-                                        'title' => 'editar fornecedor',
-                                        'data-trigger' => 'hover'
-                                    )
+                                        'class' => 'red'
+                                    ),
+                                    __('Tem certeza que deseja deletar permanentemente o produto: %s?', $supplier['Supplier']['name'])
                                 );
                                 echo $this->Form->postlink(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'glyphicon glyphicon-remove')
+                                        array('class' => 'glyphicon glyphicon-ok')
                                     ),
                                     array(
                                         'action' => 'logical_delete',
@@ -118,10 +117,10 @@ $this->Html->script('suppliers_indexes', array('inline' => false));
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'btn btn-xs btn-inverse actions-tooltip tooltip-default',
+                                        'class' => 'btn btn-xs btn-success actions-tooltip tooltip-default',
                                         'data-toggle' => 'tooltip',
                                         'data-placement' => 'top',
-                                        'title' => 'desativar fornecedor',
+                                        'title' => 're-ativar fornecedor',
                                         'data-trigger' => 'hover'
                                     ),
                                     __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
@@ -157,10 +156,10 @@ $this->Html->script('suppliers_indexes', array('inline' => false));
                         'i',
                         '',
                         array('class' => 'fa fa-eye')
-                    ).' Fornecedores desativados',
+                    ).' Fornecedores ativos',
                     array(
                         'controller' => 'suppliers',
-                        'action' => 'deleted_index'
+                        'action' => 'index'
                     ),
                     array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
                 );
