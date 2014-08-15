@@ -85,6 +85,19 @@ class RecipesForMeal extends AppModel {
             'conditions' => array('RecipesForMeal.meal_id' => $id),
             'recursive' => 2
         );
+        /*$options = array(
+            'conditions' => array('RecipesForMeal.meal_id' => $id),
+            'recursive' => 2,
+            'contain' => array(
+                'Recipe' => array(
+                    'ProductsForRecipe' => array(
+                        'Product' => array()
+                    )
+                ),
+                'Meal' => array(
+                )
+            )
+        );*/
         $related = $this->find('all', $options);
         return $related;
     }

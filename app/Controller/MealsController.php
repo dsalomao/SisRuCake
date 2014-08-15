@@ -40,10 +40,15 @@ class MealsController extends AppController {
             throw new NotFoundException(__('Invalid product'));
         }
 
-        $this->Meal->recursive = 0;
+        $this->Meal->recursive = -1;
         $meal = $this->Meal->findById($id);
 
         $relatedRecipes = $this->Meal->RecipesForMeal->findRelatedByMeal($id);
+
+        foreach($relatedRecipes as $relatedRecipe):
+        
+        endforeach;
+
 
         $this->set(array('meal' => $meal, 'relatedRecipes' => $relatedRecipes));
         $this->Paginator->paginate();
