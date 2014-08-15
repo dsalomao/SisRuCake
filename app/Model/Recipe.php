@@ -74,11 +74,47 @@ class Recipe extends AppModel {
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
-				//'required' => false,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+        'category' => array(
+            'inList' => array(
+                'rule' => array('inList', array('0', '1', '2', '3', '4', '5')),
+                'message' => 'bla',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'income' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'naturalNumber' => array(
+                'rule' => array('naturalNumber'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        )
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -140,5 +176,27 @@ class Recipe extends AppModel {
         //$relatedMeasureUnit = $related['MeasureUnits'];
         return $related;
         //return compact('relatedProducts', 'relatedMeasureUnit');
+    }
+
+    public function beforeSave($options = array()) {
+        if ($this->data['Recipe']['category'] == 0) {
+            $this->data['Recipe']['category'] = 'Entrada';
+        }
+        if ($this->data['Recipe']['category'] == 1) {
+            $this->data['Recipe']['category'] = 'Prato base';
+        }
+        if ($this->data['Recipe']['category'] == 2) {
+            $this->data['Recipe']['category'] = 'Prato proteico';
+        }
+        if ($this->data['Recipe']['category'] == 3) {
+            $this->data['Recipe']['category'] = 'Guarnição';
+        }
+        if ($this->data['Recipe']['category'] == 4) {
+            $this->data['Recipe']['category'] = 'Sobremesa';
+        }
+        if ($this->data['Recipe']['category'] == 5) {
+            $this->data['Recipe']['category'] = 'Suco';
+        }
+        return true;
     }
 }

@@ -106,7 +106,22 @@ class SuppliesProduct extends AppModel {
     }
 
     public function findRelatedByProduct($id = null){
-        $options = array('conditions' => array('SuppliesProduct.product_id' => $id), 'recursive' => 0);
+        $options = array(
+            'conditions' => array('SuppliesProduct.product_id' => $id),
+            'recursive' => 0,
+            'contain' => array(
+                'Product' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name'
+                        )
+                    ),
+                    'fields' => array('Product.id', 'Product.name')
+                ),
+                'Supplier' => array(
+                    'fields' => array('Supplier.id', 'Supplier.name')
+                )
+            )
+        );
         $related = $this->find('all', $options);
         return $related;
     }
@@ -114,12 +129,32 @@ class SuppliesProduct extends AppModel {
     public function findRelatedBySupplier($id = null){
         $options = array(
             'conditions' => array('SuppliesProduct.supplier_id' => $id),
+            'fields' => array('SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry'),
             'contain' => array(
                 'Product' => array(
                     'MeasureUnit' => array(
                         'fields' => array('MeasureUnit.id', 'MeasureUnit.name'
                         )
-                    )
+                    ),
+                    'fields' => array('Product.id', 'Product.name','Product.code')
+                )
+            )
+        );
+        $related = $this->find('all', $options);
+        return $related;
+    }
+
+    public function findAllSupplied(){
+        $options = array(
+            'contain' => array(
+                'Product' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                    ),
+                    'fields' => array('Product.id', 'Product.name')
+                ),
+                'Supplier' => array(
+                    'fields' => array('Supplier.id', 'Supplier.name')
                 )
             )
         );

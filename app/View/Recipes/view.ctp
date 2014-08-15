@@ -25,7 +25,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
                 <li class="">
                     <a data-toggle="tab" href="#instructions">
-                        Instru&ccedil;&otilde;es &nbsp;
+                        Modo de preparo &nbsp;
                     </a>
                 </li>
             </ul>
@@ -34,7 +34,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div id="atributes" class="tab-pane active">
                     <div class="profile-user-info profile-user-info-striped">
                         <div class="profile-info-row">
-                            <div class="profile-info-name"> Nome </div>
+                            <div class="profile-info-name"> Preparação </div>
 
                             <div class="profile-info-value">
                                 <span class="" id="recipe_name"><?php echo h($recipe['Recipe']['name']); ?>&nbsp;</span>
@@ -70,6 +70,26 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
                             <div class="profile-info-value">
                                 <span class="label label-sm <?php echo $class = ($recipe['Recipe']['status'] == 1) ? 'label-success':'label-danger';?>" id="recipe_status"><?php echo $status = ($recipe['Recipe']['status'] == 1) ? 'Ativo': 'Desativado';?></span>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> Categoria </div>
+
+                            <div class="profile-info-value">
+                                <span class="label label-md <?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="recipeStatus">
+                                    <?php echo $recipe['Recipe']['category']; ?>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> Rendimento </div>
+
+                            <div class="profile-info-value">
+                                <span class="badge badge-<?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'orange';} ?>" id="recipeIncome">
+                                    <?php echo $recipe['Recipe']['income']; ?><small> pessoas</small>
+                                </span>
                             </div>
                         </div>
                     </div>

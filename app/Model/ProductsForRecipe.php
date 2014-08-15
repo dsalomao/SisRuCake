@@ -84,7 +84,20 @@ class ProductsForRecipe extends AppModel {
     public function findByRecipeId($id = null){
         $options = array(
             'conditions' => array('ProductsForRecipe.recipe_id' => $id),
-            'recursive' => 2
+            'fields' => array('ProductsForRecipe.id', 'ProductsForRecipe.quantity'),
+            'recursive' => 0,
+            'contain' => array(
+                'Product' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name'
+                        )
+                    ),
+                    'fields' => array('Product.id', 'Product.name')
+                ),
+                'Recipe' => array(
+                    'fields' => array('Recipe.id', 'Recipe.name')
+                )
+            )
         );
         $related = $this->find('all', $options);
         return $related;

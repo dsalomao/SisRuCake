@@ -93,32 +93,6 @@ $this->Html->script('products', array('inline' => false));
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId">Estoque atual</label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.load_stock',
-                                    array(
-                                        'div' => 'col-sm-9',
-                                        'class' => 'input-mini',
-                                        'type' => 'text'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId">Status</label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.status',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Unidade UNESP </label>
 
 
@@ -148,21 +122,6 @@ $this->Html->script('products', array('inline' => false));
                                 ); ?>
 
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Fornecedor </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.supplier_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha um fornecedor'
-                                    )
-                                ); ?>
-
-                            </div>
 
                         </fieldset>
 
@@ -188,25 +147,4 @@ $this->Html->script('products', array('inline' => false));
             </div>
         </div>
     </div>
-</div>
-
-<div class="products form">
-
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('List Products'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Restaurants'), array('controller' => 'restaurants', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Restaurant'), array('controller' => 'restaurants', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Measure Units'), array('controller' => 'measure_units', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Measure Unit'), array('controller' => 'measure_units', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Suppliers'), array('controller' => 'suppliers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Supplier'), array('controller' => 'suppliers', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Products For Recipes'), array('controller' => 'products_for_recipes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Products For Recipe'), array('controller' => 'products_for_recipes', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Supplies Products'), array('controller' => 'supplies_products', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Supplies Product'), array('controller' => 'supplies_products', 'action' => 'add')); ?> </li>
-	</ul>
 </div>

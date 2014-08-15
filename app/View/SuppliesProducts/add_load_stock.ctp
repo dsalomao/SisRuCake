@@ -21,7 +21,7 @@ $this->Html->script('suppliesProducts', array('inline' => false));
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title col-sm-6">Entrada de nova quantidade de: <?php echo $product['Product']['name']; ?></h4><h4  style="text-align: right" class="widget-title col-sm-6">Código:  <?php echo $product['Product']['code']; ?></h4>
+                <h4 class="widget-title col-md-6 col-sm-12 col-xs-12">Entrada de nova quantidade de: <?php echo $product['Product']['name']; ?></h4><h4  style="text-align: right" class="widget-title col-md-6 col-sm-12 col-xs-12">Código:  <?php echo $product['Product']['code']; ?></h4>
             </div>
 
             <div class="widget-body">
@@ -45,7 +45,7 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                                     'quantity',
                                     array(
                                         'type' => 'text',
-                                        'div' => 'col-sm-2 col-xs-12',
+                                        'div' => 'col-sm-2 col-xs-6',
                                         'class' => 'input-mini'
                                     )
                                 ); ?>
@@ -60,7 +60,7 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                                         )
                                     ),
                                     array(
-                                        'class' => 'help-inline col-xs-12 col-sm-7'
+                                        'class' => 'help-inline col-xs-6 col-sm-7'
                                     )
                                 ); ?>
 

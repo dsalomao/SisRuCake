@@ -93,7 +93,7 @@ class Product extends AppModel {
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
-				//'required' => false,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			)
@@ -103,7 +103,7 @@ class Product extends AppModel {
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
-				//'required' => false,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -191,5 +191,20 @@ class Product extends AppModel {
         );
         $related = $this->find('all', $options);
         return $related;
+    }
+
+    public function findProductById($id = null){
+        $options = array(
+            'conditions' => array('Product.id' => $id),
+            'contain' => array(
+                'MeasureUnit' => array(
+                    'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                ),
+                'Restaurant' => array(
+                    'fields' => array('Restaurant.id', 'Restaurant.name')
+                )
+            )
+        );
+        return $this->find('all', $options);
     }
 }

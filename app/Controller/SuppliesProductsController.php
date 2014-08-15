@@ -30,8 +30,10 @@ public $helpers = array('Form', 'Html', 'Number');
  * @return void
  */
 	public function index() {
-		$this->SuppliesProduct->recursive = 2;
-		$this->set('suppliesProducts', $this->Paginator->paginate());
+		$this->SuppliesProduct->recursive = -1;
+        $suppliesProducts = $this->SuppliesProduct->findAllSupplied();
+        $this->Paginator->paginate();
+		$this->set(array('suppliesProducts' => $suppliesProducts));
 	}
 
 /**

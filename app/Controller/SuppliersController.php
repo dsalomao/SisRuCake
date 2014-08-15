@@ -45,6 +45,7 @@ class SuppliersController extends AppController {
             $supplier['RelatedProducts'][] = $this->Supplier->SuppliesProduct->Product->findById($suppliedProduct['product_id']);
             $i = $i + 1;
         endforeach;*/
+        $this->Supplier->recursive = -1;
         $supplier = $this->Supplier->findById($id);
         $this->set(array('suppliedProducts' => $suppliedProducts, 'supplier' => $supplier));
         $this->Paginator->paginate();

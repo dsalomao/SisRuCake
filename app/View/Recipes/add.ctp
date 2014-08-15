@@ -1,3 +1,12 @@
+<?php
+
+$this->html->css('chosen', array('inline' => false));
+
+$this->html->script('ace/chosen.jquery', array('inline' => false));
+$this->Html->script('ace/fuelux.spinner', array('inline' => false));
+$this->Html->script('recipes_add', array('inline' => false));
+?>
+
 <div class="page-header">
     <h1>Adicionar receita<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
 </div>
@@ -24,7 +33,7 @@
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Nome </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="RecipeName"> Preparação </label>
 
                                 <?php echo $this->Form->input(
                                     'Recipe.name',
@@ -35,7 +44,7 @@
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductDateOfEntryMonth"> Código </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="RecipeCode"> Código </label>
 
 
                                 <?php echo $this->Form->input(
@@ -48,19 +57,36 @@
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Status </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="RecipeCategory"> Categoria </label>
 
 
                                 <?php echo $this->Form->input(
-                                    'Recipe.status',
+                                    'Recipe.category',
                                     array(
-                                        'div' => 'col-sm-9'
+                                        'type' => 'select',
+                                        'div' => 'col-sm-9',
+                                        'class' => 'chosen-select',
+                                        'placeholder' => 'escolha uma UAN'
                                     )
                                 ); ?>
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Descri&ccedil;&atilde;o </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="RecipeIncome"> Rendimento </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'Recipe.income',
+                                    array(
+                                        'div' => 'col-sm-9',
+                                        'class' => 'input-mini',
+                                        'type' => 'text'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="RecipeDescription"> Descri&ccedil;&atilde;o </label>
 
 
                                 <?php echo $this->Form->input(
@@ -72,7 +98,7 @@
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Instru&ccedil;&otilde;es </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="RecipeInstructions"> Modo de preparo </label>
 
 
                                 <?php echo $this->Form->input(

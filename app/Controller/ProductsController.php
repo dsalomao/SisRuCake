@@ -39,7 +39,7 @@ class ProductsController extends AppController {
 			throw new NotFoundException(__('Invalid product'));
 		}
         $this->Product->recursive = 0;
-        $product = $this->Product->findById($id);
+        $product = $this->Product->findProductById($id);
         $related = $this->SuppliesProduct->findRelatedByProduct($id);
 		$this->set(array('product' => $product, 'related' => $related));
         $this->Paginator->paginate();
@@ -54,7 +54,9 @@ class ProductsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Product->create();
-			if ($this->Product->save($this->request->data)) {
+            $this->request->data['Product']['load_stock'] = 0;
+            $this->request->data['Product']['status'] = 1;
+            if ($this->Product->save($this->request->data)) {
 				$this->Session->setFlash(__('The product has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {

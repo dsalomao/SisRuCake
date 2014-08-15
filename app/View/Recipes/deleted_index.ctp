@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: daniel
+ * Date: 15/08/14
+ * Time: 02:18
+ */
 
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
@@ -17,8 +23,8 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="table-header">
-            Results for "Latest Registered Domains"
+        <div class="table-header" style="background-color: darkred">
+            Receitas desativadas
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -84,20 +90,21 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                                         'class' => 'blue'
                                     )
                                 );
-                                echo $this->Html->link(
+                                echo $this->Form->postLink(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-pencil bigger-130')
+                                        array('class' => 'ace-icon fa fa-trash-o bigger-130')
                                     ),
                                     array(
-                                        'action' => 'edit',
+                                        'action' => 'delete',
                                         $recipe['Recipe']['id']
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'orange'
-                                    )
+                                        'class' => 'red'
+                                    ),
+                                    __('Tem certeza que deseja deletar permanentemente esta receita: %s?', $recipe['Recipe']['name'])
                                 );
                                 ?>
                                 &nbsp;
@@ -153,10 +160,10 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                     'i',
                     '',
                     array('class' => 'fa fa-eye')
-                ).' Receitas desativadas',
+                ).' Receitas ativas',
                 array(
                     'controller' => 'recipes',
-                    'action' => 'deleted_index'
+                    'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
             );

@@ -16,7 +16,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div class="profile-info-name"> Nome </div>
 
                 <div class="profile-info-value">
-                    <span class="editable" id="product_name"><?php echo h($product['Product']['name']); ?></span>
+                    <span class="editable" id="product_name"><?php echo h($product[0]['Product']['name']); ?></span>
                 </div>
             </div>
 
@@ -24,7 +24,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div class="profile-info-name"> Código </div>
 
                 <div class="profile-info-value">
-                    <span class="editable" id="product_code"><?php echo h($product['Product']['code']); ?></span>
+                    <span class="editable" id="product_code"><?php echo h($product[0]['Product']['code']); ?></span>
                 </div>
             </div>
 
@@ -35,11 +35,11 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                         <span class="editable" id="product_unit_measure">
                                 <?php
                                 echo $this->Html->link(
-                                    $product['MeasureUnit']['name'],
+                                    $product[0]['MeasureUnit']['name'],
                                     array(
                                         'controller' => 'measure_units',
                                         'action' => 'view',
-                                        $product['MeasureUnit']['id']
+                                        $product[0]['MeasureUnit']['id']
                                     )
                                 );
                                 ?>
@@ -51,7 +51,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div class="profile-info-name"> Status </div>
 
                 <div class="profile-info-value">
-                    <span class="label label-sm <?php echo $class = ($product['Product']['status'] == 1) ? 'label-success':'label-danger';?>" id="product_code"><?php echo $status = ($product['Product']['status'] == 1) ? 'Ativo': 'Desativado';?></span>
+                    <span class="label label-sm <?php echo $class = ($product[0]['Product']['status'] == 1) ? 'label-success':'label-danger';?>" id="product_code"><?php echo $status = ($product[0]['Product']['status'] == 1) ? 'Ativo': 'Desativado';?></span>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div class="profile-info-name"> Criado </div>
 
                 <div class="profile-info-value">
-                    <span class="editable" id="product_created"><?php echo h(date("d-m-Y", strtotime($product['Product']['created']))); ?></span>
+                    <span class="editable" id="product_created"><?php echo h(date("d-m-Y", strtotime($product[0]['Product']['created']))); ?></span>
                 </div>
             </div>
 
@@ -67,7 +67,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div class="profile-info-name"> Modificado </div>
 
                 <div class="profile-info-value">
-                    <span class="editable" id="product_modified"><?php echo h(date("d-m-Y", strtotime($product['Product']['modified']))); ?>&nbsp;</span>
+                    <span class="editable" id="product_modified"><?php echo h(date("d-m-Y", strtotime($product[0]['Product']['modified']))); ?>&nbsp;</span>
                 </div>
             </div>
 
@@ -77,11 +77,11 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 <div class="profile-info-value">
                     <?php
                         echo $this->Html->link(
-                            $product['Restaurant']['name'],
+                            $product[0]['Restaurant']['name'],
                             array(
                                 'controller' => 'restaurants',
                                 'action' => 'view',
-                                $product['Restaurant']['id']
+                                $product[0]['Restaurant']['id']
                             )
                         );
                     ?>
@@ -99,10 +99,10 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 </div>
 
                 <div class="infobox-data">
-                    <span class="infobox-data-number"><?php echo h($product['Product']['load_min']); ?></span>
+                    <span class="infobox-data-number"><?php echo h($product[0]['Product']['load_min']); ?></span>
                     <div class="infobox-content">estoque m&iacute;nimo</div>
                 </div>
-                <div class="badge"><?php echo $product['MeasureUnit']['name']; ?>&nbsp;</div>
+                <div class="badge"><?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
             </div>
             <div class="infobox infobox-blue">
                 <div class="infobox-icon">
@@ -110,11 +110,11 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 </div>
 
                 <div class="infobox-data">
-                    <span class="infobox-data-number"><?php echo h($product['Product']['load_stock']); ?></span>
+                    <span class="infobox-data-number"><?php echo h($product[0]['Product']['load_stock']); ?></span>
                     <div class="infobox-content">Quantidade estocada</div>
                 </div>
 
-                <div class="badge"><?php echo $product['MeasureUnit']['name']; ?>&nbsp;</div>
+                <div class="badge"><?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
             </div>
             <div class="infobox infobox-green">
                 <div class="infobox-icon">
@@ -122,12 +122,12 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 </div>
 
                 <div class="infobox-data">
-                    <span class="infobox-data-number"><?php echo h($product['Product']['load_max']); ?></span>
+                    <span class="infobox-data-number"><?php echo h($product[0]['Product']['load_max']); ?></span>
                     <div class="infobox-content">Estoque m&aacute;ximo</div>
                 </div>
 
                 <!-- #section:pages/dashboard.infobox.stat -->
-                <div class="badge"><?php echo $product['MeasureUnit']['name']; ?>&nbsp;</div>
+                <div class="badge"><?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
 
                 <!-- /section:pages/dashboard.infobox.stat -->
             </div>
@@ -207,7 +207,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                                         <td><?php echo h($related['SuppliesProduct']['id']); ?>&nbsp;</td>
                                         <td style="text-align: right"><?php echo h($related['SuppliesProduct']['quantity']); ?>&nbsp;</td>
                                         <td>
-                                            <?php echo $this->Html->link($product['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product['MeasureUnit']['id'])); ?>
+                                            <?php echo $this->Html->link($product[0]['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product[0]['MeasureUnit']['id'])); ?>
                                         </td>
                                         <td><?php
                                             $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
@@ -245,7 +245,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                     array(
                         'controller' => 'suppliesProducts',
                         'action' => 'add_load_stock',
-                        $product['Product']['id']
+                        $product[0]['Product']['id']
                     ),
                     array(
                         'escape' => false,
@@ -263,7 +263,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                     array(
                         'controller' => 'products',
                         'action' => 'edit',
-                        $product['Product']['id']
+                        $product[0]['Product']['id']
                     ),
                     array(
                         'escape' => false,
@@ -280,7 +280,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                     ).' Desativar',
                     array(
                         'action' => 'logical_delete',
-                        $product['Product']['id']
+                        $product[0]['Product']['id']
                     ),
                     array(
                         'escape' => false,
