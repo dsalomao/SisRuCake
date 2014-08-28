@@ -74,4 +74,11 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+
+    /*
+     * Dashboard static page
+     * */
+    public function dashboard(){
+
+    }
 }

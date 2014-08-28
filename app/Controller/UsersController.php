@@ -139,4 +139,31 @@ class UsersController extends AppController {
         $this->User->recursive = 0;
         $this->set('users', $this->Paginator->paginate('User', array('User.status' => 0)));
     }
+
+    /**
+     * login method
+     *
+     * @return url stored in Auth component
+     */
+    public function login() {
+        if ($this->request->is('post')) {
+            if ($this->Auth->login()) {
+                return $this->redirect($this->Auth->Redirect());
+            }
+            $this->Session->setFlash(__('Invalid username or password, try again'));
+        }
+    }
+
+    /**
+     * logout method
+     *
+     * @return url stored in Auth component
+     */
+    public function logout() {
+        return $this->redirect($this->Auth->logout());
+    }
+
+    public function beforeFilter() {
+        $this->Auth->allow('edit');
+    }
 }

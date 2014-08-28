@@ -107,7 +107,7 @@
                                                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                                         <?php echo $this->Html->image('busto.jpg', array('class' => 'nav-user-photo', 'alt' => 'Foto Daniel')); ?>
                                                         <span class="user-info">
-                                                                <small>Bem vindo,</small> Daniel
+                                                                <small>Bem vindo,</small> <?php echo AuthComponent::user('username') ?>
                                                         </span>
                                                         <i class="ace-icon fa fa-caret-down"></i>
                                                 </a>
