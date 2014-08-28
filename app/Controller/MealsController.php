@@ -46,7 +46,7 @@ class MealsController extends AppController {
         $relatedRecipes = $this->Meal->RecipesForMeal->findRelatedByMeal($id);
 
         foreach($relatedRecipes as $relatedRecipe):
-        
+
         endforeach;
 
 

@@ -82,7 +82,7 @@ class Recipe extends AppModel {
         'category' => array(
             'inList' => array(
                 'rule' => array('inList', array('0', '1', '2', '3', '4', '5')),
-                'message' => 'bla',
+                'message' => 'selecione uma categoria válida.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
@@ -152,31 +152,6 @@ class Recipe extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-/**
- *
- *  função para trocar o valor booleano do campo "status"
- *
- */
-    public function updateStatus($id = null){
-        $this->id = $id;
-        $recipe = $this->find('first', array('conditions' => array('Recipe.id' => $id)));
-        if($recipe['Recipe']['status']){
-            $this->saveField('status', NULL);
-        }else
-            $this->saveField('status', true);
-        //this status been returned is a boolean retrieved before saveField
-        return $recipe['Recipe']['status'];
-    }
-
-    public function testeJoin($id = null){
-        $this->id = $id;
-        $options = array('conditions' => array('ProductsForRecipe.recipe_id' => $id), 'recursive' => 2);
-        $related = $this->ProductsForRecipe->find('all', $options);
-        //$relatedProducts = $related['Products'];
-        //$relatedMeasureUnit = $related['MeasureUnits'];
-        return $related;
-        //return compact('relatedProducts', 'relatedMeasureUnit');
-    }
 
     public function beforeSave($options = array()) {
         if ($this->data['Recipe']['category'] == 0) {
@@ -199,4 +174,33 @@ class Recipe extends AppModel {
         }
         return true;
     }
+
+    /**
+     *
+     *  função para trocar o valor booleano do campo "status"
+     *
+     */
+
+    public function updateStatus($id = null){
+        $this->id = $id;
+        $recipe = $this->find('first', array('conditions' => array('Recipe.id' => $id)));
+        if($recipe['Recipe']['status']){
+            $this->saveField('status', NULL);
+        }else
+            $this->saveField('status', true);
+        //this status been returned is a boolean retrieved before saveField
+        return $recipe['Recipe']['status'];
+    }
+
+    public function testeJoin($id = null){
+        $this->id = $id;
+        $options = array('conditions' => array('ProductsForRecipe.recipe_id' => $id), 'recursive' => 2);
+        $related = $this->ProductsForRecipe->find('all', $options);
+        //$relatedProducts = $related['Products'];
+        //$relatedMeasureUnit = $related['MeasureUnits'];
+        return $related;
+        //return compact('relatedProducts', 'relatedMeasureUnit');
+    }
+
+
 }

@@ -19,9 +19,10 @@ class UserTest extends CakeTestCase {
 		'app.measure_unit',
 		'app.products_for_recipe',
 		'app.recipe',
+		'app.products_for_recipes',
+		'app.recipes_for_meals',
 		'app.supplies_product',
-		'app.supplier',
-		'app.meal'
+		'app.supplier'
 	);
 
 /**

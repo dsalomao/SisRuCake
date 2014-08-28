@@ -109,6 +109,7 @@ class SuppliesProduct extends AppModel {
         $options = array(
             'conditions' => array('SuppliesProduct.product_id' => $id),
             'recursive' => 0,
+            'fields' => array('SuppliesProduct.id', 'SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry'),
             'contain' => array(
                 'Product' => array(
                     'MeasureUnit' => array(

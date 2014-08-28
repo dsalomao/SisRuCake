@@ -13,7 +13,7 @@ class UsersController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'Session');
 
 /**
  * index method
@@ -22,7 +22,7 @@ class UsersController extends AppController {
  */
 	public function index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
+		$this->set('users', $this->Paginator->paginate('User', array('User.status' => true)));
 	}
 
 /**
@@ -48,7 +48,8 @@ class UsersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
-			if ($this->User->save($this->request->data)) {
+            $this->request->data['User']['status'] = 1;
+            if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
@@ -56,7 +57,8 @@ class UsersController extends AppController {
 			}
 		}
 		$restaurants = $this->User->Restaurant->find('list');
-		$this->set(compact('restaurants'));
+        $roles = array('Administrador', 'Auxiliar', 'Cliente');
+        $this->set(compact('restaurants', 'roles'));
 	}
 
 /**
@@ -105,4 +107,36 @@ class UsersController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+    /**
+     * logical_delete method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
+    public function logical_delete($id = null) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Invalid User'));
+        }
+        $this->request->onlyAllow('post', 'logical_delete');
+        if ($this->User->updateStatus($id)) {
+            $this->Session->setFlash(__('O usuário foi desativado'));
+            return $this->redirect(array('action' => 'deleted_index'));
+        } else {
+            $this->Session->setFlash(__('O usuário foi restaurado.'));
+            return $this->redirect(array('action' => 'index'));
+        }
+
+    }
+    /**
+     * deleted_index method
+     *
+     * @return void
+     */
+    public function deleted_index() {
+        $this->User->recursive = 0;
+        $this->set('users', $this->Paginator->paginate('User', array('User.status' => 0)));
+    }
 }

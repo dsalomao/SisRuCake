@@ -1,31 +1,146 @@
-<div class="users form">
-<?php echo $this->Form->create('User'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit User'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('username');
-		echo $this->Form->input('password');
-		echo $this->Form->input('first_name');
-		echo $this->Form->input('last_name');
-		echo $this->Form->input('role');
-		echo $this->Form->input('email');
-		echo $this->Form->input('restaurant_id');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php
+/**
+ * Created by PhpStorm.
+ * User: daniel
+ * Date: 07/07/14
+ * Time: 21:15
+ */
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('User.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('User.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Restaurants'), array('controller' => 'restaurants', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Restaurant'), array('controller' => 'restaurants', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Meals'), array('controller' => 'meals', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Meal'), array('controller' => 'meals', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Recipes'), array('controller' => 'recipes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Recipe'), array('controller' => 'recipes', 'action' => 'add')); ?> </li>
-	</ul>
+$this->html->css('chosen', array('inline' => false));
+
+$this->html->script('ace/chosen.jquery', array('inline' => false));
+$this->Html->script('users_add', array('inline' => false));
+
+?>
+
+<div class="page-header">
+    <h1>Editar usuário<small><i class="ace-icon fa fa-angle-double-right"></i> <?php echo $this->request->data['User']['username']; ?></small></h1>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Novo usuário</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+                    <div class="products form">
+                        <?php echo $this->Form->create(
+                            'User',
+                            array(
+                                'class' => 'form-horizontal',
+                                'role' => 'form',
+                                'inputDefaults' => array(
+                                    'label' => false
+                                )
+                            )
+                        ); ?>
+                        <fieldset style="padding: 16px">
+                            <?php echo $this->Form->input('id'); ?>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserUsername"> Username </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'User.username',
+                                    array(
+                                        'div' => 'col-sm-9',
+                                        'type' => 'text'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserPassword"> Senha </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'User.password',
+                                    array(
+                                        'div' => 'col-sm-9',
+                                        'type' => 'text'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserFirstName"> Nome </label>
+
+                                <?php echo $this->Form->input(
+                                    'User.first_name',
+                                    array(
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserLastName"> Sobrenome </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'User.last_name',
+                                    array(
+                                        'div' => 'col-sm-9',
+                                        'type' => 'text'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserEmail"> Email </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'User.email',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-sm-9'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserRestaurantId"> Unidade UNESP </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'User.restaurant_id',
+                                    array(
+                                        'type' => 'select',
+                                        'div' => 'col-sm-9',
+                                        'class' => 'chosen-select',
+                                        'placeholder' => 'escolha uma UAN'
+                                    )
+                                ); ?>
+
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-actions center">
+                            <?php echo $this->Form->button(
+                                'editar &nbsp;'.$this->Html->tag(
+                                    'i',
+                                    '',
+                                    array(
+                                        'class' => '"ace-icon fa fa-arrow-right icon-on-right bigger-110'
+                                    )
+                                ),
+                                array(
+                                    'type' => 'submit',
+                                    'class' => 'btn btn-sm btn-warning',
+                                    'escape' => false
+                                )
+                            ); ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

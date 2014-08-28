@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: daniel
+ * Date: 27/08/14
+ * Time: 21:27
+ */
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,7 +30,7 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="table-header">
+        <div class="table-header" style="background-color: darkred;">
             Results for "Latest Registered Domains"
         </div>
 
@@ -117,7 +123,7 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'glyphicon glyphicon-remove')
+                                        array('class' => 'glyphicon glyphicon-ok')
                                     ),
                                     array(
                                         'action' => 'logical_delete',
@@ -125,7 +131,7 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'btn btn-xs btn-inverse actions-tooltip tooltip-default',
+                                        'class' => 'btn btn-xs btn-success actions-tooltip tooltip-default',
                                         'data-toggle' => 'tooltip',
                                         'data-placement' => 'top',
                                         'title' => 'desativar produto',
@@ -168,10 +174,10 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
                     'i',
                     '',
                     array('class' => 'fa fa-eye')
-                ).' Usuários desativados',
+                ).' Usuários ativos',
                 array(
                     'controller' => 'users',
-                    'action' => 'deleted_index'
+                    'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
             );
