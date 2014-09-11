@@ -46,7 +46,7 @@ class MealsController extends AppController {
         $relatedRecipes = $this->Meal->RecipesForMeal->findRelatedByMeal($id);
 
         foreach($relatedRecipes as $relatedRecipe):
-
+ 
         endforeach;
 
 
@@ -63,6 +63,7 @@ class MealsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Meal->create();
+            $this->request->data['Meal']['status'] = 1;
 			if ($this->Meal->save($this->request->data)) {
 				$this->Session->setFlash(__('The meal has been saved.'));
 				return $this->redirect(array('action' => 'index'));
