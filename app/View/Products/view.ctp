@@ -2,11 +2,14 @@
 
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
+if($product[0]['Product']['status'])
+    $this->Html->addCrumb('Produtos', '/products');
+else{
+    $this->Html->addCrumb('Produtos', '/products');
+    $this->Html->addCrumb('Produtos desativados', '/products/deleted_index');
+}
+$this->Html->addCrumb($product[0]['Product']['name']);
 ?>
-
-<div class="page-header">
-    <h1>Produto<small><i class="ace-icon fa fa-angle-double-right"></i> quantidades & atributos</small></h1>
-</div>
 
 <div class="row">
     <div class="col-sm-5">
@@ -236,22 +239,24 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
         <div class="row">
             <p>
                 <?php
-                echo $this->Html->link(
-                    $this->Html->tag(
-                        'i',
-                        '',
-                        array('class' => 'glyphicon glyphicon-plus')
-                    ).' Adicionar quantidade',
-                    array(
-                        'controller' => 'suppliesProducts',
-                        'action' => 'add_load_stock',
-                        $product[0]['Product']['id']
-                    ),
-                    array(
-                        'escape' => false,
-                        'class' => 'btn btn-lg btn-success'
-                    )
-                );
+                if($product[0]['Product']['status']){
+                    echo $this->Html->link(
+                        $this->Html->tag(
+                            'i',
+                            '',
+                            array('class' => 'glyphicon glyphicon-plus')
+                        ).' Adicionar quantidade',
+                        array(
+                            'controller' => 'suppliesProducts',
+                            'action' => 'add_load_stock',
+                            $product[0]['Product']['id']
+                        ),
+                        array(
+                            'escape' => false,
+                            'class' => 'btn btn-lg btn-success'
+                        )
+                    );
+                }
                 ?>
                 <?php
                 echo $this->Html->link(
@@ -272,22 +277,42 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                 );
                 ?>
                 <?php
-                echo $this->Form->postlink(
-                    $this->Html->tag(
-                        'i',
-                        '',
-                        array('class' => 'glyphicon glyphicon-remove')
-                    ).' Desativar',
-                    array(
-                        'action' => 'logical_delete',
-                        $product[0]['Product']['id']
-                    ),
-                    array(
-                        'escape' => false,
-                        'class' => 'btn btn-lg btn-inverse'
-                    ),
-                    __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
-                );
+                if($product[0]['Product']['status']){
+                    echo $this->Form->postlink(
+                        $this->Html->tag(
+                            'i',
+                            '',
+                            array('class' => 'glyphicon glyphicon-remove')
+                        ).' Desativar',
+                        array(
+                            'action' => 'logical_delete',
+                            $product[0]['Product']['id']
+                        ),
+                        array(
+                            'escape' => false,
+                            'class' => 'btn btn-lg btn-inverse'
+                        ),
+                        __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
+                    );
+                }
+                else{
+                    echo $this->Form->postlink(
+                        $this->Html->tag(
+                            'i',
+                            '',
+                            array('class' => 'glyphicon glyphicon-ok')
+                        ).' Reativar',
+                        array(
+                            'action' => 'logical_delete',
+                            $product[0]['Product']['id']
+                        ),
+                        array(
+                            'escape' => false,
+                            'class' => 'btn btn-lg btn-success'
+                        ),
+                        __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
+                    );
+                }
                 ?>
             </p>
         </div>

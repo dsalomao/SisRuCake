@@ -9,13 +9,10 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('suppliers_indexes', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Fornecedores
-        <small><i class="ace-icon fa fa-angle-double-right"></i></small>
-    </h1>
-</div>
+$this->Html->addCrumb('Fornecedores', '/suppliers');
+$this->Html->addCrumb('Fornecedores desativados');
+?>
 
 <div class="row">
     <div class="col-xs-12">

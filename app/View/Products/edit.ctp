@@ -11,11 +11,10 @@ $this->html->css('chosen', array('inline' => false));
 $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('products', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Editar produto<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
+$this->Html->addCrumb('Produtos', '/products');
+$this->Html->addCrumb('Editar produto');
+?>
 
 <div class="row">
     <div class="col-xs-12">

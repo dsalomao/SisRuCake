@@ -19,13 +19,9 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 
+$this->Html->addCrumb('Produtos', array('controller' => 'products', 'action' => 'index'));
+$this->Html->addCrumb('Produtos desativados');
 ?>
-
-<div class="page-header">
-    <h1>Estoque
-        <small><i class="ace-icon fa fa-angle-double-right"></i> itens &amp; produtos DELETADOS</small>
-    </h1>
-</div>
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header" style="background-color: darkred">

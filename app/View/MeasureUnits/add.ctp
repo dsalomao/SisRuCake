@@ -1,12 +1,13 @@
-<div class="page-header">
-    <h1>Adicionar unidade de medida.<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
+<?php
+$this->Html->addCrumb('Unidades de medida', '/measure_units');
+$this->Html->addCrumb('Adicionar unidade de medida');
+?>
 
 <div class="row">
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title">Novo produto</h4>
+                <h4 class="widget-title">Nova unidade de medida</h4>
             </div>
 
             <div class="widget-body">
@@ -41,7 +42,10 @@
                                 <?php echo $this->Form->input(
                                     'int_only',
                                     array(
-                                        'div' => 'col-sm-9'
+                                        'div' => 'col-sm-9',
+                                        'type' => 'checkbox',
+                                        'class' => 'ace ace-switch ace-switch-5',
+                                        'after' => $this->Html->tag('span', '', array('class' => 'lbl middle'))
                                     )
                                 ); ?>
 

@@ -294,7 +294,7 @@
                                                                     'i',
                                                                     '',
                                                                     array('class' => 'menu-icon fa fa-book')
-                                                                ).' Livro de cardápios',
+                                                                ).' Livro de refeições',
                                                                 array(
                                                                     'controller' => 'meals',
                                                                     'action' => 'index'
@@ -507,21 +507,15 @@
                 <div class="main-content">
                         <!-- #section:basics/content.breadcrumbs -->
                         <div class="breadcrumbs" id="breadcrumbs">
-                                <script type="text/javascript">
-                                        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-                                </script>
 
-                                <ul class="breadcrumb">
-                                        <li>
-                                                <i class="ace-icon fa fa-home home-icon"></i>
-                                                <a href="#">Home</a>
-                                        </li>
-
-                                        <li>
-                                                <a href="#">Other Pages</a>
-                                        </li>
-                                        <li class="active">Blank Page</li>
-                                </ul><!-- /.breadcrumb -->
+                                <?php echo $this->Html->getCrumbList(
+                                    array('class' => 'breadcrumb', 'lastClass' => 'active'),
+                                    array(
+                                        'text' => $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-home home-icon')).'Área de trabalho',
+                                        'url' => array('controller' => 'pages', 'action' => 'display', 'home'),
+                                        'escape' => false
+                                    )
+                                ); ?>
 
                                 <!-- #section:basics/content.searchbox -->
                                 <div class="nav-search" id="nav-search">

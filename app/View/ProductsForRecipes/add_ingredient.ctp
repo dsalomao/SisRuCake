@@ -10,11 +10,11 @@
     $this->html->script('ace/chosen.jquery', array('inline' => false));
     $this->Html->script('ace/fuelux.spinner', array('inline' => false));
     $this->Html->script('productsForRecipes', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Novo ingrediente</h1>
-</div>
+    $this->Html->addCrumb('Receitas', '/recipes');
+    $this->Html->addCrumb($thisRecipe['Recipe']['name'], array('controller' => 'recipes', 'action' => 'view', $thisRecipe['Recipe']['id']));
+    $this->Html->addCrumb('Adicionar ingrediente');
+?>
 
 <div class="row">
     <div class="col-xs-12">

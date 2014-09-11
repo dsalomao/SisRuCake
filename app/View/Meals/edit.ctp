@@ -1,12 +1,18 @@
-<div class="page-header">
-    <h1>Adicionar refeição<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
-
+<?php
+if($this->request->data['Meal']['status'])
+    $this->Html->addCrumb('Refeições', '/meals');
+else{
+    $this->Html->addCrumb('Refeições', '/meals');
+    $this->Html->addCrumb('Refeições desativadas', '/meals/deleted_index');
+}
+$this->Html->addCrumb($this->request->data['Meal']['code'], array('controller' => 'meals', 'action' => 'view', $this->request->data['Meal']['id']));
+$this->Html->addCrumb('Edita refeição');
+?>
 <div class="row">
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title">Nova refeição</h4>
+                <h4 class="widget-title">Editar refeição: <?php echo $this->request->data['Meal']['code']; ?></h4>
             </div>
 
             <div class="widget-body">
@@ -73,17 +79,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Meal.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Meal.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Meals'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Recipes For Meals'), array('controller' => 'recipes_for_meals', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Recipes For Meal'), array('controller' => 'recipes_for_meals', 'action' => 'add')); ?> </li>
-	</ul>
 </div>

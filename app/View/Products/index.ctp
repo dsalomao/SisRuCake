@@ -10,13 +10,8 @@ $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('products_indexes', array('inline' => false));
 
+$this->Html->addCrumb('Produtos');
 ?>
-
-<div class="page-header">
-    <h1>Estoque
-        <small><i class="ace-icon fa fa-angle-double-right"></i> itens &amp; produtos estocados</small>
-    </h1>
-</div>
 <div class="row">
     <div class="col-xs-12">
 
@@ -25,7 +20,7 @@ $this->Html->script('products_indexes', array('inline' => false));
 <div class="row">
        <div class="col-xs-12">
            <div class="table-header">
-               Results for "Latest Registered Domains"
+               Lista de produtos ativos
            </div>
 
            <!-- <div class="table-responsive"> -->

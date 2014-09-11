@@ -1,6 +1,8 @@
-<div class="page-header">
-    <h1>Editar unidade de medida.<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
+<?php
+
+$this->Html->addCrumb('Unidades de medida', '/measure_units');
+$this->Html->addCrumb('Editar unidade de medida');
+?>
 
 <div class="row">
     <div class="col-xs-12">

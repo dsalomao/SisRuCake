@@ -146,6 +146,6 @@ class ProductsController extends AppController {
  */
     public function deleted_index() {
         $this->Product->recursive = 0;
-        $this->set('products', $this->Paginator->paginate('Product', array('Product.status' => false)));
+        $this->set('products', $this->Paginator->paginate('Product', array('Product.status' => 0)));
     }
 }

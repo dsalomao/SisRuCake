@@ -2,11 +2,15 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('suppliers_view', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Fornecedores<small><i class="ace-icon fa fa-angle-double-right"></i> <?php echo h($supplier['Supplier']['name']); ?>&nbsp;</small></h1>
-</div>
+if($supplier['Supplier']['status'])
+    $this->Html->addCrumb('Fornecedores', '/suppliers');
+else{
+    $this->Html->addCrumb('Fornecedores', '/suppliers');
+    $this->Html->addCrumb('Fornecedores desativados', '/suppliers/deleted_index');
+}
+$this->Html->addCrumb($supplier['Supplier']['name']);
+?>
 
 <div class="row">
     <div class="col-sm-5">

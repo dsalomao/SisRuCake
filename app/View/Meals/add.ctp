@@ -1,7 +1,7 @@
-<div class="page-header">
-    <h1>Adicionar refeição<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
-
+<?php
+$this->Html->addCrumb('Refeições', '/meals');
+$this->Html->addCrumb('Adicionar refeição');
+?>
 <div class="row">
     <div class="col-xs-12">
         <div class="widget-box">
@@ -29,18 +29,6 @@
 
                                 <?php echo $this->Form->input(
                                     'Meal.code',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Status </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Meal.status',
                                     array(
                                         'div' => 'col-sm-9'
                                     )

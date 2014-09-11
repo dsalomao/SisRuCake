@@ -1,10 +1,14 @@
 <?php
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Receitas<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;<?php echo h($recipe['Recipe']['name']); ?></small></h1>
-</div>
+if($recipe['Recipe']['status'])
+    $this->Html->addCrumb('Receitas', '/recipes');
+else{
+    $this->Html->addCrumb('Receitas', '/recipes');
+    $this->Html->addCrumb('Receitas desativadas', '/recipes/deleted_index');
+}
+$this->Html->addCrumb($recipe['Recipe']['name']);
+?>
 
 <div class="row">
     <div class="col-sm-12">
@@ -233,22 +237,24 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
         <h4 class="header smaller lighter blue"> Ações </h4>
         <p>
             <?php
-            echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'glyphicon glyphicon-plus')
-                ).' Adicionar ingrediente',
-                array(
-                    'controller' => 'ProductsForRecipes',
-                    'action' => 'add_ingredient',
-                    $recipe['Recipe']['id']
-                ),
-                array(
-                    'escape' => false,
-                    'class' => 'btn btn-lg btn-success'
-                )
-            );
+            if($recipe['Recipe']['status']){
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-plus')
+                    ).' Adicionar ingrediente',
+                    array(
+                        'controller' => 'ProductsForRecipes',
+                        'action' => 'add_ingredient',
+                        $recipe['Recipe']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-success'
+                    )
+                );
+            }
             ?>&nbsp;
             <?php
             echo $this->Html->link(

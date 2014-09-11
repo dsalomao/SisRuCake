@@ -8,11 +8,10 @@
 
 $this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliers_edit', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Editar fornecedor<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
+$this->Html->addCrumb('Fornecedores', '/suppliers');
+$this->Html->addCrumb('Editar fornecedor');
+?>
 
 <div class="row">
     <div class="col-xs-12">

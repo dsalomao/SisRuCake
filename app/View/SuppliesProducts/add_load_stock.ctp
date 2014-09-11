@@ -11,11 +11,10 @@ $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliesProducts', array('inline' => false));
-?>
 
-<div class="page-header">
-    <h1>Entrada em estoque<small><i class="ace-icon fa fa-angle-double-right"></i> dar entrada em produto j&aacute; exixtente</small></h1>
-</div>
+$this->Html->addCrumb('Produtos', '/products');
+$this->Html->addCrumb('Adicionar em estoque');
+?>
 
 <div class="row">
     <div class="col-xs-12">
@@ -73,8 +72,9 @@ $this->Html->script('suppliesProducts', array('inline' => false));
                                 <?php echo $this->Form->input(
                                     'price',
                                     array(
-                                        'div' => 'col-sm-9',
-
+                                        'type' => 'text',
+                                        'div' => 'col-sm-2 col-xs-6',
+                                        'class' => 'input-mini'
                                     )
                                 ); ?>
 

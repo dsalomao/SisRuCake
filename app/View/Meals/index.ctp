@@ -1,17 +1,10 @@
-<div class="page-header">
-    <h1>Livro de refeições
-        <small><i class="ace-icon fa fa-angle-double-right"></i></small>
-    </h1>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-
-    </div>
-</div>
+<?php
+$this->Html->addCrumb('Refeições');
+?>
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header">
-            Tabela de cardápios ativos
+            Tabela de refeições ativas
         </div>
 
         <!-- <div class="table-responsive"> -->

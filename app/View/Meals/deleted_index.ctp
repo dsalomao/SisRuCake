@@ -5,12 +5,9 @@
  * Date: 07/08/14
  * Time: 03:16
  */
+$this->Html->addCrumb('Refeições', '/meals');
+$this->Html->addCrumb('Refeições desativadas');
 ?>
-<div class="page-header">
-    <h1>Livro de refeições
-        <small><i class="ace-icon fa fa-angle-double-right"></i></small>
-    </h1>
-</div>
 <div class="row">
     <div class="col-xs-12">
 
@@ -19,7 +16,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header" style="background-color: darkred">
-            Tabela de cardápios desativados
+            Tabela de refeições desativadas
         </div>
 
         <!-- <div class="table-responsive"> -->

@@ -6,11 +6,9 @@
  * Time: 21:15
  */
 
+$this->Html->addCrumb('Receitas', '/recipes');
+$this->Html->addCrumb('Editar receita');
 ?>
-
-<div class="page-header">
-    <h1>Editar receita<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
 
 <div class="row">
     <div class="col-xs-12">

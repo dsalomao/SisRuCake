@@ -9,6 +9,9 @@
 
 $this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliers_add', array('inline' => false));
+
+$this->Html->addCrumb('Fornecedores', '/suppliers');
+$this->Html->addCrumb('Adicionar fornecedor');
 ?>
 
 <div class="page-header">

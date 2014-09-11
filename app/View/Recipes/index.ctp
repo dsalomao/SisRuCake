@@ -3,22 +3,12 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 
+$this->Html->addCrumb('Receitas');
 ?>
-
-<div class="page-header">
-    <h1>Livro de receitas
-        <small><i class="ace-icon fa fa-angle-double-right"></i></small>
-    </h1>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-
-    </div>
-</div>
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header">
-            Results for "Latest Registered Domains"
+            Livro de receitas
         </div>
 
         <!-- <div class="table-responsive"> -->

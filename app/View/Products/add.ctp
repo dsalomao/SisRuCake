@@ -12,12 +12,9 @@ $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('products', array('inline' => false));
 
-
+$this->Html->addCrumb('Produtos', '/products');
+$this->Html->addCrumb('Adicionar produto');
 ?>
-
-<div class="page-header">
-    <h1>Adicionar produto<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
 
 <div class="row">
     <div class="col-xs-12">
