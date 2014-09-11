@@ -34,13 +34,12 @@ class ProductsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-        $this->loadModel('SuppliesProduct');
 		if (!$this->Product->exists($id)) {
 			throw new NotFoundException(__('Invalid product'));
 		}
         $this->Product->recursive = 0;
         $product = $this->Product->findProductById($id);
-        $related = $this->SuppliesProduct->findRelatedByProduct($id);
+        $related = $this->Product->SuppliesProduct->findRelatedByProduct($id);
 		$this->set(array('product' => $product, 'related' => $related));
         $this->Paginator->paginate();
 
