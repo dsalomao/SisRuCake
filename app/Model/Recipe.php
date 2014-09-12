@@ -126,7 +126,7 @@ class Recipe extends AppModel {
  */
 	public $hasMany = array(
 		'ProductsForRecipe' => array(
-			'className' => 'ProductsForRecipes',
+			'className' => 'ProductsForRecipe',
 			'foreignKey' => 'recipe_id',
 			'dependent' => false,
 			'conditions' => '',

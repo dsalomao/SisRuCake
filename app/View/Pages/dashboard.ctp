@@ -90,7 +90,7 @@
                     array('class' => 'fa fa-calendar')
                 ).' Calendário',
                 array(
-                    'controller' => 'meals',
+                    'controller' => 'serviceDates',
                     'action' => 'calendar'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)

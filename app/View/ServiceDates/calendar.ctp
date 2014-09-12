@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  * Created by PhpStorm.
  * User: daniel
@@ -10,16 +10,9 @@ $this->html->css('fullcalendar', array('inline' => false));
 $this->html->script('ace/jquery-ui.custom', array('inline' => false));
 $this->html->script('ace/fullcalendar', array('inline' => false));
 $this->html->script('calendar', array('inline' => false));
+
+    $this->Html->addCrumb('Calendário');
 ?>
-<div class="page-header">
-    <h1>
-        Calendário
-        <small>
-            <i class="ace-icon fa fa-angle-double-right"></i>
-            cardápios & datas de serviço
-        </small>
-    </h1>
-</div><!-- /.page-header -->
 
 <div class="col-sm-9">
     <div class="space"></div>

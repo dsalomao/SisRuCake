@@ -512,7 +512,7 @@
                                     array('class' => 'breadcrumb', 'lastClass' => 'active'),
                                     array(
                                         'text' => $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-home home-icon')).'Área de trabalho',
-                                        'url' => array('controller' => 'pages', 'action' => 'display', 'home'),
+                                        'url' => array('controller' => 'pages', 'action' => 'display', 'dashboard'),
                                         'escape' => false
                                     )
                                 ); ?>

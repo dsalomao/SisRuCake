@@ -111,4 +111,16 @@ class Meal extends AppModel {
         //this status been returned is a boolean retrieved before saveField
         return $meal['Meal']['status'];
     }
+
+    public function findByMealId($id = null){
+        $options = array(
+            'conditions' => array('Meal.id' => $id),
+            'recursive' => 0,
+            'contain' => array(
+                'ServiceDate' => array(
+                )
+            )
+        );
+        return $meal = $this->find('first', $options);
+    }
 }

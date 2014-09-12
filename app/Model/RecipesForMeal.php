@@ -83,7 +83,7 @@ class RecipesForMeal extends AppModel {
     public function findRelatedByMeal($id = null){
         $options = array(
             'conditions' => array('RecipesForMeal.meal_id' => $id),
-            'recursive' => 2
+            'recursive' => -1
         );
         /*$options = array(
             'conditions' => array('RecipesForMeal.meal_id' => $id),
@@ -112,5 +112,20 @@ class RecipesForMeal extends AppModel {
         $options = array('conditions' => array('status' => 1));
         $active = $this->Meal->find('list', $options);
         return $active;
+    }
+
+    public function findByMealId($id = null){
+        $options = array(
+            'conditions' => array('RecipesForMeal.meal_id' => $id),
+            'recursive' => 0,
+            'contain' => array(
+                'Recipe' => array(
+                    'ProductsForRecipe' => array(
+                        'Product' => array()
+                    )
+                )
+            )
+        );
+        return $related = $this->find('all', $options);
     }
 }
