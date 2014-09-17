@@ -135,7 +135,23 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                 </a>
                                 <ul class="dropdown-menu dropdown-info">
                                     <li>
-                                        <?php echo $this->Html->link('Remover receita', array('data-toggle' => 'dropdown', 'class' => 'dropdown-toggle', array('controller' => 'RecipesForMeal', 'action' => 'delete')))?>
+                                        <?php
+                                        echo $this->Form->postLink(
+                                            $this->Html->tag(
+                                                'span',
+                                                ' Remover receita',
+                                                array('class' => 'fa fa-sign-out fa-fw')
+                                            ),
+                                            array(
+                                                'controller' => 'RecipesForMeals',
+                                                'action' => 'delete',
+                                                $related['RecipesForMeal']['id']
+                                            ),
+                                            array(
+                                                'escape' => false
+                                            )
+                                        );
+                                        ?>
                                     </li>
                                 </ul>
                             </li>
@@ -215,8 +231,104 @@ $this->Html->addCrumb($meal['Meal']['code']);
                             </div>
 
                             <div id="recipeId<?php echo h($related['Recipe']['id']); ?>products" class="tab-pane">
-                                <?php foreach($related['Recipe']['ProductsForRecipe'] as $relatedProduct): ?>
-                                <?php endforeach; ?>
+                                <div class="widget-box transparent">
+                                    <div class="widget-header widget-header-flat">
+                                        <h4 class="widget-title lighter">
+                                            <i class="ace-icon fa fa-star orange"></i>Porcionamento padrão (1x) <small>Rendimento Padrão: <?php echo $related['Recipe']['income']; ?> pessoas</small>
+                                        </h4>
+
+                                        <div class="widget-toolbar">
+                                            <a href="#" data-action="collapse">
+                                                <i class="ace-icon fa fa-chevron-up"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body"><div class="widget-body-inner" style="display: block;">
+                                            <div class="widget-main no-padding">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead class="thin-border-bottom">
+                                                    <tr>
+                                                        <th>
+                                                            <i class="ace-icon fa fa-caret-right blue"></i>Quantidade
+                                                        </th>
+
+                                                        <th>
+                                                            <i class="ace-icon fa fa-caret-right blue"></i>Unidade
+                                                        </th>
+
+                                                        <th class="hidden-480">
+                                                            <i class="ace-icon fa fa-caret-right blue"></i>Producto
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <?php foreach($related['Recipe']['ProductsForRecipe'] as $relatedProduct): ?>
+                                                        <tr>
+                                                            <td style="text-align: right"><?php echo $relatedProduct['quantity']; ?></td>
+
+                                                            <td><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
+
+                                                            <td class="hidden-480"><?php echo $relatedProduct['Product']['name']; ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div><!-- /.widget-main -->
+                                        </div>
+                                    </div><!-- /.widget-body -->
+                                </div>
+
+                                <div class="widget-box transparent">
+                                    <div class="widget-header widget-header-flat">
+                                        <h4 class="widget-title lighter">
+                                            <i class="ace-icon fa fa-star orange"></i>Porcionamento com Multiplicador de porcionamento (<?php echo $related['RecipesForMeal']['portion_multiplier'] ?>x)<small> Rendimento aproximado: <?php echo $float_income = $related['Recipe']['income']*$related['RecipesForMeal']['portion_multiplier']; ?> pessoas</small>
+                                        </h4>
+
+                                        <div class="widget-toolbar">
+                                            <a href="#" data-action="collapse">
+                                                <i class="ace-icon fa fa-chevron-up"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body"><div class="widget-body-inner" style="display: block;">
+                                            <div class="widget-main no-padding">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead class="thin-border-bottom">
+                                                    <tr>
+                                                        <th>
+                                                            <i class="ace-icon fa fa-caret-right blue"></i>Quantidade
+                                                        </th>
+
+                                                        <th>
+                                                            <i class="ace-icon fa fa-caret-right blue"></i>Unidade
+                                                        </th>
+
+                                                        <th class="hidden-480">
+                                                            <i class="ace-icon fa fa-caret-right blue"></i>Producto
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <?php foreach($related['Recipe']['ProductsForRecipe'] as $relatedProduct): ?>
+                                                        <tr>
+                                                            <?php $portion_quantified = $relatedProduct['quantity']*$related['RecipesForMeal']['portion_multiplier']; ?>
+                                                            <td style="text-align: right"><?php echo $portion_quantified; ?></td>
+
+                                                            <td><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
+
+                                                            <td class="hidden-480"><?php echo $relatedProduct['Product']['name']; ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div><!-- /.widget-main -->
+                                        </div>
+                                    </div><!-- /.widget-body -->
+                                </div>
                             </div>
                         </div>
                     </div>

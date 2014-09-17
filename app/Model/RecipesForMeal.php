@@ -121,7 +121,12 @@ class RecipesForMeal extends AppModel {
             'contain' => array(
                 'Recipe' => array(
                     'ProductsForRecipe' => array(
-                        'Product' => array()
+                        'Product' => array(
+                            'MeasureUnit' => array(
+                                'fields' => array('MeasureUnit.name')
+                            ),
+                            'fields' => array('Product.name', 'Product.code')
+                        )
                     )
                 )
             )

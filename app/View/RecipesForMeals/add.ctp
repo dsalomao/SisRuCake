@@ -59,7 +59,7 @@ $this->Html->addCrumb('adicionar receita');
 
 
                                 <?php echo $this->Form->input(
-                                    'quantity',
+                                    'portion_multiplier',
                                     array(
                                         'type' => 'text',
                                         'div' => 'col-sm-1',
