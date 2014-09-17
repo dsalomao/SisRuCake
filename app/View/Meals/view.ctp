@@ -231,7 +231,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                             </div>
 
                             <div id="recipeId<?php echo h($related['Recipe']['id']); ?>products" class="tab-pane">
-                                <div class="widget-box transparent">
+                                <div class="widget-box transparent collapsed">
                                     <div class="widget-header widget-header-flat">
                                         <h4 class="widget-title lighter">
                                             <i class="ace-icon fa fa-star orange"></i>Porcionamento padrão (1x) <small>Rendimento Padrão: <?php echo $related['Recipe']['income']; ?> pessoas</small>
@@ -239,7 +239,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
 
                                         <div class="widget-toolbar">
                                             <a href="#" data-action="collapse">
-                                                <i class="ace-icon fa fa-chevron-up"></i>
+                                                <i class="ace-icon fa fa-chevron-down"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -280,7 +280,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                     </div><!-- /.widget-body -->
                                 </div>
 
-                                <div class="widget-box transparent">
+                                <div class="widget-box transparent collapsed">
                                     <div class="widget-header widget-header-flat">
                                         <h4 class="widget-title lighter">
                                             <i class="ace-icon fa fa-star orange"></i>Porcionamento com Multiplicador de porcionamento (<?php echo $related['RecipesForMeal']['portion_multiplier'] ?>x)<small> Rendimento aproximado: <?php echo $float_income = $related['Recipe']['income']*$related['RecipesForMeal']['portion_multiplier']; ?> pessoas</small>
@@ -288,7 +288,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
 
                                         <div class="widget-toolbar">
                                             <a href="#" data-action="collapse">
-                                                <i class="ace-icon fa fa-chevron-up"></i>
+                                                <i class="ace-icon fa fa-chevron-down"></i>
                                             </a>
                                         </div>
                                     </div>

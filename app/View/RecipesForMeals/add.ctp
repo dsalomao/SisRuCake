@@ -12,7 +12,7 @@ $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('recipesForMeals', array('inline' => false));
 
 $this->Html->addCrumb('Refeições', '/meals');
-$this->Html->addCrumb($meal['Meal']['code'], '/meals');
+$this->Html->addCrumb($meal['Meal']['code'], array('controller' => 'Meals', 'action' => 'view', $meal['Meal']['id']));
 $this->Html->addCrumb('adicionar receita');
 ?>
 
