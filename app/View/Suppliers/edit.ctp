@@ -9,6 +9,7 @@
 $this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliers_edit', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Fornecedores', '/suppliers');
 $this->Html->addCrumb('Editar fornecedor');
 ?>

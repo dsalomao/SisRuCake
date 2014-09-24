@@ -5,6 +5,8 @@
  * Date: 07/08/14
  * Time: 03:16
  */
+
+$this->Html->addCrumb('Planejamento de cardápío');
 $this->Html->addCrumb('Refeições', '/meals');
 $this->Html->addCrumb('Refeições desativadas');
 ?>

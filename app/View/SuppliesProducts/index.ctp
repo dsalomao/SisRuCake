@@ -7,6 +7,7 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Caderno de entrada');
 ?>
 

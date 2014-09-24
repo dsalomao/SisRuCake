@@ -12,6 +12,7 @@ $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliesProducts', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', '/products');
 $this->Html->addCrumb('Adicionar em estoque');
 ?>

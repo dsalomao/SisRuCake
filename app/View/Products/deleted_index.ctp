@@ -19,6 +19,7 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', array('controller' => 'products', 'action' => 'index'));
 $this->Html->addCrumb('Produtos desativados');
 ?>

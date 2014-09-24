@@ -11,6 +11,7 @@
     $this->Html->script('ace/fuelux.spinner', array('inline' => false));
     $this->Html->script('productsForRecipes', array('inline' => false));
 
+    $this->Html->addCrumb('Receituário padrão');
     $this->Html->addCrumb('Receitas', '/recipes');
     $this->Html->addCrumb($thisRecipe['Recipe']['name'], array('controller' => 'recipes', 'action' => 'view', $thisRecipe['Recipe']['id']));
     $this->Html->addCrumb('Adicionar ingrediente');

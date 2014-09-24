@@ -8,6 +8,7 @@ $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('measure_units', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Unidades de medida');
 ?>
 

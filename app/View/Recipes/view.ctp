@@ -1,6 +1,7 @@
 <?php
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
+$this->Html->addCrumb('Receituário padrão');
 if($recipe['Recipe']['status'])
     $this->Html->addCrumb('Receitas', '/recipes');
 else{

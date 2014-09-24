@@ -12,6 +12,7 @@ $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('products', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', '/products');
 $this->Html->addCrumb('Editar produto');
 ?>

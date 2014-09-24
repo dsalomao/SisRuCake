@@ -6,6 +6,7 @@ $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('recipes_add', array('inline' => false));
 
+$this->Html->addCrumb('Receituário padrão');
 $this->Html->addCrumb('Receitas', '/recipes');
 $this->Html->addCrumb('Adicionar receita');
 ?>

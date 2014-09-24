@@ -1,4 +1,6 @@
 <?php
+
+$this->Html->addCrumb('Planejamento de cardápío');
 if($this->request->data['Meal']['status'])
     $this->Html->addCrumb('Refeições', '/meals');
 else{

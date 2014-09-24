@@ -9,6 +9,7 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 
+$this->Html->addCrumb('Receituário padrão');
 $this->Html->addCrumb('Receitas', '/recipes');
 $this->Html->addCrumb('Receitas desativadas');
 ?>

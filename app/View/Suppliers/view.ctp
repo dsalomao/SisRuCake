@@ -3,6 +3,7 @@ $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('suppliers_view', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 if($supplier['Supplier']['status'])
     $this->Html->addCrumb('Fornecedores', '/suppliers');
 else{

@@ -1,4 +1,6 @@
 <?php
+
+$this->Html->addCrumb('Planejamento de cardápío');
 $this->Html->addCrumb('Refeições', '/meals');
 $this->Html->addCrumb('Adicionar refeição');
 ?>

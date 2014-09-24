@@ -6,6 +6,7 @@
  * Time: 21:15
  */
 
+$this->Html->addCrumb('Receituário padrão');
 $this->Html->addCrumb('Receitas', '/recipes');
 $this->Html->addCrumb('Editar receita');
 ?>

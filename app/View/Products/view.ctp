@@ -2,6 +2,7 @@
 
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
 if($product[0]['Product']['status'])
     $this->Html->addCrumb('Produtos', '/products');
 else{
