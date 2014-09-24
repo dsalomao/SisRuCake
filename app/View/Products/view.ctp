@@ -189,13 +189,13 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                                             <span class="lbl"></span>
                                         </label>
                                     </th>
-                                    <th><?php echo $this->Paginator->sort('id'); ?></th>
+                                    <th class="hidden-480"><?php echo $this->Paginator->sort('id'); ?></th>
                                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
                                     <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
+                                    <th class="hidden-480"><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
+                                    <th class="hidden-480"><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
                                     <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('supplier_id', 'Fornecedor'); ?></th>
+                                    <th class="hidden-480"><?php echo $this->Paginator->sort('supplier_id', 'Fornecedor'); ?></th>
                                 </tr>
                                 </thead>
 
@@ -208,21 +208,21 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                                                 <span class="lbl"></span>
                                             </label>
                                         </td>
-                                        <td><?php echo h($related['SuppliesProduct']['id']); ?>&nbsp;</td>
+                                        <td class="hidden-480"><?php echo h($related['SuppliesProduct']['id']); ?>&nbsp;</td>
                                         <td style="text-align: right"><?php echo h($related['SuppliesProduct']['quantity']); ?>&nbsp;</td>
                                         <td>
                                             <?php echo $this->Html->link($product[0]['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product[0]['MeasureUnit']['id'])); ?>
                                         </td>
-                                        <td><?php
+                                        <td class="hidden-480"><?php
                                             $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
                                             echo $this->Number->currency($related['SuppliesProduct']['price'], 'BRL');
                                             ?>&nbsp;
                                         </td>
-                                        <td>
+                                        <td class="hidden-480">
                                             <?php echo $this->Html->link($related['Product']['name'], array('controller' => 'products', 'action' => 'view', $related['Product']['id'])); ?>
                                         </td>
                                         <td><?php echo h(date("d-m-Y", strtotime($related['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
-                                        <td>
+                                        <td class="hidden-480">
                                             <?php echo $this->Html->link($related['Supplier']['name'], array('controller' => 'suppliers', 'action' => 'view', $related['Supplier']['id'])); ?>
                                         </td>
                                     </tr>

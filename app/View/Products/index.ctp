@@ -40,10 +40,10 @@ $this->Html->addCrumb('Produtos');
                        <th><?php echo $this->Paginator->sort('name', 'Nome'); ?></th>
                        <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
                        <th><?php echo $this->Paginator->sort('load_stock', 'Qtd. em estoque'); ?></th>
-                       <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
-                       <th class="hidden-md"><?php echo $this->Paginator->sort('created', 'Criado'); ?></th>
-                       <th class="hidden-md"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?></th>
-                       <th><?php echo $this->Paginator->sort('restaurant_id', 'Und. UNESP'); ?></th>
+                       <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
+                       <th class="hidden-md hidden-sm hidden-xs"><?php echo $this->Paginator->sort('created', 'Criado'); ?></th>
+                       <th class="hidden-md hidden-sm hidden-xs"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?></th>
+                       <th class="hidden-md hidden-sm hidden-xs"><?php echo $this->Paginator->sort('restaurant_id', 'Und. UNESP'); ?></th>
                        <th class="actions"><?php echo __('Ações'); ?></th>
                    </tr>
                    </thead>
@@ -61,18 +61,18 @@ $this->Html->addCrumb('Produtos');
                            <td><?php echo h($product['Product']['name']); ?>&nbsp;</td>
                            <td><?php echo h($product['Product']['code']); ?>&nbsp;</td>
                            <td style="text-align: right;"><?php echo h($product['Product']['load_stock']); ?>&nbsp;</td>
-                           <td><?php echo $this->Html->link($product['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product['MeasureUnit']['id'])); ?>&nbsp;</td>
-                           <td class="hidden-md"><?php echo h(date("d-m-Y", strtotime($product['Product']['created']))); ?>&nbsp;</td>
-                           <td class="hidden-md"><?php echo h(date("d-m-Y", strtotime($product['Product']['modified']))); ?>&nbsp;</td>
-                           <td><?php echo $this->Html->link($product['Restaurant']['name'], array('controller' => 'restaurants', 'action' => 'view', $product['Restaurant']['id'])); ?></td>
+                           <td class="hidden-sm hidden-xs"><?php echo $this->Html->link($product['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product['MeasureUnit']['id'])); ?>&nbsp;</td>
+                           <td class="hidden-md hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($product['Product']['created']))); ?>&nbsp;</td>
+                           <td class="hidden-md hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($product['Product']['modified']))); ?>&nbsp;</td>
+                           <td class="hidden-md hidden-sm hidden-xs"><?php echo $this->Html->link($product['Restaurant']['name'], array('controller' => 'restaurants', 'action' => 'view', $product['Restaurant']['id'])); ?></td>
                            <td class="actions">
-                               <div class="hidden-xs action-buttons">
+                               <div class="hidden-xs hidden-sm hidden-md btn-group">
                                    <?php
                                    echo $this->Html->link(
                                        $this->Html->tag(
                                            'i',
                                            '',
-                                           array('class' => 'ace-icon fa fa-search-plus bigger-130')
+                                           array('class' => 'ace-icon fa fa-search-plus')
                                        ),
                                        array(
                                            'action' => 'view',
@@ -80,7 +80,7 @@ $this->Html->addCrumb('Produtos');
                                        ),
                                        array(
                                            'escape' => false,
-                                           'class' => 'blue actions-tooltip tooltip-info',
+                                           'class' => 'btn btn-xs btn-primary actions-tooltip tooltip-info',
                                            'data-toggle' => 'tooltip',
                                            'data-placement' => 'top',
                                            'title' => 'ver produto',
@@ -99,7 +99,7 @@ $this->Html->addCrumb('Produtos');
                                        ),
                                        array(
                                            'escape' => false,
-                                           'class' => 'orange actions-tooltip tooltip-warning',
+                                           'class' => 'btn btn-xs btn-warning actions-tooltip tooltip-warning',
                                            'data-toggle' => 'tooltip',
                                            'data-placement' => 'top',
                                            'title' => 'editar produto',
@@ -150,6 +150,142 @@ $this->Html->addCrumb('Produtos');
                                        )
                                    );
                                    ?>
+                               </div>
+                               <div class="hidden-lg">
+                                   <div class="inline position-relative">
+                                       <?php
+                                       echo $this->Html->link(
+                                           $this->Html->tag(
+                                               'i',
+                                               '',
+                                               array('class' => 'ace-icon fa fa-cog icon-only bigger-110')
+                                           ),
+                                           '',
+                                           array(
+                                               'escape' => false,
+                                               'class' => 'btn btn-minier btn-primary dropdown-toggle',
+                                               'data-toggle' => 'dropdown',
+                                               'data-position' => 'auto'
+                                           )
+                                       );
+                                       ?>
+
+
+
+                                       <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                           <li>
+                                               <?php
+                                               echo $this->Html->link(
+                                                   $this->Html->tag(
+                                                       'span',
+                                                       $this->Html->tag(
+                                                           'i',
+                                                           '',
+                                                           array('class' => 'ace-icon fa fa-search-plus bigger-120')
+                                                       ),
+                                                       array(
+                                                           'class' => 'blue'
+                                                       )
+                                                   ),
+                                                   array(
+                                                       'action' => 'view',
+                                                       $product['Product']['id']
+                                                   ),
+                                                   array(
+                                                       'escape' => false,
+                                                       'class' => 'actions-tooltip tooltip-info',
+                                                       'data-rel' => 'tooltip',
+                                                       'data-original-title' => 'ver produto'
+                                                   )
+                                               );
+                                               ?>
+                                           </li>
+
+                                           <li>
+                                               <?php
+                                               echo $this->Html->link(
+                                                   $this->Html->tag(
+                                                       'span',
+                                                       $this->Html->tag(
+                                                           'i',
+                                                           '',
+                                                           array('class' => 'ace-icon fa fa-pencil bigger-120')
+                                                       ),
+                                                       array(
+                                                           'class' => 'orange'
+                                                       )
+                                                   ),
+                                                   array(
+                                                       'action' => 'edit',
+                                                       $product['Product']['id']
+                                                   ),
+                                                   array(
+                                                       'escape' => false,
+                                                       'class' => 'actions-tooltip tooltip-warning',
+                                                       'data-rel' => 'tooltip',
+                                                       'data-original-title' => 'editar produto'
+                                                   )
+                                               );
+                                               ?>
+                                           </li>
+
+                                           <li>
+                                               <?php
+                                               echo $this->Html->link(
+                                                   $this->Html->tag(
+                                                       'span',
+                                                       $this->Html->tag(
+                                                           'i',
+                                                           '',
+                                                           array('class' => 'glyphicon glyphicon-remove bigger-120')
+                                                       ),
+                                                       array(
+                                                           'class' => 'inverse'
+                                                       )
+                                                   ),
+                                                   array(
+                                                       'action' => 'logical_delete',
+                                                       $product['Product']['id']
+                                                   ),
+                                                   array(
+                                                       'escape' => false,
+                                                       'class' => ' actions-tooltip tooltip-default',
+                                                       'data-rel' => 'tooltip',
+                                                       'data-original-title' => 'desativar produto'
+                                                   )
+                                               );
+                                               ?>
+                                           </li>
+                                           <li>
+                                               <?php
+                                               echo $this->Html->link(
+                                                   $this->Html->tag(
+                                                       'span',
+                                                       $this->Html->tag(
+                                                           'i',
+                                                           '',
+                                                           array('class' => 'glyphicon glyphicon-plus bigger-120')
+                                                       ),
+                                                       array(
+                                                           'class' => 'green'
+                                                       )
+                                                   ),
+                                                   array(
+                                                       'action' => 'add_load_stock',
+                                                       $product['Product']['id']
+                                                   ),
+                                                   array(
+                                                       'escape' => false,
+                                                       'class' => ' actions-tooltip tooltip-success',
+                                                       'data-rel' => 'tooltip',
+                                                       'data-original-title' => 'adicionar quantidade'
+                                                   )
+                                               );
+                                               ?>
+                                           </li>
+                                       </ul>
+                                   </div>
+
                                </div>
                            </td>
                        </tr>

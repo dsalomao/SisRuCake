@@ -14,7 +14,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
 ?>
 
 <div class="row">
-    <div class="col-sm-5">
+    <div class="col-xs-12 col-sm-12 col-md-5">
         <h3 class="header smaller lighter blue"> Atributos </h3>
         <div class="profile-user-info profile-user-info-striped">
             <div class="profile-info-row">
@@ -99,7 +99,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
 
         </div>
     </div>
-    <div class="col-sm-7 widget-container-col ui-sortable" style="min-height: 184px;">
+    <div class="col-xs-12 col-sm-12 col-md-7 widget-container-col ui-sortable" style="min-height: 184px;">
         <!-- #section:custom/widget-box.options.transparent -->
 
         <!-- /section:custom/widget-box.options.transparent -->
@@ -146,7 +146,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                     <th><?php echo $this->Paginator->sort('name', 'Nome'); ?></th>
                                     <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
                                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd.'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
+                                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
                                     <th><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
                                     <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
                                     <th class="actions"><?php echo __('Ações'); ?></th>
@@ -162,10 +162,10 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                 <span class="lbl"></span>
                                             </label>
                                         </td>
-                                        <td><?php echo h($suppliedProduct['Product']['name']); ?>&nbsp;</td>
+                                        <td ><?php echo h($suppliedProduct['Product']['name']); ?>&nbsp;</td>
                                         <td><?php echo h($suppliedProduct['Product']['code']); ?>&nbsp;</td>
                                         <td style="text-align: right"><?php echo h($suppliedProduct['SuppliesProduct']['quantity']); ?>&nbsp;</td>
-                                        <td><?php echo h($suppliedProduct['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
+                                        <td class="hidden-sm hidden-xs"><?php echo h($suppliedProduct['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
                                         <td><?php
                                             $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
                                             echo $this->Number->currency($suppliedProduct['SuppliesProduct']['price'], 'BRL');
@@ -173,7 +173,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                         </td>
                                         <td><?php echo h(date("d-m-Y", strtotime($suppliedProduct['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
                                         <td class="actions">
-                                            <div class="hidden-xs action-buttons">
+                                            <div class="hidden-xs hidden-sm hidden-md btn-group">
                                                 <?php
                                                     echo $this->Html->link(
                                                         $this->Html->tag(
@@ -188,7 +188,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                         ),
                                                         array(
                                                             'escape' => false,
-                                                            'class' => 'blue actions-tooltip tooltip-info',
+                                                            'class' => 'btn btn-xs btn-primary actions-tooltip tooltip-info',
                                                             'data-toggle' => 'tooltip',
                                                             'data-placement' => 'top',
                                                             'title' => 'ver produto',
@@ -208,7 +208,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                         ),
                                                         array(
                                                             'escape' => false,
-                                                            'class' => 'button btn-xs btn-success actions-tooltip tooltip-success',
+                                                            'class' => 'btn btn-xs btn-success actions-tooltip tooltip-success',
                                                             'data-toggle' => 'tooltip',
                                                             'data-placement' => 'top',
                                                             'title' => 'adicionar quantidade',
@@ -216,6 +216,86 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                         )
                                                     );
                                                 ?>
+                                            </div>
+                                            <div class="hidden-lg">
+                                                <div class="inline position-relative">
+                                                    <?php
+                                                    echo $this->Html->link(
+                                                        $this->Html->tag(
+                                                            'i',
+                                                            '',
+                                                            array('class' => 'ace-icon fa fa-cog icon-only bigger-110')
+                                                        ),
+                                                        '',
+                                                        array(
+                                                            'escape' => false,
+                                                            'class' => 'btn btn-minier btn-primary dropdown-toggle',
+                                                            'data-toggle' => 'dropdown',
+                                                            'data-position' => 'auto'
+                                                        )
+                                                    );
+                                                    ?>
+
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                        <li>
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'span',
+                                                                    $this->Html->tag(
+                                                                        'i',
+                                                                        '',
+                                                                        array('class' => 'ace-icon fa fa-pencil bigger-120')
+                                                                    ),
+                                                                    array(
+                                                                        'class' => 'blue'
+                                                                    )
+                                                                ),
+                                                                array(
+                                                                    'controller' => 'Products',
+                                                                    'action' => 'view',
+                                                                    $suppliedProduct['Product']['id']
+                                                                ),
+                                                                array(
+                                                                    'escape' => false,
+                                                                    'class' => 'actions-tooltip tooltip-info',
+                                                                    'data-rel' => 'tooltip',
+                                                                    'data-original-title' => 'ver produto'
+                                                                )
+                                                            );
+                                                            ?>
+                                                        </li>
+
+                                                        <li>
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'span',
+                                                                    $this->Html->tag(
+                                                                        'i',
+                                                                        '',
+                                                                        array('class' => 'glyphicon glyphicon-plus bigger-120')
+                                                                    ),
+                                                                    array(
+                                                                        'class' => 'green'
+                                                                    )
+                                                                ),
+                                                                array(
+                                                                    'controller' => 'SuppliesProducts',
+                                                                    'action' => 'add_load_stock',
+                                                                    $suppliedProduct['Product']['id']
+                                                                ),
+                                                                array(
+                                                                    'escape' => false,
+                                                                    'class' => 'actions-tooltip tooltip-success',
+                                                                    'data-rel' => 'tooltip',
+                                                                    'data-original-title' => 'adicionar quantidade'
+                                                                )
+                                                            );
+                                                            ?>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

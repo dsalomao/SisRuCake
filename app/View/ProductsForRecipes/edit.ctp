@@ -12,11 +12,11 @@ $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('ProductsForRecipes', array('inline' => false));
 
+$this->Html->addCrumb('Receituário padrão');
+$this->Html->addCrumb('Receitas', '/recipes');
+$this->Html->addCrumb($thisRecipe['Recipe']['name'], array('controller' => 'recipes', 'action' => 'view', $thisRecipe['Recipe']['id']));
+$this->Html->addCrumb('Editar ingrediente');
 ?>
-
-<div class="page-header">
-    <h1>Editar receita<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
 
 <div class="row">
     <div class="col-xs-12">
@@ -50,19 +50,6 @@ $this->Html->script('ProductsForRecipes', array('inline' => false));
                                         'type' => 'text',
                                         'div' => 'col-sm-9',
                                         'class' => 'input-mini'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipeCode"> Unidade </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'ProductsForRecipe.measure_unit_id',
-                                    array(
-                                        'div' => 'col-sm-9'
-
                                     )
                                 ); ?>
 

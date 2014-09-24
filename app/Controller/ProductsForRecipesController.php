@@ -76,7 +76,7 @@ class ProductsForRecipesController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->ProductsForRecipe->save($this->request->data)) {
 				$this->Session->setFlash(__('The products for recipe has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller' => 'Recipes', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The products for recipe could not be saved. Please, try again.'));
 			}
@@ -86,8 +86,10 @@ class ProductsForRecipesController extends AppController {
 		}
 		$products = $this->ProductsForRecipe->Product->find('list');
 		$recipes = $this->ProductsForRecipe->Recipe->find('list');
-		$measureUnits = $this->ProductsForRecipe->MeasureUnit->find('list');
-		$this->set(compact('products', 'recipes', 'measureUnits'));
+        $this->ProductsForRecipe->Recipe->recursive = -1;
+        //find related recipe been posted
+        $thisRecipe = $this->ProductsForRecipe->Recipe->findById($this->request->data['Recipe']['id']);
+		$this->set(compact('products', 'recipes', 'measureUnits', 'thisRecipe'));
 	}
 
 /**

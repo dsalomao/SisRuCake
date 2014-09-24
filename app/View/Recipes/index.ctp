@@ -25,13 +25,13 @@ $this->Html->addCrumb('Receitas');
                             <span class="lbl"></span>
                         </label>
                     </th>
-                    <th><?php echo $this->Paginator->sort('id'); ?></th>
+                    <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('id'); ?></th>
                     <th><?php echo $this->Paginator->sort('name', 'Preparação'); ?></th>
-                    <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
-                    <th class="hidden-md"><?php echo $this->Paginator->sort('description', 'Descrição'); ?></th>
+                    <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
+                    <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('description', 'Descrição'); ?></th>
                     <th><?php echo $this->Paginator->sort('category', 'Categoria'); ?></th>
-                    <th><?php echo $this->Paginator->sort('created', 'Criado'); ?></th>
-                    <th><?php echo $this->Paginator->sort('modified', 'Modificado'); ?></th>
+                    <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('created', 'Criado'); ?></th>
+                    <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?></th>
                     <th class="actions"><?php echo __('Ações'); ?></th>
                 </tr>
                 </thead>
@@ -46,25 +46,25 @@ $this->Html->addCrumb('Receitas');
                             </label>
                         </td>
 
-                        <td><?php echo h($recipe['Recipe']['id']); ?>&nbsp;</td>
+                        <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['id']); ?>&nbsp;</td>
                         <td><?php echo h($recipe['Recipe']['name']); ?>&nbsp;</td>
-                        <td><?php echo h($recipe['Recipe']['code']); ?>&nbsp;</td>
-                        <td class="hidden-md"><?php echo h($recipe['Recipe']['description']); ?>&nbsp;</td>
+                        <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['code']); ?>&nbsp;</td>
+                        <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['description']); ?>&nbsp;</td>
                         <td>
                             <span class="label label-md <?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="recipe_status">
                                     <?php echo $recipe['Recipe']['category']; ?>
                                 </span>
                         </td>
-                        <td><?php echo h($recipe['Recipe']['created']); ?>&nbsp;</td>
-                        <td><?php echo h($recipe['Recipe']['modified']); ?>&nbsp;</td>
+                        <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['created']); ?>&nbsp;</td>
+                        <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['modified']); ?>&nbsp;</td>
                         <td class="actions">
-                            <div class="hidden-xs action-buttons">
+                            <div class="hidden-xs hidden-sm hidden-md btn-group">
                                 <?php
                                 echo $this->Html->link(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-search-plus bigger-130')
+                                        array('class' => 'ace-icon fa fa-search-plus')
                                     ),
                                     array(
                                         'action' => 'view',
@@ -72,14 +72,14 @@ $this->Html->addCrumb('Receitas');
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'blue'
+                                        'class' => 'btn btn-xs btn-primary'
                                     )
                                 );
                                 echo $this->Html->link(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-pencil bigger-130')
+                                        array('class' => 'ace-icon fa fa-pencil')
                                     ),
                                     array(
                                         'action' => 'edit',
@@ -87,7 +87,7 @@ $this->Html->addCrumb('Receitas');
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'orange'
+                                        'class' => 'btn btn-xs btn-warning'
                                     )
                                 );
                                 ?>
@@ -110,6 +110,117 @@ $this->Html->addCrumb('Receitas');
                                     __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $recipe['Recipe']['id'])
                                 );
                                 ?>
+                            </div>
+                            <div class="hidden-lg">
+                                <div class="inline position-relative">
+                                    <?php
+                                    echo $this->Html->link(
+                                        $this->Html->tag(
+                                            'i',
+                                            '',
+                                            array('class' => 'ace-icon fa fa-cog icon-only bigger-110')
+                                        ),
+                                        array(
+                                            'action' => 'edit',
+                                            $recipe['Recipe']['id']
+                                        ),
+                                        array(
+                                            'escape' => false,
+                                            'class' => 'btn btn-minier btn-primary dropdown-toggle',
+                                            'data-toggle' => 'dropdown',
+                                            'data-position' => 'auto'
+                                        )
+                                    );
+                                    ?>
+
+
+
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                        <li>
+                                            <?php
+                                            echo $this->Html->link(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag(
+                                                        'i',
+                                                        '',
+                                                        array('class' => 'ace-icon fa fa-search-plus bigger-120')
+                                                    ),
+                                                    array(
+                                                        'class' => 'blue'
+                                                    )
+                                                ),
+                                                array(
+                                                    'action' => 'view',
+                                                    $recipe['Recipe']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'tooltip-error',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'View'
+                                                )
+                                            );
+                                            ?>
+                                        </li>
+
+                                        <li>
+                                            <?php
+                                            echo $this->Html->link(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag(
+                                                        'i',
+                                                        '',
+                                                        array('class' => 'ace-icon fa fa-pencil bigger-120')
+                                                    ),
+                                                    array(
+                                                        'class' => 'orange'
+                                                    )
+                                                ),
+                                                array(
+                                                    'action' => 'edit',
+                                                    $recipe['Recipe']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'tooltip-error',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'Edit'
+                                                )
+                                            );
+                                            ?>
+                                        </li>
+
+                                        <li>
+                                            <?php
+                                            echo $this->Html->link(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag(
+                                                        'i',
+                                                        '',
+                                                        array('class' => 'glyphicon glyphicon-remove bigger-120')
+                                                    ),
+                                                    array(
+                                                        'class' => 'inverse'
+                                                    )
+                                                ),
+                                                array(
+                                                    'action' => 'logical_delete',
+                                                    $recipe['Recipe']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'tooltip-error',
+                                                    'data-rel' => 'tooltip',
+                                                    'data-original-title' => 'Delete'
+                                                )
+                                            );
+                                            ?>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </td>
                     </tr>

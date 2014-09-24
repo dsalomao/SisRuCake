@@ -160,7 +160,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                             <th><?php echo $this->Paginator->sort('quantity', 'Quantidade'); ?></th>
                                             <th><?php echo $this->Paginator->sort('measure_unit_id', 'Unidade'); ?></th>
                                             <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
-                                            <th><?php echo $this->Paginator->sort('recipe_id', 'Receita'); ?></th>
+                                            <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('recipe_id', 'Receita'); ?></th>
                                             <th class="actions"><?php echo __('Ações'); ?></th>
                                         </tr>
                                     </thead>
@@ -178,9 +178,9 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                             <td style="text-align: right"><?php echo $related['ProductsForRecipe']['quantity']; ?></td>
                                             <td><?php echo $related['Product']['MeasureUnit']['name']; ?></td>
                                             <td><?php echo $related['Product']['name']; ?></td>
-                                            <td><?php echo $related['Recipe']['name']; ?></td>
+                                            <td class="hidden-xs hidden-sm"><?php echo $related['Recipe']['name']; ?></td>
                                             <td class="actions">
-                                                <div class="hidden-xs action-buttons">
+                                                <div class="hidden-xs hidden-sm hidden-md btn-group">
                                                     <?php
                                                     echo $this->Html->link(
                                                         $this->Html->tag(
@@ -195,7 +195,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                         ),
                                                         array(
                                                             'escape' => false,
-                                                            'class' => 'orange'
+                                                            'class' => 'btn btn-xs btn-warning'
                                                         )
                                                     );
                                                     ?>
@@ -219,6 +219,86 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                         __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
                                                     );
                                                     ?>
+                                                </div>
+                                                <div class="hidden-lg">
+                                                    <div class="inline position-relative">
+                                                        <?php
+                                                        echo $this->Html->link(
+                                                            $this->Html->tag(
+                                                                'i',
+                                                                '',
+                                                                array('class' => 'ace-icon fa fa-cog icon-only bigger-110')
+                                                            ),
+                                                            '',
+                                                            array(
+                                                                'escape' => false,
+                                                                'class' => 'btn btn-minier btn-primary dropdown-toggle',
+                                                                'data-toggle' => 'dropdown',
+                                                                'data-position' => 'auto'
+                                                            )
+                                                        );
+                                                        ?>
+
+                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                            <li>
+                                                                <?php
+                                                                echo $this->Html->link(
+                                                                    $this->Html->tag(
+                                                                        'span',
+                                                                        $this->Html->tag(
+                                                                            'i',
+                                                                            '',
+                                                                            array('class' => 'ace-icon fa fa-pencil bigger-120')
+                                                                        ),
+                                                                        array(
+                                                                            'class' => 'orange'
+                                                                        )
+                                                                    ),
+                                                                    array(
+                                                                        'controller' => 'ProductsForRecipes',
+                                                                        'action' => 'edit',
+                                                                        $related['ProductsForRecipe']['id']
+                                                                    ),
+                                                                    array(
+                                                                        'escape' => false,
+                                                                        'class' => 'actions-tooltip tooltip-warning',
+                                                                        'data-rel' => 'tooltip',
+                                                                        'data-original-title' => 'editar ingrediente'
+                                                                    )
+                                                                );
+                                                                ?>
+                                                            </li>
+
+                                                            <li>
+                                                                <?php
+                                                                echo $this->Html->link(
+                                                                    $this->Html->tag(
+                                                                        'span',
+                                                                        $this->Html->tag(
+                                                                            'i',
+                                                                            '',
+                                                                            array('class' => 'glyphicon glyphicon-trash bigger-120')
+                                                                        ),
+                                                                        array(
+                                                                            'class' => 'red'
+                                                                        )
+                                                                    ),
+                                                                    array(
+                                                                        'controller' => 'ProductsForRecipes',
+                                                                        'action' => 'delete',
+                                                                        $related['ProductsForRecipe']['id']
+                                                                    ),
+                                                                    array(
+                                                                        'escape' => false,
+                                                                        'class' => 'actions-tooltip tooltip-danger',
+                                                                        'data-rel' => 'tooltip',
+                                                                        'data-original-title' => 'deletar ingrediente'
+                                                                    )
+                                                                );
+                                                                ?>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
