@@ -134,6 +134,7 @@ class User extends AppModel {
 	);
 
     public function beforeSave($options = array()) {
+        //Role handling
         if ($this->data['User']['role'] == 0) {
             $this->data['User']['role'] = 'Administrador';
         }

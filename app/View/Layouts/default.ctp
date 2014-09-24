@@ -105,7 +105,7 @@
                                 <!-- user buttons such as messages, notifications and user menu -->
                                         <li class="light-blue user-min">
                                                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                                                        <?php echo $this->Html->image('busto.jpg', array('class' => 'nav-user-photo', 'alt' => 'Foto Daniel')); ?>
+                                                        <?php echo $this->Html->image('users/'.AuthComponent::user('image_url'), array('class' => 'nav-user-photo', 'alt' => 'Foto Daniel')); ?>
                                                         <span class="user-info">
                                                                 <small>Bem vindo,</small> <?php echo AuthComponent::user('username') ?>
                                                         </span>

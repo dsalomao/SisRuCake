@@ -49,9 +49,32 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
             $this->request->data['User']['status'] = 1;
+            //echo $this->print_arr($this->request->data);
+            $filename = null;
+            if (
+                !empty($this->request->data['User']['image_url']['tmp_name'])
+                && is_uploaded_file($this->request->data['User']['image_url']['tmp_name'])
+            ){
+                // Strip path information
+                $filename = basename($this->request->data['User']['image_url']['name']);
+                move_uploaded_file(
+                    $this->request->data['User']['image_url']['tmp_name'],
+                    WWW_ROOT . 'img' . DS . 'users' . DS .$filename
+                );
+            }
+
+            // Set the file-name only to save in the database
+            $this->request->data['User']['image_url'] = $filename;
+            //$fileOK = $this->uploadFile('../webroot/img/users', $this->request->data['User']['image_url']);
+            //echo $this->print_arr($fileOK);
+            //if(array_key_exists('urls', $fileOK)) {
+                // save the url in the form data
+                //$this->request->data['User']['image_url'] = $fileOK['urls'][0];
+            //}
             if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
 				return $this->redirect(array('action' => 'index'));
+
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}

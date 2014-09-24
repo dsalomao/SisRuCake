@@ -11,11 +11,9 @@ $this->html->css('chosen', array('inline' => false));
 $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('users_add', array('inline' => false));
 
+$this->Html->addCrumb('Usuários', '/users');
+$this->Html->addCrumb('Adicionar usuário');
 ?>
-
-<div class="page-header">
-    <h1>Adicionar usuário<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
 
 <div class="row">
     <div class="col-xs-12">
@@ -34,7 +32,8 @@ $this->Html->script('users_add', array('inline' => false));
                                 'role' => 'form',
                                 'inputDefaults' => array(
                                     'label' => false
-                                )
+                                ),
+                                'type' => 'file'
                             )
                         ); ?>
                         <fieldset style="padding: 16px">
@@ -127,6 +126,19 @@ $this->Html->script('users_add', array('inline' => false));
                                         'div' => 'col-sm-9',
                                         'class' => 'chosen-select',
                                         'placeholder' => 'escolha uma UAN'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="UserRestaurantId"> Coloque sua melhor foto! </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'User.image_url',
+                                    array(
+                                        'type' => 'file',
+                                        'div' => 'col-sm-9'
                                     )
                                 ); ?>
 

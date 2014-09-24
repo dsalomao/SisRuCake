@@ -16,13 +16,8 @@ $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 //$this->Html->script('users_index', array('inline' => false));
 
+$this->Html->addCrumb('Usuários desativados');
 ?>
-
-<div class="page-header">
-    <h1>Lista de usuários
-        <small><i class="ace-icon fa fa-angle-double-right"></i></small>
-    </h1>
-</div>
 <div class="row">
     <div class="col-xs-12">
 
@@ -154,20 +149,6 @@ $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false))
         <h4> A&ccedil;&otilde;es </h4>
         <div class="hr dotted"></div>
         <p>
-            <?php
-            echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'glyphicon glyphicon-plus')
-                ).' Novo',
-                array(
-                    'controller' => 'users',
-                    'action' => 'add'
-                ),
-                array('class' => 'btn btn-lg btn-primary', 'escape' => false)
-            );
-            ?>
             <?php
             echo $this->Html->link(
                 $this->Html->tag(

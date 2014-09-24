@@ -6,14 +6,9 @@
  * Time: 14:20
  */
 
-    $this->Html->css('dashboard', array('inline' => false));
+    $this->Html->css('dashboard');
 ?>
-
-<div class="page-header">
-    <h1>Área de trabalho
-        <small><i class="ace-icon fa fa-angle-double-right"></i></small>
-    </h1>
-</div>
+<div class="hr hr32 hr-dotted"></div>
 <div class="container">
     <div class="row">
         <h2>Logística & suprimentos</h2>
@@ -111,6 +106,35 @@
                     'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-default', 'escape' => false)
+            ); ?>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Usuários do sistema</h2>
+        <div class="well text-center">
+            <?php echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
+                    array('class' => 'fa fa-book')
+                ).' Caderno de usuários',
+                array(
+                    'controller' => 'users',
+                    'action' => 'index'
+                ),
+                array('class' => 'btn btn-lg btn-default', 'escape' => false)
+            ); ?>
+            <?php echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
+                    array('class' => 'glyphicon glyphicon-plus')
+                ).' adicionar usuário',
+                array(
+                    'controller' => 'users',
+                    'action' => 'add'
+                ),
+                array('class' => 'btn btn-lg btn-primary', 'escape' => false)
             ); ?>
         </div>
     </div>
