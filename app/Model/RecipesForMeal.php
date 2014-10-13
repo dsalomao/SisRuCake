@@ -125,10 +125,11 @@ class RecipesForMeal extends AppModel {
                             'MeasureUnit' => array(
                                 'fields' => array('MeasureUnit.name')
                             ),
-                            'fields' => array('Product.name', 'Product.code')
+                            'fields' => array('Product.id', 'Product.name', 'Product.code', 'Product.load_stock')
                         )
                     )
-                )
+                ),
+                'Meal' => array()
             )
         );
         return $related = $this->find('all', $options);

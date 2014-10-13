@@ -14,11 +14,6 @@ $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos');
 ?>
 <div class="row">
-    <div class="col-xs-12">
-
-    </div>
-</div>
-<div class="row">
        <div class="col-xs-12">
            <div class="table-header">
                Lista de produtos ativos
