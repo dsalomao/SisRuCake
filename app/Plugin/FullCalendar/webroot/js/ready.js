@@ -14,7 +14,7 @@ $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
-		
+
 		header: {
     		left:   'title',
     		center: '',
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		eventRender: function(event, element) {
         	element.qtip({
 				content: event.details,
-				position: { 
+				position: {
 					target: 'mouse',
 					adjust: {
 						x: 10,

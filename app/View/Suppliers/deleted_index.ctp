@@ -28,21 +28,15 @@ $this->Html->addCrumb('Fornecedores desativados');
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th class="center">
-                        <label class="position-relative">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>
-                        </label>
-                    </th>
-                    <th><?php echo $this->Paginator->sort('id'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('name', 'Nome fantasia'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('id'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('name', 'Nome fantasia'); ?>&nbsp;</th>
                     <th><?php echo $this->Paginator->sort('business_name', 'Razão social'); ?>&nbsp;</th>
                     <th><?php echo $this->Paginator->sort('code', 'Código'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('adress', 'Endereço'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('cnpj', 'CNPJ'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('contact', 'Contato'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('created', 'Criado'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('modified', 'Modificado'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('adress', 'Endereço'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('cnpj', 'CNPJ'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('contact', 'Contato'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('created', 'Criado'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?>&nbsp;</th>
                     <th class="actions"><?php echo __('Actions'); ?>&nbsp;</th>
                 </tr>
                 </thead>
@@ -50,29 +44,23 @@ $this->Html->addCrumb('Fornecedores desativados');
                 <tbody>
                 <?php foreach ($suppliers as $supplier): ?>
                     <tr>
-                        <td class="center">
-                            <label class="position-relative">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
-                        <td><?php echo h($supplier['Supplier']['id']); ?>&nbsp;</td>
-                        <td><?php echo h($supplier['Supplier']['name']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['id']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['name']); ?>&nbsp;</td>
                         <td><?php echo h($supplier['Supplier']['business_name']); ?>&nbsp;</td>
                         <td><?php echo h($supplier['Supplier']['code']); ?>&nbsp;</td>
-                        <td><?php echo h($supplier['Supplier']['adress']); ?>&nbsp;</td>
-                        <td><?php echo h($supplier['Supplier']['cnpj']); ?>&nbsp;</td>
-                        <td><?php echo h($supplier['Supplier']['contact']); ?>&nbsp;</td>
-                        <td><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['created']))); ?>&nbsp;</td>
-                        <td><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['modified']))); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['adress']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['cnpj']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['contact']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['created']))); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['modified']))); ?>&nbsp;</td>
                         <td class="actions">
-                            <div class="hidden-xs action-buttons">
+                            <div class="hidden-xs hidden-sm btn-group">
                                 <?php
                                 echo $this->Html->link(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-search-plus ')
+                                        array('class' => 'ace-icon fa fa-search-plus  bigger-120')
                                     ),
                                     array(
                                         'action' => 'view',
@@ -80,28 +68,31 @@ $this->Html->addCrumb('Fornecedores desativados');
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'blue actions-tooltip tooltip-info bigger-130',
+                                        'class' => 'btn btn-xs btn-info actions-tooltip tooltip-info',
                                         'data-toggle' => 'tooltip',
                                         'data-placement' => 'top',
                                         'title' => 'ver fornecedor',
                                         'data-trigger' => 'hover'
                                     )
                                 );
-                                echo $this->Form->postLink(
+                                echo $this->Html->link(
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-trash-o bigger-130')
+                                        array('class' => 'ace-icon fa fa-pencil bigger-120')
                                     ),
                                     array(
-                                        'action' => 'delete',
+                                        'action' => 'edit',
                                         $supplier['Supplier']['id']
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'red'
-                                    ),
-                                    __('Tem certeza que deseja deletar permanentemente o produto: %s?', $supplier['Supplier']['name'])
+                                        'class' => 'btn btn-xs btn-warning actions-tooltip tooltip-warning',
+                                        'data-toggle' => 'tooltip',
+                                        'data-placement' => 'top',
+                                        'title' => 'editar fornecedor',
+                                        'data-trigger' => 'hover'
+                                    )
                                 );
                                 echo $this->Form->postlink(
                                     $this->Html->tag(
@@ -115,15 +106,110 @@ $this->Html->addCrumb('Fornecedores desativados');
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'btn btn-xs btn-success actions-tooltip tooltip-default',
+                                        'class' => 'btn btn-xs btn-success actions-tooltip tooltip-success',
                                         'data-toggle' => 'tooltip',
                                         'data-placement' => 'top',
-                                        'title' => 're-ativar fornecedor',
+                                        'title' => 'Reativar Fornecedor',
                                         'data-trigger' => 'hover'
                                     ),
                                     __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
                                 );
                                 ?>
+                            </div>
+                            <div class="hidden-lg hidden-md">
+                                <div class="inline position-relative">
+                                    <?php
+                                    echo $this->Html->link(
+                                        $this->Html->tag(
+                                            'i',
+                                            '',
+                                            array('class' => 'ace-icon fa fa-cog icon-only bigger-110')
+                                        ),
+                                        '',
+                                        array(
+                                            'escape' => false,
+                                            'class' => 'btn btn-minier btn-primary dropdown-toggle',
+                                            'data-toggle' => 'dropdown',
+                                            'data-position' => 'auto'
+                                        )
+                                    );
+                                    ?>
+
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                        <li>
+                                            <?php
+                                            echo $this->Html->link(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-search-plus')),
+                                                    array('class' => 'blue')
+                                                ),
+                                                array(
+                                                    'action' => 'view',
+                                                    $supplier['Supplier']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'actions-tooltip tooltip-info bigger-130',
+                                                    'data-toggle' => 'tooltip',
+                                                    'data-placement' => 'top',
+                                                    'title' => 'Ver Fornecedor',
+                                                    'data-trigger' => 'hover'
+                                                )
+                                            );
+                                            ?>
+                                        </li>
+
+                                        <li>
+                                            <?php
+                                            echo $this->Html->link(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-pencil bigger-130')),
+                                                    array('class' => 'orange')
+                                                ),
+                                                array(
+                                                    'action' => 'edit',
+                                                    $supplier['Supplier']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'actions-tooltip tooltip-warning',
+                                                    'data-toggle' => 'tooltip',
+                                                    'data-placement' => 'top',
+                                                    'title' => 'Editar Fornecedor',
+                                                    'data-trigger' => 'hover'
+                                                )
+                                            );
+                                            ?>
+                                        </li>
+
+                                        <li>
+                                            <?php
+                                            echo $this->Form->postlink(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-ok')),
+                                                    array('class' => 'green')
+                                                ),
+                                                array(
+                                                    'action' => 'logical_delete',
+                                                    $supplier['Supplier']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'actions-tooltip tooltip-success',
+                                                    'data-toggle' => 'tooltip',
+                                                    'data-placement' => 'top',
+                                                    'title' => 'Reativar Fornecedor',
+                                                    'data-trigger' => 'hover'
+                                                ),
+                                                __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
+                                            );
+                                            ?>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </td>
                     </tr>

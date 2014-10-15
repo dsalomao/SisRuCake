@@ -15,10 +15,6 @@ $this->Html->addCrumb('Fornecedores', '/suppliers');
 $this->Html->addCrumb('Adicionar fornecedor');
 ?>
 
-<div class="page-header">
-    <h1>Adicionar fornecedor<small><i class="ace-icon fa fa-angle-double-right"></i></small></h1>
-</div>
-
 <div class="row">
     <div class="col-xs-12">
         <div class="widget-box">

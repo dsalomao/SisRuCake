@@ -136,18 +136,11 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th class="center">
-                                        <label class="position-relative">
-                                            <input type="checkbox" class="ace" />
-                                            <span class="lbl"></span>
-                                        </label>
-                                    </th>
-
-                                    <th><?php echo $this->Paginator->sort('name', 'Nome'); ?></th>
+                                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('name', 'Nome'); ?></th>
                                     <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
                                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd.'); ?></th>
-                                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
+                                    <th><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
+                                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
                                     <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
                                     <th class="actions"><?php echo __('Ações'); ?></th>
                                 </tr>
@@ -156,30 +149,24 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                 <tbody>
                                 <?php foreach ($suppliedProducts as $suppliedProduct): ?>
                                     <tr>
-                                        <td class="center">
-                                            <label class="position-relative">
-                                                <input type="checkbox" class="ace" />
-                                                <span class="lbl"></span>
-                                            </label>
-                                        </td>
-                                        <td ><?php echo h($suppliedProduct['Product']['name']); ?>&nbsp;</td>
+                                        <td class="hidden-sm hidden-xs"><?php echo h($suppliedProduct['Product']['name']); ?>&nbsp;</td>
                                         <td><?php echo h($suppliedProduct['Product']['code']); ?>&nbsp;</td>
                                         <td style="text-align: right"><?php echo h($suppliedProduct['SuppliesProduct']['quantity']); ?>&nbsp;</td>
-                                        <td class="hidden-sm hidden-xs"><?php echo h($suppliedProduct['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
-                                        <td><?php
+                                        <td><?php echo h($suppliedProduct['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
+                                        <td class="hidden-sm hidden-xs"><?php
                                             $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
                                             echo $this->Number->currency($suppliedProduct['SuppliesProduct']['price'], 'BRL');
                                             ?>&nbsp;
                                         </td>
                                         <td><?php echo h(date("d-m-Y", strtotime($suppliedProduct['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
                                         <td class="actions">
-                                            <div class="hidden-xs hidden-sm hidden-md btn-group">
+                                            <div class="hidden-xs hidden-sm btn-group">
                                                 <?php
                                                     echo $this->Html->link(
                                                         $this->Html->tag(
                                                             'i',
                                                             '',
-                                                            array('class' => 'ace-icon fa fa-search-plus bigger-130')
+                                                            array('class' => 'ace-icon fa fa-search-plus bigger-120')
                                                         ),
                                                         array(
                                                             'controller' => 'products',
@@ -191,7 +178,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                             'class' => 'btn btn-xs btn-primary actions-tooltip tooltip-info',
                                                             'data-toggle' => 'tooltip',
                                                             'data-placement' => 'top',
-                                                            'title' => 'ver produto',
+                                                            'title' => 'Ver Produto',
                                                             'data-trigger' => 'hover'
                                                         )
                                                     );
@@ -211,13 +198,13 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                             'class' => 'btn btn-xs btn-success actions-tooltip tooltip-success',
                                                             'data-toggle' => 'tooltip',
                                                             'data-placement' => 'top',
-                                                            'title' => 'adicionar quantidade',
+                                                            'title' => 'Adicionar Quantidade',
                                                             'data-trigger' => 'hover'
                                                         )
                                                     );
                                                 ?>
                                             </div>
-                                            <div class="hidden-lg">
+                                            <div class="hidden-lg hidden-md">
                                                 <div class="inline position-relative">
                                                     <?php
                                                     echo $this->Html->link(
