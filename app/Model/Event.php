@@ -1,19 +1,20 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Meal Model
+ * Event Model
  *
- * @property RecipesForMeal $RecipesForMeal
- * @property Event $Event
+ * @property EventType $EventType
+ * @property ProductsForEvent $ProductsForEvent
+ * @property Meal $Meal
  */
-class Meal extends AppModel {
+class Event extends AppModel {
 
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'code';
+	public $displayField = 'title';
 
 /**
  * Validation rules
@@ -21,15 +22,7 @@ class Meal extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'code' => array(
-			'alphaNumeric' => array(
-				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+		'title' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -39,9 +32,9 @@ class Meal extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'status' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
+		'start' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -54,14 +47,29 @@ class Meal extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'EventType' => array(
+			'className' => 'EventType',
+			'foreignKey' => 'event_type_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
  * hasMany associations
  *
  * @var array
  */
 	public $hasMany = array(
-		'RecipesForMeal' => array(
-			'className' => 'RecipesForMeal',
-			'foreignKey' => 'meal_id',
+		'ProductsForEvent' => array(
+			'className' => 'ProductsForEvent',
+			'foreignKey' => 'event_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -81,11 +89,11 @@ class Meal extends AppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'Event' => array(
-			'className' => 'Event',
+		'Meal' => array(
+			'className' => 'Meal',
 			'joinTable' => 'events_meals',
-			'foreignKey' => 'meal_id',
-			'associationForeignKey' => 'event_id',
+			'foreignKey' => 'event_id',
+			'associationForeignKey' => 'meal_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -96,30 +104,27 @@ class Meal extends AppModel {
 		)
 	);
 
-    /**
-     *
-     *  função para trocar o valor booleano do campo "status"
-     *
-     */
-    public function updateStatus($id = null){
-        $this->id = $id;
-        $meal = $this->find('first', array('conditions' => array('Meal.id' => $id)));
-        if($meal['Meal']['status']){
-            $this->saveField('status', false);
-        }else
-            $this->saveField('status', true);
-        //this status been returned is a boolean retrieved before saveField
-        return $meal['Meal']['status'];
-    }
-
-    public function findByMealId($id = null){
+    public function findEvent($id = null){
         $options = array(
-            'conditions' => array('Meal.id' => $id),
+            'conditions' => array('Event.id' => $id),
             'recursive' => 0,
             'contain' => array(
+                'Meal' => array(
+                    'RecipesForMeal' => array(
+                        'Recipe' => array(
+                            'ProductsForRecipe' => array(
+                                'Product' => array(
+                                    'MeasureUnit' => array()
+                                )
+                            )
+                        )
+                    )
+                ),
+                'EventType' => array()
             )
         );
-        return $meal = $this->find('first', $options);
+        $event = $this->find('first', $options);
+        return $event;
     }
 
 }

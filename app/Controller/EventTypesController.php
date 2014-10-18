@@ -10,12 +10,12 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
  
-class EventTypesController extends FullCalendarAppController {
+class EventTypesController extends AppController {
 
 	var $name = 'EventTypes';
 
         var $paginate = array(
-            'limit' => 15
+            'limit' => 10
         );
 
 	function index() {

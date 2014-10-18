@@ -10,20 +10,23 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
  
-class EventType extends FullCalendarAppModel {
-	var $name = 'EventType';
+class EventType extends AppModel {
+
+    var $name = 'EventType';
+
 	var $displayField = 'name';
+
 	var $validate = array(
 		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
 			),
 		),
 	);
 
 	var $hasMany = array(
 		'Event' => array(
-			'className' => 'FullCalendar.Event',
+			'className' => 'Event',
 			'foreignKey' => 'event_type_id',
 			'dependent' => false,
 		)

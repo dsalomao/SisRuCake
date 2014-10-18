@@ -260,7 +260,6 @@
                                                                             array('class' => 'menu-icon fa fa-book')
                                                                         ).' Livro de receitas',
                                                                         array(
-                                                                            'plugin' => false,
                                                                             'controller' => 'Recipes',
                                                                             'action' => 'index'
                                                                         ),
@@ -299,7 +298,6 @@
                                                                     array('class' => 'menu-icon fa fa-book')
                                                                 ).' Livro de refeições',
                                                                 array(
-                                                                    'plugin' => false,
                                                                     'controller' => 'meals',
                                                                     'action' => 'index'
                                                                 ),
@@ -318,9 +316,8 @@
                                                                     array('class' => 'menu-icon fa fa-calendar')
                                                                 ).' Calendário',
                                                                 array(
-                                                                    'plugin' => 'full_calendar',
-                                                                    'controller' => 'full_calendar',
-                                                                    'action' => 'index'
+                                                                    'controller' => 'events',
+                                                                    'action' => 'calendar'
                                                                 ),
                                                                 array('escape' => false)
                                                             );
@@ -337,7 +334,6 @@
                                                                     array('class' => 'menu-icon fa fa-bell-o')
                                                                 ).' Eventos',
                                                                 array(
-                                                                    'plugin' => 'full_calendar',
                                                                     'controller' => 'events',
                                                                     'action' => 'index'
                                                                 ),
@@ -376,7 +372,6 @@
                                                                             array('class' => 'menu-icon fa fa-calendar')
                                                                         ).' Caderno de entrada',
                                                                         array(
-                                                                            'plugin' => false,
                                                                             'controller' => 'suppliesProducts',
                                                                             'action' => 'index'
                                                                         ),
@@ -395,7 +390,6 @@
                                                                             array('class' => 'menu-icon fa fa-credit-card')
                                                                         ).' Caderno de saída',
                                                                         array(
-                                                                            'plugin' => false,
                                                                             'controller' => 'productsForEvents',
                                                                             'action' => 'index'
                                                                         ),
@@ -414,9 +408,8 @@
                                                                                                 array('class' => 'menu-icon fa fa-fighter-jet')
                                                                                         ).' Fornecedores',
                                                                                         array(
-                                                                                            'plugin' => false,
-                                                                                                'controller' => 'suppliers',
-                                                                                                'action' => 'index'
+                                                                                            'controller' => 'suppliers',
+                                                                                            'action' => 'index'
                                                                                         ),
                                                                                         array('escape' => false)
                                                                                 );
@@ -433,9 +426,8 @@
                                                                                                 array('class' => 'fa fa-glass')
                                                                                         ).' Produtos',
                                                                                         array(
-                                                                                            'plugin' => false,
-                                                                                                'controller' => 'products',
-                                                                                                'action' => 'index'
+                                                                                            'controller' => 'products',
+                                                                                            'action' => 'index'
                                                                                         ),
                                                                                         array('escape' => false)
                                                                                 );
@@ -452,9 +444,8 @@
                                                                                         array('class' => 'glyphicon glyphicon-tint')
                                                                                 ).' Unidades de medida',
                                                                                 array(
-                                                                                    'plugin' => false,
-                                                                                        'controller' => 'measureUnits',
-                                                                                        'action' => 'index'
+                                                                                    'controller' => 'measureUnits',
+                                                                                    'action' => 'index'
                                                                                 ),
                                                                                 array('escape' => false)
                                                                         );
@@ -559,7 +550,7 @@
                                     array('class' => 'breadcrumb', 'lastClass' => 'active'),
                                     array(
                                         'text' => $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-home home-icon')).'Área de trabalho',
-                                        'url' => array('plugin' => false, 'controller' => 'pages', 'action' => 'display', 'dashboard'),
+                                        'url' => array('controller' => 'pages', 'action' => 'display', 'dashboard'),
                                         'escape' => false
                                     )
                                 ); ?>

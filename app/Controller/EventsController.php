@@ -1,26 +1,63 @@
 <?php
-/*
- * Controller/EventsController.php
- * CakePHP Full Calendar Plugin
+App::uses('AppController', 'Controller');
+/**
+ * Events Controller
  *
- * Copyright (c) 2010 Silas Montgomery
- * http://silasmontgomery.com
- *
- * Licensed under MIT
- * http://www.opensource.org/licenses/mit-license.php
+ * @property Event $Event
+ * @property PaginatorComponent $Paginator
+ * @property SessionComponent $Session
  */
-
-class EventsController extends FullCalendarAppController {
+class EventsController extends AppController {
 
 	var $name = 'Events';
 
-        var $paginate = array(
+    public $components = array('RequestHandler');
+
+    var $paginate = array(
             'limit' => 15
+    );
+
+    function index(){
+        $eventTypes = $this->Event->EventType->find('list');
+        $meals = $this->Event->Meal->find('list');
+        $this->set(array('eventTypes' => $eventTypes, 'meals' => $meals));
+    }
+
+    function get_all() {
+        $this->layout = 'ajax';
+        $events = $this->Event->find(
+            'all',
+            array(
+                'recursive' => 0,
+                'contain' => array(
+                    'EventType' => array(
+                        'fields' => array('color')
+                    )
+                ),
+                'fields' => array('id', 'title', 'start', 'end', 'all_day')
+            )
         );
 
-        function index() {
-		$this->Event->recursive = 1;
-		$this->set('events', $this->paginate());
+        foreach($events as $event) {
+            if($event['Event']['all_day'] == 1) {
+                $allday = true;
+                $end = $event['Event']['start'];
+            } else {
+                $allday = false;
+                $end = $event['Event']['end'];
+            }
+            $data[] = array(
+                'id' => $event['Event']['id'],
+                'title'=>$event['Event']['title'],
+                'start'=>$event['Event']['start'],
+                'end' => $end,
+                'allDay' => $allday,
+                'url' => Router::url('/') . 'events/view/'.$event['Event']['id'],
+                'className' => $event['EventType']['color']
+            );
+        }
+
+		$this->set('events', $data);
 	}
 
 	function view($id = null) {
@@ -37,7 +74,8 @@ class EventsController extends FullCalendarAppController {
 			$this->Event->create();
 			if ($this->Event->save($this->data)) {
 				$this->Session->setFlash(__('The event has been saved', true));
-				$this->redirect(array('action' => 'index'));
+				//$this->redirect(array('action' => 'index'));
+                $this
 			} else {
 				$this->Session->setFlash(__('The event could not be saved. Please, try again.', true));
 			}

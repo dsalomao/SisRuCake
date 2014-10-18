@@ -30,6 +30,7 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                             array(
                                 'class' => 'form-horizontal',
                                 'role' => 'form',
+                                'action' => 'add',
                                 'inputDefaults' => array(
                                     'label' => false
                                 )
@@ -111,9 +112,9 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                                         'options' => array(
                                             'Scheduled' => 'Agendado',
                                             'Confirmed' => 'Confirmado',
-                                            'In Progress' => 'In Progress',
-                                            'Rescheduled' => 'Rescheduled',
-                                            'Completed' => 'Completed'
+                                            'In Progress' => 'Em progresso',
+                                            'Rescheduled' => 'Reagendado',
+                                            'Completed' => 'Completo'
                                         )
                                     )
                                 ); ?>
@@ -123,7 +124,7 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                                 <label class="col-sm-3 control-label no-padding-right" for="EventMealId"> Refeição </label>
 
                                 <?php echo $this->Form->input(
-                                    'Event.meal_id',
+                                    'Event.event',
                                     array(
                                         'div' => 'col-sm-9'
                                     )

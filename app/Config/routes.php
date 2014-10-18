@@ -41,3 +41,7 @@
  * the built-in default routes.
  */
 	require CAKE . 'Config' . DS . 'routes.php';
+/**
+ * enabling all extensions to be sent through routes
+ */
+    Router::parseExtensions('json');

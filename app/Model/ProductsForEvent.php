@@ -69,7 +69,7 @@ class ProductsForEvent extends AppModel {
 			'order' => ''
 		),
 		'Event' => array(
-			'className' => 'FullCalendar.Event',
+			'className' => 'Event',
 			'foreignKey' => 'event_id',
 			'conditions' => '',
 			'fields' => '',

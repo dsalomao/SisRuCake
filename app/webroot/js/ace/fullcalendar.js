@@ -5357,7 +5357,7 @@ function DayEventRenderer() {
 				htmlEscape(
 					formatDates(event.start, event.end, opt('timeFormat'))
 				) +
-				"</span>";
+				"</span>&nbsp;";
 		}
 		html +=
 			"<span class='fc-event-title'>" +
