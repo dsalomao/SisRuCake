@@ -79,29 +79,20 @@ class Event extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
-	);
-
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array(
-		'Meal' => array(
-			'className' => 'Meal',
-			'joinTable' => 'events_meals',
-			'foreignKey' => 'event_id',
-			'associationForeignKey' => 'meal_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		)
+		),
+        'MealsForEvent' => array(
+            'className' => 'MealsForEvent',
+            'foreignKey' => 'event_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
 	);
 
     public function findEvent($id = null){

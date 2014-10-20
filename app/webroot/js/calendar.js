@@ -2,36 +2,46 @@
  * Created by daniel on 07/08/14.
  */
 $(document).ready(function() {
-    $('#new_event').on('click', function() {
 
-        $('#modal-wizard .modal-header').ace_wizard().on('finished', function(e) {
-            var form_data = $('#EventIndexForm').serializeArray();
-            console.log(form_data);
+    //setting new wizard step if Event.event_type == refeição
+    $('#EventEventTypeId').on('change', function(e){
+        var selected = $('#EventEventTypeId option:selected').val();
 
-            $.post('/SisRuCake/events/add', form_data);
+        if(selected == 1){
+            console.log('isso ai');
+            $('#EventMeals').prop( "disabled", false );
+            $('#EventMeals').removeClass('hidden');
+            $('#modal-step3 label').removeClass('hidden');
+        }
+        else{
+            console.log('fudeu');
+            $('#EventMeals').prop( "disabled", true );
+            $('#EventMeals').addClass('hidden');
+            $('#modal-step3 label').addClass('hidden');
+        }
+    });
 
-            bootbox.dialog({
-                message: "Thank you! Your information was successfully saved!",
-                buttons: {
-                    "success" : {
-                        "label" : "OK",
-                        "className" : "btn-sm btn-primary"
-                    }
+    $('#modal-wizard').wizard().on('finished', function(e) {
+
+        var form_data = $('#EventIndexForm').serializeArray();
+
+        console.log(form_data);
+
+        $.post('/SisRuCake/events/add_event', form_data);
+
+        $('#modal-wizard').modal('hide');
+
+        bootbox.dialog({
+            message: "Thank you! Your information was successfully saved!",
+            buttons: {
+                "success" : {
+                    "label" : "OK",
+                    "className" : "btn-sm btn-primary"
                 }
-            });
+            }
         });
-
-        $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
-
     });
 
-    $('#btnWizardPrev').on('click', function() {
-        $('.modal-footer .wizard-actions .btn .btn-sm .btn-prev').wizard('previous');
-    });
-
-    $('#btnWizardNext').on('click', function() {
-        $('#myWizard').wizard('next','foo');
-    });
 });
 
 jQuery(function($) {
@@ -62,9 +72,8 @@ jQuery(function($) {
     /* getting all events with get_all action from EventsController
      -----------------------------------------------------------------*/
 
-    $.get("/SisRuCake/events/get_all").then(function(data) {
-        var events = $.parseJSON(data);
-        initializeCalendar(events);
+    $.getJSON("/SisRuCake/events/get_all").then(function(data) {
+        initializeCalendar(data);
     });
 
     /* initialize the calendar

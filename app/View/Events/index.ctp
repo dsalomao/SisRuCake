@@ -122,26 +122,21 @@
 <div id="modal-wizard" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" data-target="#modal-step-contents">
+            <div id="my-wizard" class="modal-header" data-target="#modal-step-contents">
                 <ul class="wizard-steps">
                     <li data-target="#modal-step1" class="active">
                         <span class="step">1</span>
-                        <span class="title">Validation states</span>
+                        <span class="title">Propriedades</span>
                     </li>
 
                     <li data-target="#modal-step2">
                         <span class="step">2</span>
-                        <span class="title">Alerts</span>
+                        <span class="title">Data</span>
                     </li>
 
                     <li data-target="#modal-step3">
                         <span class="step">3</span>
-                        <span class="title">Payment Info</span>
-                    </li>
-
-                    <li data-target="#modal-step4">
-                        <span class="step">4</span>
-                        <span class="title">Other Info</span>
+                        <span class="title">Info evento</span>
                     </li>
                 </ul>
             </div>
@@ -159,120 +154,118 @@
                     )
                 );
                 ?>
-                    <div class="step-pane active" id="modal-step1">
-                        <fieldset style="padding: 16px">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Tipo de evento. </label>
+                <div class="step-pane active" id="modal-step1">
+                    <fieldset style="padding: 16px">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Tipo de evento. </label>
 
-                                <?php echo $this->Form->input(
-                                    'Event.event_type_id',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
+                            <?php echo $this->Form->input(
+                                'Event.event_type_id',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventTitle"> Título </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.title',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventDetails"> Detalhes </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.details',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="step-pane" id="modal-step2">
-                        <fieldset style="padding: 16px">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventStart"> Início </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.start',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventEnd"> Fim </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.end',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventAllDay"> Integral </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.all_day',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="step-pane" id="modal-step3">
-                        <fieldset style="padding: 16px">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Refeições </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.meals',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="step-pane" id="modal-step4">
-                        <div class="center">
-                            <h4 class="blue">Step 4</h4>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventTitle"> Título </label>
+
+                            <?php echo $this->Form->input(
+                                'Event.title',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventDetails"> Detalhes </label>
+
+                            <?php echo $this->Form->input(
+                                'Event.details',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="step-pane" id="modal-step2">
+                    <fieldset style="padding: 16px">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventStart"> Início </label>
+
+                            <?php echo $this->Form->input(
+                                'Event.start',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventEnd"> Fim </label>
+
+                            <?php echo $this->Form->input(
+                                'Event.end',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventAllDay"> Integral </label>
+
+                            <?php echo $this->Form->input(
+                                'Event.all_day',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="step-pane" id="modal-step3">
+                    <fieldset style="padding: 16px">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Refeições </label>
+
+                            <?php echo $this->Form->input(
+                                'Event.meals',
+                                array(
+                                    'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                    </fieldset>
+                    <div class="center">
+                        <h3 class="green">Ótimo!</h3>
+                        Seu evento está pronto para ser enviado, clique em terminar!
                     </div>
+                </div>
                 <?php echo $this->Form->end(); ?>
             </div>
 
             <div class="modal-footer wizard-actions">
                 <button class="btn btn-sm btn-prev">
                     <i class="ace-icon fa fa-arrow-left"></i>
-                    Prev
+                    Anterior
                 </button>
 
-                <button class="btn btn-success btn-sm btn-next" data-last="Finish">
-                    Next
+                <button class="btn btn-success btn-sm btn-next" data-last="Terminar">
+                    Próximo
                     <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                 </button>
 
                 <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
                     <i class="ace-icon fa fa-times"></i>
-                    Cancel
+                    Cancelar
                 </button>
             </div>
         </div>

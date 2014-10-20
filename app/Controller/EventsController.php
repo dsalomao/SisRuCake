@@ -19,12 +19,11 @@ class EventsController extends AppController {
 
     function index(){
         $eventTypes = $this->Event->EventType->find('list');
-        $meals = $this->Event->Meal->find('list');
+        $meals = $this->Event->MealsForEvent->Meal->find('list');
         $this->set(array('eventTypes' => $eventTypes, 'meals' => $meals));
     }
 
     function get_all() {
-        $this->layout = 'ajax';
         $events = $this->Event->find(
             'all',
             array(
@@ -56,8 +55,8 @@ class EventsController extends AppController {
                 'className' => $event['EventType']['color']
             );
         }
-
-		$this->set('events', $data);
+        $this->set('events', $data);
+        $this->set('_serialize', array('events'));
 	}
 
 	function view($id = null) {
@@ -69,18 +68,38 @@ class EventsController extends AppController {
 		$this->set(array('event' => $event));
 	}
 
+    function add_event() {
+        if (!empty($this->data)) {
+            $this->Event->create();
+            if ($this->Event->save($this->data)) {
+                $response = array('response' =>'Evento salvo com sucesso.');
+                $this->set('response', $response);
+                $this->set('_serialize', array('response'));
+                $this->Session->setFlash(__('Salvou.', true));
+
+            } else {
+                $response = array('response' =>'Erro ao salvar o evento.');
+                $this->set('response', $response);
+                $this->set('_serialize', array('response'));
+                $this->Session->setFlash(__('Não salvou.', true));
+            }
+        }
+    }
+
 	function add() {
 		if (!empty($this->data)) {
 			$this->Event->create();
 			if ($this->Event->save($this->data)) {
 				$this->Session->setFlash(__('The event has been saved', true));
-				//$this->redirect(array('action' => 'index'));
-                $this
+				$this->redirect(array('action' => 'index'));
+
 			} else {
 				$this->Session->setFlash(__('The event could not be saved. Please, try again.', true));
+                $this->set('response', 'Erro ao salvar o evento.');
 			}
 		}
-		$this->set(array('eventTypes' => $this->Event->EventType->find('list'),'meals' => $this->Event->Meal->find('list')));
+
+		$this->set(array('eventTypes' => $this->Event->EventType->find('list'),'meals' => $this->Event->MealsForEvent->Meal->find('list')));
 	}
 
 	function edit($id = null) {

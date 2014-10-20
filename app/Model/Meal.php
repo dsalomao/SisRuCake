@@ -71,7 +71,20 @@ class Meal extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+        'MealsForEvent' => array(
+            'className' => 'MealsForEvent',
+            'foreignKey' => 'meal_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
 	);
 
 
