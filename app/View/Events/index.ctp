@@ -1,11 +1,18 @@
 <?php
     echo $this->Html->css('fullcalendar');
+    echo $this->Html->css('jquery.datetimepicker');
 
     echo $this->Html->script('ace/jquery-ui.custom');
     echo $this->Html->script('ace/fullcalendar');
-    echo $this->Html->script('calendar');
     echo $this->Html->script('ace/bootbox');
     echo $this->Html->script('ace/fuelux.wizard.min');
+    echo $this->Html->script('ace/moment');
+echo $this->Html->script('pt-br');
+    echo $this->Html->script('calendar');
+    echo $this->Html->script('libs/jquery.datetimepicker');
+
+    $this->Html->addCrumb('Planejamento de cardápio');
+    $this->Html->addCrumb('Calendário');
 ?>
 
 <div class="row">
@@ -24,47 +31,18 @@
             <div class="col-sm-3">
                 <div class="widget-box transparent">
                     <div class="widget-header">
-                        <h4>Draggable events</h4>
+                        <h4>Refeições</h4>
                     </div>
 
                     <div class="widget-body">
                         <div class="widget-main no-padding">
                             <div id="external-events">
-                                <div class="external-event label-grey" data-class="label-grey">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 1
-                                </div>
-
-                                <div class="external-event label-success" data-class="label-success">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 2
-                                </div>
-
-                                <div class="external-event label-danger" data-class="label-danger">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 3
-                                </div>
-
-                                <div class="external-event label-purple" data-class="label-purple">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 4
-                                </div>
-
-                                <div class="external-event label-yellow" data-class="label-yellow">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 5
-                                </div>
-
-                                <div class="external-event label-pink" data-class="label-pink">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 6
-                                </div>
-
-                                <div class="external-event label-info" data-class="label-info">
-                                    <i class="ace-icon fa fa-arrows"></i>
-                                    My Event 7
-                                </div>
-
+                                <?php foreach($meals as $meal): ?>
+                                    <div class="external-event label-success" data-class="label-grey">
+                                        <i class="ace-icon fa fa-arrows"></i>
+                                        <?php echo $meal ?>
+                                    </div>
+                                <?php endforeach; ?>
                                 <label>
                                     <input type="checkbox" class="ace ace-checkbox" id="drop-remove" />
                                     <span class="lbl"> Remove after drop</span>
@@ -148,6 +126,7 @@
                     array(
                         'class' => 'form-horizontal',
                         'role' => 'form',
+                        'url' => array('controller' => 'events', 'action' => 'post_event'),
                         'inputDefaults' => array(
                             'label' => false
                         )
@@ -156,6 +135,8 @@
                 ?>
                 <div class="step-pane active" id="modal-step1">
                     <fieldset style="padding: 16px">
+                        <?php echo $this->Form->input('Event.id'); ?>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Tipo de evento. </label>
 
@@ -196,14 +177,18 @@
                     <fieldset style="padding: 16px">
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="EventStart"> Início </label>
-
-                            <?php echo $this->Form->input(
-                                'Event.start',
-                                array(
-                                    'div' => 'col-sm-9'
-                                )
-                            ); ?>
-
+                                <?php
+                                echo $this->Form->input(
+                                    'Event.start',
+                                    array(
+                                        'div' => array(
+                                            'class' => 'col-sm-9'
+                                        ),
+                                        'class' => 'form-control',
+                                        'type' => 'text'
+                                    )
+                                );
+                                ?>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="EventEnd"> Fim </label>
@@ -211,8 +196,11 @@
                             <?php echo $this->Form->input(
                                 'Event.end',
                                 array(
-                                    'div' => 'col-sm-9'
-                                )
+                                    'div' => array(
+                                        'class' => 'col-sm-9'
+                                    ),
+                                    'class' => 'form-control',
+                                    'type' => 'text')
                             ); ?>
 
                         </div>
@@ -233,12 +221,26 @@
                 <div class="step-pane" id="modal-step3">
                     <fieldset style="padding: 16px">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Refeições </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="EventMealId"> Refeições </label>
 
                             <?php echo $this->Form->input(
-                                'Event.meals',
+                                'Event.meal_id',
                                 array(
                                     'div' => 'col-sm-9'
+                                )
+                            ); ?>
+
+                        </div>
+                    </fieldset>
+                    <fieldset style="padding: 16px">
+                        <div class="form-group">
+
+                            <?php echo $this->Form->input(
+                                'Event.status',
+                                array(
+                                    'div' => 'col-sm-9',
+                                    'value' => 'agendado',
+                                    'type' => 'hidden'
                                 )
                             ); ?>
 

@@ -3,44 +3,76 @@
  */
 $(document).ready(function() {
 
-    //setting new wizard step if Event.event_type == refeição
-    $('#EventEventTypeId').on('change', function(e){
-        var selected = $('#EventEventTypeId option:selected').val();
+    //setting new wizard step if event_type == refeição
+    $('#EventEventTypeId').on('change', function(event){
 
-        if(selected == 1){
-            console.log('isso ai');
-            $('#EventMeals').prop( "disabled", false );
-            $('#EventMeals').removeClass('hidden');
-            $('#modal-step3 label').removeClass('hidden');
-        }
-        else{
-            console.log('fudeu');
-            $('#EventMeals').prop( "disabled", true );
-            $('#EventMeals').addClass('hidden');
-            $('#modal-step3 label').addClass('hidden');
-        }
+            var selected = $('#EventEventTypeId option:selected').val();
+
+            if(selected == 0){
+                console.log('isso ai');
+                $('#EventMeals').prop( "disabled", false );
+                $('#EventMeals').removeClass('hidden');
+                $('#modal-step3 label').removeClass('hidden');
+            }
+            else{
+                console.log('fudeu');
+                $('#EventMealId').prop( "disabled", true );
+                $('#EventMealId').addClass('hidden');
+                $('#modal-step3 label').addClass('hidden');
+            }
     });
 
-    $('#modal-wizard').wizard().on('finished', function(e) {
+    //loading the 2 datetimepickers
+    $('#EventStart').datetimepicker({
+        lang:'pt',
+        format:'Y-m-d H:i:i',
+        formatTime:'H:i:i'
+    });
+
+    $('#EventEnd').datetimepicker({
+        lang:'pt',
+        format:'Y-m-d H:i:i',
+        formatTime:'H:i:i'
+    });
+
+    //At the end of the form inside the wizard modal
+    $('#modal-wizard').wizard().on('finished', function(event) {
 
         var form_data = $('#EventIndexForm').serializeArray();
+        //console.log(form_data);
 
-        console.log(form_data);
+        $.post('/SisRuCake/events/post_event', form_data)
+            .done(function (data){
+                var parsedData = jQuery.parseJSON(data);
+                $('#calendar').fullCalendar( 'renderEvent', parsedData[0] , 'stick');
 
-        $.post('/SisRuCake/events/add_event', form_data);
+                bootbox.dialog({
+                    message: "Seu novo evento foi salvo com sucesso.",
+                    buttons: {
+                        "success" : {
+                            "label" : "OK",
+                            "className" : "btn-sm btn-primary"
+                        }
+                    }
+                });
+            })
+            .fail(function (){
+                bootbox.dialog({
+                    message: "Algo de errado ocorreu, por favor tente novamente.",
+                    buttons: {
+                        "success" : {
+                            "label" : "OK",
+                            "className" : "btn-sm btn-primary"
+                        }
+                    }
+                });
+            });
 
         $('#modal-wizard').modal('hide');
 
-        bootbox.dialog({
-            message: "Thank you! Your information was successfully saved!",
-            buttons: {
-                "success" : {
-                    "label" : "OK",
-                    "className" : "btn-sm btn-primary"
-                }
-            }
-        });
     });
+
+    $('#modal-wizard .wizard-actions .btn-prev').attr('disabled', true);
 
 });
 
@@ -134,62 +166,75 @@ jQuery(function($) {
 
             }
             ,
-            selectable: true,
-            selectHelper: true,
-            select: function(start, end, allDay) {
-
-                bootbox.prompt("New Event Title:", function(title) {
-                    if (title !== null) {
-                        calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true // make the event "stick"
-                        );
-                    }
-                });
-
-
-                calendar.fullCalendar('unselect');
-            }
-            ,
+            selectable: false,
+            selectHelper: false,
             eventClick: function(calEvent, jsEvent, view) {
 
-                //display a modal
+                //display a modal for editing clicked event
                 var modal =
                     '<div class="modal fade">\
                       <div class="modal-dialog">\
                        <div class="modal-content">\
                          <div class="modal-body">\
                            <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
-                           <form class="no-margin">\
-                              <label>Change event name &nbsp;</label>\
-                              <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
-					 <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
-				   </form>\
-				 </div>\
-				 <div class="modal-footer">\
-					<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
-					<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-				 </div>\
-			  </div>\
-			 </div>\
-			</div>';
+                           <form action="/SisRuCake/events/edit/'+calEvent.id+'" id="EventEditForm" class="no-margin" method="post" accept-charset="utf-8">\
+                               <fieldset style="padding: 16px">\
+                                   <input type="hidden" name="data[Event][id]" value="'+calEvent.id+'" id="EventId" />\
+                                      <div class="form-group">\
+                                          <label class="col-sm-3 control-label no-padding-right" for="EventTitle">Título &nbsp;</label>\
+                                          <input name="data[Event][title]" class="middle" maxlength="255" type="text" value="'+calEvent.title+'" id="EventTitle" required="required"><br>\
+                                      </div>\
+                                      <div class="form-group">\
+                                          <label class="col-sm-3 control-label no-padding-right" for="EventDetails">Detalhes &nbsp;</label>\
+                                          <textarea name="data[Event][details]" class="middle" cols="30" rows="6" id="EventDetails" value="'+calEvent.datails+'"></textarea><br>\
+                                      </div>\
+                                      <div class="form-group">\
+                                          <label class="col-sm-3 control-label no-padding-right" for="EventAllDay">Integral &nbsp;</label>\
+                                          <input class="middle" type="checkbox" name="data[Event][all_day]" id="EventAllDay"><br>\
+                                      </div>\
+                                      <div class="form-group">\
+                                          <label class="col-sm-3 control-label no-padding-right" for="EventStatus">Status &nbsp;</label>\
+                                          <select name="data[Event][status]" id="EventStatus">\
+                                                <option value="agendado">Agendado</option>\
+                                                <option value="confirmado">Confirmado</option>\
+                                                <option value="em progresso">Em progresso</option>\
+                                                <option value="reagendado">Reagendado</option>\
+                                                <option value="completo">Completo</option>\
+                                          </select>\
+                                      </div>\
+                               </fieldset>\
+                               <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
+                           </form>\
+                         </div>\
+				         <div class="modal-footer">\
+                            <button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
+                            <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+				         </div>\
+			           </div>\
+			          </div>\
+			        </div>';
 
+                console.log(calEvent.allDay);
+                var modal = $(modal).appendTo("body");
+                modal.modal('show');
+                modal.find('#EventId').val(calEvent.id);
+                modal.find('#EventTitle').val(calEvent.title);
+                modal.find('#EventDetails').val(calEvent.details);
+                modal.find('#EventStart').val(calEvent.start);
+                modal.find('#EventEnd').val(calEvent.end);
+                if(calEvent.allDay == 1)
+                    modal.find('#EventAllDay').prop('checked', true);
+                modal.find('#EventStatus').val(calEvent.status);
 
-                var modal = $(modal).appendTo('body');
                 modal.find('form').on('submit', function(ev){
-                    ev.preventDefault();
-
-                    calEvent.title = $(this).find("input[type=text]").val();
+                    calEvent.title = $(this).find("#EventTitle").val();
                     calendar.fullCalendar('updateEvent', calEvent);
                     modal.modal("hide");
                 });
+
                 modal.find('button[data-action=delete]').on('click', function() {
                     calendar.fullCalendar('removeEvents' , function(ev){
+
                         return (ev._id == calEvent._id);
                     })
                     modal.modal("hide");
@@ -200,12 +245,12 @@ jQuery(function($) {
                 });
 
 
-                //console.log(calEvent.id);
-                //console.log(jsEvent);
-                //console.log(view);
+                console.log(calEvent);
+                console.log(jsEvent);
+                console.log(view);
 
                 // change the border color just for fun
-                //$(this).css('border-color', 'red');
+                $(this).css('border-color', 'transparent');
 
             }
 
