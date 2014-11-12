@@ -23,50 +23,6 @@ class EventsController extends AppController {
         $this->set(array('eventTypes' => $eventTypes, 'meals' => $meals));
     }
 
-    function post_event(){
-        if($this->request->is('post')){
-            $this->Event->create();
-            if ($this->Event->save($this->request->data)) {
-                if($this->request->data['Event']['event_type_id'] == 0) {
-                    $data = array(
-                        'MealsForEvent' => array(
-                            'meal_id' => $this->request->data['Event']['meal_id'],
-                            'event_id' => $this->Event->getLastInsertID()
-                        )
-                    );
-                    $this->Event->MealsForEvent->add_from_calendar($data);
-                }
-
-                $event = $this->Event->findById($this->Event->getLastInsertID());
-
-                if($event['Event']['all_day'] == 1) {
-                    $allday = true;
-                    $end = $event['Event']['start'];
-                } else {
-                    $allday = false;
-                    $end = $event['Event']['end'];
-                }
-                $data[] = array(
-                    'id' => $event['Event']['id'],
-                    'title'=>$event['Event']['title'],
-                    'allDay' => $allday,
-                    'start'=>$event['Event']['start'],
-                    'end' => $end,
-                    'url' => Router::url('/') . 'events/view/'.$event['Event']['id'],
-                    'className' => $event['EventType']['color']
-                );
-                $this->response->body(json_encode($data), 'Ok, seu evento foi salvo com sucesso.');
-                $this->response->statusCode(200);
-                $this->response->send();
-            } else {
-                $response[] = array('response' =>'Erro ao salvar o evento.');
-                $this->response->body(json_encode($response));
-                $this->response->statusCode(500);
-                $this->response->send();
-            }
-        }
-    }
-
     function get_all() {
         $events = $this->Event->find(
             'all',
@@ -77,7 +33,7 @@ class EventsController extends AppController {
                         'fields' => array('color')
                     )
                 ),
-                'fields' => array('id', 'title', 'status', 'details', 'start', 'end', 'all_day')
+                'fields' => array('id', 'title', 'start', 'end', 'all_day')
             )
         );
 
@@ -93,26 +49,42 @@ class EventsController extends AppController {
                 'id' => $event['Event']['id'],
                 'title'=>$event['Event']['title'],
                 'start'=>$event['Event']['start'],
-                'details'=>$event['Event']['details'],
-                'status'=>$event['Event']['status'],
                 'end' => $end,
                 'allDay' => $allday,
-                //'url' => Router::url('/') . 'events/view/'.$event['Event']['id'],
+                'url' => Router::url('/') . 'events/view/'.$event['Event']['id'],
                 'className' => $event['EventType']['color']
             );
         }
-        echo json_encode($data);
-        $this->autoRender = false;
+        $this->set('events', $data);
+        $this->set('_serialize', array('events'));
 	}
 
 	function view($id = null) {
-		if (!$this->Event->exists($id)) {
+		if (!$id) {
 			$this->Session->setFlash(__('Invalid event', true));
 			$this->redirect(array('action' => 'index'));
 		}
         $event = $this->Event->findEvent($id);
 		$this->set(array('event' => $event));
 	}
+
+    function add_event() {
+        if (!empty($this->data)) {
+            $this->Event->create();
+            if ($this->Event->save($this->data)) {
+                $response = array('response' =>'Evento salvo com sucesso.');
+                $this->set('response', $response);
+                $this->set('_serialize', array('response'));
+                $this->Session->setFlash(__('Salvou.', true));
+
+            } else {
+                $response = array('response' =>'Erro ao salvar o evento.');
+                $this->set('response', $response);
+                $this->set('_serialize', array('response'));
+                $this->Session->setFlash(__('Não salvou.', true));
+            }
+        }
+    }
 
 	function add() {
 		if (!empty($this->data)) {

@@ -88,7 +88,26 @@ class Meal extends AppModel {
 	);
 
 
-
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'Event' => array(
+			'className' => 'Event',
+			'joinTable' => 'events_meals',
+			'foreignKey' => 'meal_id',
+			'associationForeignKey' => 'event_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		)
+	);
 
     /**
      *

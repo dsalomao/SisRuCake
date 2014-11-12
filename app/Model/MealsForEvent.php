@@ -39,9 +39,4 @@ class MealsForEvent extends AppModel {
 			'order' => ''
 		)
 	);
-
-    function add_from_calendar($data = null){
-        $this->create();
-        $this->save($data);
-    }
 }

@@ -16,7 +16,6 @@ class MealsForEventsController extends AppController {
  */
 	public $components = array('Paginator', 'Session');
 
-
 /**
  * index method
  *

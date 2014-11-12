@@ -88,7 +88,7 @@
 
                 <div class="profile-info-value">
                      <span class="editable" id="event_all_day">
-                        <?php echo $this->Html->link($event['MealsForEvent'][0]['Meal']['code'], array('plugin' => false, 'controller' => 'meals', 'action' => 'view', $event['MealsForEvent'][0]['Meal']['id'])); ?>
+                        <?php echo $this->Html->link($event['Meal']['code'], array('plugin' => false, 'controller' => 'meals', 'action' => 'view', $event['Meal']['id'])); ?>
                      </span>
                 </div>
             </div>
@@ -99,7 +99,7 @@
         <h4 class="header smaller lighter blue"> Receitas </h4>
 
         <div id="accordion" class="accordion-style1 panel-group">
-            <?php foreach($event['MealsForEvent'][0]['Meal']['RecipesForMeal'] as $relatedRecipe): ?>
+            <?php foreach($event['Meal']['RecipesForMeal'] as $relatedRecipe): ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
