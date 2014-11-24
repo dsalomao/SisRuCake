@@ -1,6 +1,5 @@
 jQuery(function($) {
 
-
     $('#ProductLoadStock').ace_spinner({
         value:0,
         min:0,

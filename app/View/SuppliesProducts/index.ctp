@@ -24,13 +24,13 @@ $this->Html->addCrumb('Caderno de entrada');
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('id'); ?></th>
                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
                     <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
                     <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
                     <th><?php echo $this->Paginator->sort('price', 'Preço R$'); ?></th>
                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('invoice', 'Nota fiscal'); ?></th>
                     <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
+                    <th><?php echo $this->Paginator->sort('expiration', 'Data de validade'); ?></th>
                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('supplier_id', 'Fornecedor'); ?></th>
                 </tr>
                 </thead>
@@ -38,8 +38,9 @@ $this->Html->addCrumb('Caderno de entrada');
                 <tbody>
                 <?php foreach ($suppliesProducts as $suppliesProduct): ?>
                     <tr>
-                        <td class="hidden-sm hidden-xs"><?php echo h($suppliesProduct['SuppliesProduct']['id']); ?>&nbsp;</td>
-                        <td style="text-align: right"><?php echo h($suppliesProduct['SuppliesProduct']['quantity']); ?>&nbsp;</td>
+                        <td style="text-align: right">
+                            <?php echo h($suppliesProduct['SuppliesProduct']['quantity']); ?>&nbsp;
+                        </td>
                         <td>
                             <?php echo $this->Html->link($suppliesProduct['Product']['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $suppliesProduct['Product']['MeasureUnit']['id'])); ?>
                         </td>
@@ -55,6 +56,7 @@ $this->Html->addCrumb('Caderno de entrada');
                         <td class="hidden-sm hidden-xs"><?php echo h($suppliesProduct['SuppliesProduct']['invoice']); ?>&nbsp;</td>
 
                         <td><?php echo h(date("d-m-Y", strtotime($suppliesProduct['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
+                        <td><?php echo h(date("d-m-Y", strtotime($suppliesProduct['SuppliesProduct']['expiration']))); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs">
                             <?php echo $this->Html->link($suppliesProduct['Supplier']['name'], array('controller' => 'suppliers', 'action' => 'view', $suppliesProduct['Supplier']['id'])); ?>
                         </td>

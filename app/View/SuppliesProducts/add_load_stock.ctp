@@ -45,7 +45,7 @@ $this->Html->addCrumb('Adicionar em estoque');
                                 <label class="col-sm-3 col-xs-12 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
 
                                 <?php echo $this->Form->input(
-                                    'quantity',
+                                    'SuppliesProduct.quantity',
                                     array(
                                         'type' => 'text',
                                         'div' => 'col-sm-2 col-xs-6',
@@ -74,7 +74,7 @@ $this->Html->addCrumb('Adicionar em estoque');
 
 
                                 <?php echo $this->Form->input(
-                                    'price',
+                                    'SuppliesProduct.price',
                                     array(
                                         'type' => 'text',
                                         'div' => 'col-sm-2 col-xs-6',
@@ -87,19 +87,38 @@ $this->Html->addCrumb('Adicionar em estoque');
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductDateOfEntry"> dia </label>
 
-                                    <?php echo $this->Form->input(
-                                        'date_of_entry',
-                                        array(
-                                            'div' => array(
-                                                'class' => 'input-group date col-sm-9',
-                                                'style' => 'padding-left:12px;padding-right:12px;',
-                                                'id' => 'date_of_entry_dtp'
-                                            ),
-                                            'type' => 'text',
-                                            'class' => 'form-control',
-                                            'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
-                                        )
-                                    ); ?>
+                                <?php echo $this->Form->input(
+                                    'SuppliesProduct.date_of_entry',
+                                    array(
+                                        'div' => array(
+                                            'class' => 'input-group date col-sm-9',
+                                            'style' => 'padding-left:12px;padding-right:12px;',
+                                            'id' => 'date_of_entry_dtp'
+                                        ),
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
+                                    )
+                                ); ?>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductExpiration"> Data de validade </label>
+
+                                <?php echo $this->Form->input(
+                                    'SuppliesProduct.expiration',
+                                    array(
+                                        'div' => array(
+                                            'class' => 'input-group date col-sm-9',
+                                            'style' => 'padding-left:12px;padding-right:12px;',
+                                            'id' => 'expiration'
+                                        ),
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
+                                    )
+                                ); ?>
 
                             </div>
 
@@ -108,7 +127,7 @@ $this->Html->addCrumb('Adicionar em estoque');
 
 
                                 <?php echo $this->Form->input(
-                                    'invoice',
+                                    'SuppliesProduct.invoice',
                                     array(
                                         'div' => 'col-sm-9',
 
@@ -122,7 +141,7 @@ $this->Html->addCrumb('Adicionar em estoque');
 
 
                                 <?php echo $this->Form->input(
-                                    'supplier_id',
+                                    'SuppliesProduct.supplier_id',
                                     array(
                                         'type' => 'select',
                                         'div' => 'col-sm-9',

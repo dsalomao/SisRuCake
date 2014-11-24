@@ -9,6 +9,13 @@ jQuery(function($) {
         minuteStep: 15
     });
 
+    $('#expiration').datetimepicker({
+        language: 'pt-BR',
+        format: 'yyyy-mm-dd hh:ii',
+        daysOfWeekDisabled:'0,6',
+        minuteStep: 15
+    });
+
     $('.chosen-select').chosen();
 
     $(window).on('resize.chosen', function() {

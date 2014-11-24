@@ -59,6 +59,16 @@ class SuppliesProduct extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+        'expiration' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
         'invoice' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
@@ -109,7 +119,7 @@ class SuppliesProduct extends AppModel {
         $options = array(
             'conditions' => array('SuppliesProduct.product_id' => $id),
             'recursive' => 0,
-            'fields' => array('SuppliesProduct.id', 'SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry'),
+            'fields' => array('SuppliesProduct.id', 'SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry', 'SuppliesProduct.expiration'),
             'contain' => array(
                 'Product' => array(
                     'MeasureUnit' => array(
