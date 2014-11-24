@@ -3,76 +3,54 @@
  */
 $(document).ready(function() {
 
-    //setting new wizard step if Event.event_type == refeição
-    $('#EventEventTypeId').on('change', function(e){
-        var selected = $('#EventEventTypeId option:selected').val();
-
-        if(selected == 1){
-            console.log('isso ai');
-            $('#EventMeals').prop( "disabled", false );
-            $('#EventMeals').removeClass('hidden');
-            $('#modal-step3 label').removeClass('hidden');
-        }
-        else{
-            console.log('fudeu');
-            $('#EventMeals').prop( "disabled", true );
-            $('#EventMeals').addClass('hidden');
-            $('#modal-step3 label').addClass('hidden');
-        }
-    });
-
-    $('#modal-wizard').wizard().on('finished', function(e) {
+    //At the end of the form inside the wizard modal
+    $('#modal-wizard').wizard().on('finished', function(event) {
 
         var form_data = $('#EventIndexForm').serializeArray();
-
         console.log(form_data);
+/*
+        $.post('/SisRuCake/events/post_event', form_data)
+            .done(function (data){
+                var parsedData = jQuery.parseJSON(data);
+                $('#calendar').fullCalendar( 'renderEvent', parsedData[0] , 'stick');
 
-        $.post('/SisRuCake/events/add_event', form_data);
+                bootbox.dialog({
+                    message: "Seu novo evento foi salvo com sucesso.",
+                    buttons: {
+                        "success" : {
+                            "label" : "OK",
+                            "className" : "btn-sm btn-primary"
+                        }
+                    }
+                });
+            })
+            .fail(function (){
+                bootbox.dialog({
+                    message: "Algo de errado ocorreu, por favor tente novamente.",
+                    buttons: {
+                        "success" : {
+                            "label" : "OK",
+                            "className" : "btn-sm btn-primary"
+                        }
+                    }
+                });
+            });*/
 
         $('#modal-wizard').modal('hide');
 
-        bootbox.dialog({
-            message: "Thank you! Your information was successfully saved!",
-            buttons: {
-                "success" : {
-                    "label" : "OK",
-                    "className" : "btn-sm btn-primary"
-                }
-            }
-        });
     });
+
+    $('#modal-wizard .wizard-actions .btn-prev').attr('disabled', true);
 
 });
 
 jQuery(function($) {
 
-    /* initialize the external events
-     -----------------------------------------------------------------*/
-
-    $('#external-events div.external-event').each(function() {
-
-        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-        // it doesn't need to have a start or end
-        var eventObject = {
-            title: $.trim($(this).text()) // use the element's text as the event title
-        };
-
-        // store the Event Object in the DOM element so we can get to it later
-        $(this).data('eventObject', eventObject);
-
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-            zIndex: 999,
-            revert: true,      // will cause the event to go back to its
-            revertDuration: 0  //  original position after the drag
-        });
-
-    });
-
     /* getting all events with get_all action from EventsController
      -----------------------------------------------------------------*/
 
     $.getJSON("/SisRuCake/events/get_all").then(function(data) {
+        console.log(data);
         initializeCalendar(data);
     });
 
@@ -88,10 +66,7 @@ jQuery(function($) {
 
         var calendar = $('#calendar').fullCalendar({
             //isRTL: true,
-            buttonText: {
-                prev: '<i class="ace-icon fa fa-chevron-left"></i>',
-                next: '<i class="ace-icon fa fa-chevron-right"></i>'
-            },
+            buttonIcons: false,
 
             //options for pt-br
             monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'], monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'], dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'], buttonText: {   today: 'hoje',  month: 'mês',   week: 'semana', day: 'dia'  },  titleFormat: {  month: 'MMMM yyyy', week: "d [ yyyy]{ '&#8212;'[ MMM] d MMM yyyy}", day: 'dddd, d MMM, yyyy'    },  columnFormat: { month: 'ddd',   week: 'ddd d/M',    day: 'dddd d/M' },  allDayText: 'dia todo', axisFormat: 'H:mm', timeFormat: {   '': 'H(:mm)',   agenda: 'H:mm{ - H:mm}' },
@@ -106,108 +81,273 @@ jQuery(function($) {
             events: events,
             aspectRatio: 2,
             editable: true,
+            eventRender: function(event, element) {
+                element.css('border', 'transparent');
+                //console.log(event.url);
+
+                element.qtip({
+                    content: event.details,
+                    position: {
+                        target: 'mouse',
+                        adjust: {
+                            x: 10,
+                            y: -5
+                        }
+                    },
+                    style: {
+                        name: 'light',
+                        tip: 'leftTop'
+                    }
+                });
+            },
+            eventDragStart: function(event) {
+                $(this).qtip("destroy");
+            },
+            eventResizeStart: function(event) {
+                $(this).qtip("destroy");
+            },
+            eventResize: function(event, delta, revertFunc) {
+
+                var enddate = new Date(event.end);
+                var endyear = enddate.getFullYear();
+                var endday = enddate.getDate();
+                var endmonth = enddate.getMonth()+1;
+                var endhour = enddate.getHours();
+                var endminute = enddate.getMinutes();
+
+                var event_end = endyear+"-"+endmonth+"-"+endday+" "+endhour+":"+endminute;
+
+                var data = {
+                    id: event.id,
+                    end: event_end
+                };
+
+                console.log(data);
+
+                $.post('/SisRuCake/events/edit/'+event.id, data)
+                    .done(function (){
+                        bootbox.dialog({
+                            message: "Seu evento foi salvo com sucesso.",
+                            buttons: {
+                                "success" : {
+                                    "label" : "OK",
+                                    "className" : "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    })
+                    .fail(function (){
+                        bootbox.dialog({
+                            message: "Algo de errado ocorreu, por favor tente novamente.",
+                            buttons: {
+                                "success" : {
+                                    "label" : "OK",
+                                    "className" : "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                        revertFunc();
+                    });
+            },
             droppable: true, // this allows things to be dropped onto the calendar !!!
-            drop: function(date, allDay) { // this function is called when something is dropped
-
-                // retrieve the dropped element's stored Event Object
-                var originalEventObject = $(this).data('eventObject');
-                var $extraEventClass = $(this).attr('data-class');
-
-
-                // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject);
-
-                // assign it the date that was reported
-                copiedEventObject.start = date;
-                copiedEventObject.allDay = allDay;
-                if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove();
+            eventDrop: function(event) {
+                var startdate = new Date(event.start);
+                var startyear = startdate.getFullYear();
+                var startday = startdate.getDate();
+                var startmonth = startdate.getMonth()+1;
+                var starthour = startdate.getHours();
+                var startminute = startdate.getMinutes();
+                var enddate = new Date(event.end);
+                var endyear = enddate.getFullYear();
+                var endday = enddate.getDate();
+                var endmonth = enddate.getMonth()+1;
+                var endhour = enddate.getHours();
+                var endminute = enddate.getMinutes();
+                if(event.allDay == true) {
+                    var allday = 1;
+                } else {
+                    var allday = 0;
                 }
+                var event_start = startyear+"-"+startmonth+"-"+startday+" "+starthour+":"+startminute;
+                var event_end = endyear+"-"+endmonth+"-"+endday+" "+endhour+":"+endminute;
 
-            }
-            ,
-            selectable: true,
-            selectHelper: true,
-            select: function(start, end, allDay) {
+                var data = {
+                        id: event.id,
+                        start: event_start,
+                        end: event_end,
+                        all_day: allday
+                };
+                console.log(data);
 
-                bootbox.prompt("New Event Title:", function(title) {
-                    if (title !== null) {
-                        calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true // make the event "stick"
-                        );
+                $.post('/SisRuCake/events/edit/'+event.id, data)
+                    .done(function (){
+                        bootbox.dialog({
+                            message: "Seu evento foi salvo com sucesso.",
+                            buttons: {
+                                "success" : {
+                                    "label" : "OK",
+                                    "className" : "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    })
+                    .fail(function (){
+                        bootbox.dialog({
+                            message: "Algo de errado ocorreu, por favor tente novamente.",
+                            buttons: {
+                                "success" : {
+                                    "label" : "OK",
+                                    "className" : "btn-sm btn-primary"
+                                }
+                            }
+                        });
+                    });
+            },
+            eventClick: function(calEvent, jsEvent, view) {
+                if(calEvent.allDay)
+                    var allday = '<span class="label label-sm label-success" id="event_all_day">Sim</span>';
+                else
+                    allday = '<span class="label label-sm label-danger" id="event_all_day">Não</span>';
+
+                if(calEvent.type == 'Refeição'){
+                    var meal = '<div class="profile-info-row">\
+                                    <div class="profile-info-name"> Refeição </div>\
+                                    <div class="profile-info-value">\
+                                         <a href="/SisRuCake/restaurants/view/3">'+calEvent.meal+'</a>\
+                                    </div>\
+                                </div>';
+                }
+                else
+                    meal = '';
+
+                var startdate = new Date(calEvent.start);
+                var startyear = startdate.getFullYear();
+                var startday = startdate.getDate();
+                var startmonth = startdate.getMonth()+1;
+                var starthour = startdate.getHours();
+                var startminute = startdate.getMinutes();
+                var enddate = new Date(calEvent.end);
+                var endyear = enddate.getFullYear();
+                var endday = enddate.getDate();
+                var endmonth = enddate.getMonth()+1;
+                var endhour = enddate.getHours();
+                var endminute = enddate.getMinutes();
+
+
+
+                console.log(calEvent.id);
+
+                var event_start = "<span class='glyphicon glyphicon-calendar'></span> "+startyear+"-"+startmonth+"-"+startday+" <span class='glyphicon glyphicon-time'></span> "+starthour+":"+startminute;
+                var event_end = "<span class='glyphicon glyphicon-calendar'></span> "+endyear+"-"+endmonth+"-"+endday+" <span class='glyphicon glyphicon-time'></span> "+endhour+":"+endminute;
+
+                var message = '<div class="profile-user-info profile-user-info-striped">\
+                                    <div class="profile-info-row">\
+                                        <div class="profile-info-name"> Tipo </div>\
+                                            <div class="profile-info-value">\
+                                                <span class="editable" id="event_type">'+calEvent.type+'</span>\
+                                            </div>\
+                                        </div>\
+                                        <div class="profile-info-row">\
+                                            <div class="profile-info-name"> Título </div>\
+                                            <div class="profile-info-value">\
+                                                <span class="editable" id="event_title">'+calEvent.title+'</span>\
+                                            </div>\
+                                        </div>\
+                                        <div class="profile-info-row">\
+                                            <div class="profile-info-name"> Detalhes </div>\
+                                            <div class="profile-info-value">\
+                                                <span class="editable" id="product_unit_measure">'+calEvent.details+'</span>\
+                                            </div>\
+                                        </div>\
+                                        <div class="profile-info-row">\
+                                            <div class="profile-info-name"> Início </div>\
+                                            <div class="profile-info-value">\
+                                                <span id="product_code">'+event_start+'</span>\
+                                            </div>\
+                                        </div>\
+                                        <div class="profile-info-row">\
+                                            <div class="profile-info-name"> Fim </div>\
+                                            <div class="profile-info-value">\
+                                                <span class="editable" id="product_created">'+event_end+'</span>\
+                                            </div>\
+                                        </div>\
+                                        <div class="profile-info-row">\
+                                            <div class="profile-info-name"> Integral </div>\
+                                            <div class="profile-info-value">'+allday+'</div>\
+                                        </div>\
+                                        <div class="profile-info-row">\
+                                            <div class="profile-info-name"> Status </div>\
+                                            <div class="profile-info-value">\
+                                                 <span class="editable" id="event_status">'+calEvent.status+'</span>\
+                                            </div>\
+                                        </div>'+meal+'\
+                                    </div>';
+
+                bootbox.dialog({
+                    title: 'O que faremos com este evento?',
+                    message: message,
+                    buttons: {
+                        Deletar: {
+                            className: "btn-danger btn-sm",
+                            callback: function(){
+                                bootbox.confirm("Tem certeza que gostaria de deletar este evento?", function(result) {
+                                    if(result){
+                                        $.get('/SisRuCake/events/delete/'+calEvent.id);
+                                        $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                                    }
+                                });
+                                //
+                            }
+                        },
+                        Cancelar: {
+                            className: "btn-sm"
+                        },
+                        Visitar: {
+                            className: "btn-info btn-sm",
+                            callback: function() {
+                                document.location.href = calEvent.url;
+                            }
+                        }
+                    },
+                    callback: function(result) {
+                        //if(result) do something;
                     }
                 });
 
+                if(calEvent.url){
+                    return false;
+                }
+/*
+                modal.find('#EventId').val(calEvent.id);
+                modal.find('#EventEventTypeId').prop("disabled", true);
+                modal.find('#EventTitle').val(calEvent.title);
+                modal.find('#EventDetails').val(calEvent.details);
+                modal.find('#EventStart').prop("disabled", true);
+                modal.find('#EventEnd').prop("disabled", true);
+                modal.find('#EventMealId').prop("disabled", true);
 
-                calendar.fullCalendar('unselect');
-            }
-            ,
-            eventClick: function(calEvent, jsEvent, view) {
+                if(calEvent.allDay == 1)
+                    modal.find('#EventAllDay').prop('checked', true);
 
-                //display a modal
-                var modal =
-                    '<div class="modal fade">\
-                      <div class="modal-dialog">\
-                       <div class="modal-content">\
-                         <div class="modal-body">\
-                           <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
-                           <form class="no-margin">\
-                              <label>Change event name &nbsp;</label>\
-                              <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
-					 <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
-				   </form>\
-				 </div>\
-				 <div class="modal-footer">\
-					<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
-					<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-				 </div>\
-			  </div>\
-			 </div>\
-			</div>';
+                modal.modal('show');
 
-
-                var modal = $(modal).appendTo('body');
-                modal.find('form').on('submit', function(ev){
-                    ev.preventDefault();
-
-                    calEvent.title = $(this).find("input[type=text]").val();
-                    calendar.fullCalendar('updateEvent', calEvent);
-                    modal.modal("hide");
-                });
                 modal.find('button[data-action=delete]').on('click', function() {
                     calendar.fullCalendar('removeEvents' , function(ev){
+
                         return (ev._id == calEvent._id);
                     })
                     modal.modal("hide");
                 });
 
-                modal.modal('show').on('hidden', function(){
-                    modal.remove();
-                });
 
 
-                //console.log(calEvent.id);
+                //console.log(calEvent);
                 //console.log(jsEvent);
                 //console.log(view);
-
-                // change the border color just for fun
-                //$(this).css('border-color', 'red');
-
-            }
+*/
+            },
+            selectable: false,
+            selectHelper: false,
 
         });
     };

@@ -59,8 +59,10 @@ class SuppliersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Supplier->create();
+            $this->request->data['Supplier']['status'] = 1;
 			if ($this->Supplier->save($this->request->data)) {
-				$this->Session->setFlash(__('The supplier has been saved.'));
+                $supplier = $this->Supplier->findById($this->Supplier->getLastInsertID());
+				$this->Session->setFlash(__("O fornecedor '%s' foi salvo com sucesso.", $supplier['Supplier']['name']));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The supplier could not be saved. Please, try again.'));
@@ -81,10 +83,10 @@ class SuppliersController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Supplier->save($this->request->data)) {
-				$this->Session->setFlash(__('The supplier has been saved.'));
+				$this->Session->setFlash(__('Este fornecedor foi editado com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The supplier could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O fornecedor não pode ser editado, tente novamente.'));
 			}
 		} else {
 			$options = array('conditions' => array('Supplier.' . $this->Supplier->primaryKey => $id));
@@ -127,7 +129,7 @@ class SuppliersController extends AppController {
         }
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Supplier->updateStatus($id)) {
-            $this->Session->setFlash(__('O fornecedor foi deletado.'));
+            $this->Session->setFlash(__('O fornecedor foi desativado.'));
             return $this->redirect(array('action' => 'deleted_index'));
         } else {
             $this->Session->setFlash(__('O fornecedor foi restaurado.'));

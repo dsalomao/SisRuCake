@@ -8,6 +8,9 @@
 
 echo $this->Html->css('bootstrap-datetimepicker');
 
+echo $this->Html->script('libs/moment');
+echo $this->Html->script('libs/bootstrap-datetimepicker');
+echo $this->Html->script('libs/bootstrap-datetimepicker.pt-BR');
 echo $this->Html->script('products_for_events_submit');
 ?>
 
@@ -15,14 +18,14 @@ echo $this->Html->script('products_for_events_submit');
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title col-sm-6">Retirar produto utilizado na refeição: <?php echo $event['Event']['title']; ?> </h4><h4 class="widget-title col-sm-6" style="text-align: right">Código produto: <?php echo $product['Product']['code']; ?></h4>
+                <h4 class="widget-title col-sm-6">Retirar quantidade: <?php echo $product['Product']['name']; ?> </h4><h4 class="widget-title col-sm-6" style="text-align: right">Código produto: <?php echo $product['Product']['code']; ?></h4>
             </div>
 
             <div class="widget-body">
                 <div class="widget-main no-padding">
                     <div class="productsForRecipes form">
                         <?php echo $this->Form->create(
-                            'ProductsForEvent',
+                            'ManualAdjustment',
                             array(
                                 'class' => 'form-horizontal',
                                 'role' => 'form',
@@ -41,39 +44,32 @@ echo $this->Html->script('products_for_events_submit');
                                         array(
                                             'type' => 'text',
                                             'div' => 'col-sm-1',
-                                            'class' => 'input-mini',
-                                            'value' => $quantity
+                                            'class' => 'input-mini'
                                         )
                                     ); ?>
                                     <div class="col-sm-8">
-                                            <?php echo $this->Html->tag(
-                                                'span',
-                                                $product['MeasureUnit']['name'],
-                                                array(
-                                                    'class' => 'label label-lg label-info arrowed-right',
-                                                    'id' => 'tag_'.$product['MeasureUnit']['id']
-                                                )
-                                            ); ?>
+                                        <?php echo $this->Html->tag(
+                                            'span',
+                                            $product['MeasureUnit']['name'],
+                                            array(
+                                                'class' => 'label label-lg label-info arrowed-right',
+                                                'id' => 'tag_'.$product['MeasureUnit']['id']
+                                            )
+                                        ); ?>
                                     </div>
 
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="ProductsForEvent"> Data </label>
 
-
-                                        <?php echo $this->Form->input(
-                                            'date_of_submission',
-                                            array(
-                                                'div' => array(
-                                                    'class' => 'input-group date col-sm-9',
-                                                    'style' => 'padding-left:12px;padding-right:12px;',
-                                                    'id' => 'data_dtp'
-                                                ),
-                                                'type' => 'text',
-                                                'class' => 'form-control',
-                                                'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
-                                            )
-                                        ); ?>
+                                    <?php echo $this->Form->input(
+                                        'product_id',
+                                        array(
+                                            'div' => 'col-sm-9',
+                                            'type' => 'hidden',
+                                            'class' => 'form-control',
+                                            'value' => $product['Product']['id']
+                                        )
+                                    ); ?>
 
                                 </div>
                         </fieldset>

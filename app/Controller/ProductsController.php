@@ -61,10 +61,10 @@ class ProductsController extends AppController {
             $this->request->data['Product']['load_stock'] = 0;
             $this->request->data['Product']['status'] = 1;
             if ($this->Product->save($this->request->data)) {
-				$this->Session->setFlash(__('The product has been saved.'));
+				$this->Session->setFlash(__('O produto foi adicionado com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O produto não pode ser adicionado, tente novamente.'));
 			}
 		}
 		$restaurants = $this->Product->Restaurant->find('list');
@@ -80,20 +80,27 @@ class ProductsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (!$this->Product->exists($id)) {
-			throw new NotFoundException(__('Invalid product'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Product->save($this->request->data)) {
-				$this->Session->setFlash(__('The product has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The product could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
-			$this->request->data = $this->Product->find('first', $options);
-		}
+        if (!$this->Product->exists($id)) {
+            throw new NotFoundException(__('Invalid product'));
+        }
+        $product = $this->Product->findProductById($id);
+        if($product[0]['Product']['load_stock']){
+            $this->Session->setFlash(__('Este produto contém itens em estoque e não pode ser editado.'));
+            return $this->redirect(array('action' => 'index'));
+        }
+        else{
+            if ($this->request->is(array('post', 'put'))) {
+                if ($this->Product->save($this->request->data)) {
+                    $this->Session->setFlash(__('O produto foi editado com sucesso.'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('O produto não pode ser editado, tente novamente.'));
+                }
+            } else {
+                $options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
+                $this->request->data = $this->Product->find('first', $options);
+            }
+        }
 		$restaurants = $this->Product->Restaurant->find('list');
 		$measureUnits = $this->Product->MeasureUnit->find('list');
 		$this->set(compact('restaurants', 'measureUnits', 'suppliers'));
@@ -130,11 +137,11 @@ class ProductsController extends AppController {
     public function logical_delete($id = null) {
         $this->Product->id = $id;
         if (!$this->Product->exists()) {
-            throw new NotFoundException(__('Invalid product'));
+            throw new NotFoundException(__('Produto inexistente.'));
         }
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Product->updateStatus($id)) {
-            $this->Session->setFlash(__('O produto foi deletado'));
+            $this->Session->setFlash(__('O produto foi desativado'));
             return $this->redirect(array('action' => 'deleted_index'));
         } else {
             $this->Session->setFlash(__('O produto foi restaurado.'));

@@ -43,7 +43,7 @@ class Supplier extends AppModel {
 		'business_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Por favor de a razão socual do fornecedor.',
+				'message' => 'Por favor de a razão social do fornecedor.',
 				'allowEmpty' => false,
 				'required' => true,
 				//'last' => false, // Stop validation after this rule

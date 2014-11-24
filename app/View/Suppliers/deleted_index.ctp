@@ -111,8 +111,7 @@ $this->Html->addCrumb('Fornecedores desativados');
                                         'data-placement' => 'top',
                                         'title' => 'Reativar Fornecedor',
                                         'data-trigger' => 'hover'
-                                    ),
-                                    __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
+                                    )
                                 );
                                 ?>
                             </div>
@@ -203,8 +202,7 @@ $this->Html->addCrumb('Fornecedores desativados');
                                                     'data-placement' => 'top',
                                                     'title' => 'Reativar Fornecedor',
                                                     'data-trigger' => 'hover'
-                                                ),
-                                                __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
+                                                )
                                             );
                                             ?>
                                         </li>

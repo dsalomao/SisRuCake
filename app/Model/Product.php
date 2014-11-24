@@ -178,6 +178,19 @@ class Product extends AppModel {
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
+        ),
+        'ManualAdjustment' => array(
+            'className' => 'ManualAdjustments',
+            'foreignKey' => 'product_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
         )
 	);
 

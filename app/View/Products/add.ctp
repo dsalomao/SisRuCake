@@ -39,7 +39,7 @@ $this->Html->addCrumb('Adicionar produto');
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Nome </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductName"> Nome </label>
 
                                 <?php echo $this->Form->input(
                                     'Product.name',
@@ -50,7 +50,7 @@ $this->Html->addCrumb('Adicionar produto');
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductDateOfEntryMonth"> Código </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductCode"> Código </label>
 
 
                                 <?php echo $this->Form->input(
@@ -63,7 +63,7 @@ $this->Html->addCrumb('Adicionar produto');
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Estoque m&iacute;nimo </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductLoadMin"> Estoque m&iacute;nimo </label>
 
 
                                 <?php echo $this->Form->input(
@@ -77,7 +77,7 @@ $this->Html->addCrumb('Adicionar produto');
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Estoque m&aacute;ximo </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductLoadMax"> Estoque m&aacute;ximo </label>
 
 
                                 <?php echo $this->Form->input(
@@ -91,7 +91,7 @@ $this->Html->addCrumb('Adicionar produto');
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Unidade UNESP </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductRestaurantId"> Unidade UNESP </label>
 
 
                                 <?php echo $this->Form->input(
@@ -106,7 +106,7 @@ $this->Html->addCrumb('Adicionar produto');
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductSupplierId"> Unidade de medida </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductMeasureUnitId"> Unidade de medida </label>
 
 
                                 <?php echo $this->Form->input(

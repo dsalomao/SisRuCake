@@ -26,12 +26,6 @@ $this->Html->addCrumb('Produtos');
                <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                    <thead>
                    <tr>
-                       <th class="center">
-                           <label class="position-relative">
-                               <input type="checkbox" class="ace" />
-                               <span class="lbl"></span>
-                           </label>
-                       </th>
                        <th><?php echo $this->Paginator->sort('name', 'Nome'); ?></th>
                        <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
                        <th><?php echo $this->Paginator->sort('load_stock', 'Qtd. em estoque'); ?></th>
@@ -46,12 +40,6 @@ $this->Html->addCrumb('Produtos');
                    <tbody>
                    <?php foreach ($products as $product): ?>
                        <tr>
-                           <td class="center">
-                               <label class="position-relative">
-                                   <input type="checkbox" class="ace" />
-                                   <span class="lbl"></span>
-                               </label>
-                           </td>
 
                            <td><?php echo h($product['Product']['name']); ?>&nbsp;</td>
                            <td><?php echo h($product['Product']['code']); ?>&nbsp;</td>
@@ -122,7 +110,7 @@ $this->Html->addCrumb('Produtos');
                                            'title' => 'desativar produto',
                                            'data-trigger' => 'hover'
                                        ),
-                                       __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $product['Product']['name'])
+                                       __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $product['Product']['name'])
                                    );
                                    echo $this->Html->link(
                                        $this->Html->tag(
@@ -141,6 +129,28 @@ $this->Html->addCrumb('Produtos');
                                            'data-toggle' => 'tooltip',
                                            'data-placement' => 'top',
                                            'title' => 'adicionar quantidade',
+                                           'data-trigger' => 'hover'
+                                       )
+                                   );
+                                   echo $this->Html->link(
+                                       $this->Html->tag(
+                                           'i',
+                                           '',
+                                           array(
+                                               'class' => 'glyphicon glyphicon-minus'
+                                           )
+                                       ),
+                                       array(
+                                           'controller' => 'manual_adjustments',
+                                           'action' => 'manual_submit',
+                                           $product['Product']['id']
+                                       ),
+                                       array(
+                                           'escape' => false,
+                                           'class' => 'btn btn-xs btn-danger actions-tooltip tooltip-error',
+                                           'data-toggle' => 'tooltip',
+                                           'data-placement' => 'top',
+                                           'title' => 'retirar quantidade',
                                            'data-trigger' => 'hover'
                                        )
                                    );
@@ -274,6 +284,34 @@ $this->Html->addCrumb('Produtos');
                                                        'class' => ' actions-tooltip tooltip-success',
                                                        'data-rel' => 'tooltip',
                                                        'data-original-title' => 'adicionar quantidade'
+                                                   )
+                                               );
+                                               ?>
+                                           </li>
+                                           <li>
+                                               <?php
+                                               echo $this->Html->link(
+                                                   $this->Html->tag(
+                                                       'span',
+                                                       $this->Html->tag(
+                                                           'i',
+                                                           '',
+                                                           array('class' => 'glyphicon glyphicon-minus bigger-120')
+                                                       ),
+                                                       array(
+                                                           'class' => 'red'
+                                                       )
+                                                   ),
+                                                   array(
+                                                       'controller' => 'manual_adjustments',
+                                                       'action' => 'manual_submit',
+                                                       $product['Product']['id']
+                                                   ),
+                                                   array(
+                                                       'escape' => false,
+                                                       'class' => ' actions-tooltip tooltip-error',
+                                                       'data-rel' => 'tooltip',
+                                                       'data-original-title' => 'retirar quantidade'
                                                    )
                                                );
                                                ?>

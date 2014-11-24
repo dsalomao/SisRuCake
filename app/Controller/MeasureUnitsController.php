@@ -35,7 +35,7 @@ class MeasureUnitsController extends AppController {
  */
 	public function view($id = null) {
 		if (!$this->MeasureUnit->exists($id)) {
-			throw new NotFoundException(__('Invalid measure unit'));
+			throw new NotFoundException(__('Unidade de medida não existente.'));
 		}
 		$options = array('conditions' => array('MeasureUnit.' . $this->MeasureUnit->primaryKey => $id));
 		$this->set('measureUnit', $this->MeasureUnit->find('first', $options));
@@ -50,10 +50,11 @@ class MeasureUnitsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->MeasureUnit->create();
 			if ($this->MeasureUnit->save($this->request->data)) {
-				$this->Session->setFlash(__('The measure unit has been saved.'));
+                $measureUnit = $this->MeasureUnit->findById($this->MeasureUnit->getLastInsertID());
+				$this->Session->setFlash(__("A unidade de medida '%s' foi adicionada com sucesso.", $measureUnit['MeasureUnit']['name']));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The measure unit could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Sua unidade de medida não pode ser salva, por favor tente novamente.'));
 			}
 		}
 	}
@@ -71,10 +72,10 @@ class MeasureUnitsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->MeasureUnit->save($this->request->data)) {
-				$this->Session->setFlash(__('The measure unit has been saved.'));
+				$this->Session->setFlash(__('Sua unidade de medida foi editada com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The measure unit could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Não pudemos editar esta unidade, por favor tente novamente.'));
 			}
 		} else {
 			$options = array('conditions' => array('MeasureUnit.' . $this->MeasureUnit->primaryKey => $id));
@@ -96,9 +97,9 @@ class MeasureUnitsController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->MeasureUnit->delete()) {
-			$this->Session->setFlash(__('The measure unit has been deleted.'));
+			$this->Session->setFlash(__('Sua unidade foi deletada com sucesso.'));
 		} else {
-			$this->Session->setFlash(__('The measure unit could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('Não pudemos deletar esta unidade, por favor tente novamente.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

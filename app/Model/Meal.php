@@ -93,6 +93,7 @@ class Meal extends AppModel {
  *
  * @var array
  */
+    /*
 	public $hasAndBelongsToMany = array(
 		'Event' => array(
 			'className' => 'Event',
@@ -108,7 +109,7 @@ class Meal extends AppModel {
 			'finderQuery' => '',
 		)
 	);
-
+*/
     /**
      *
      *  função para trocar o valor booleano do campo "status"

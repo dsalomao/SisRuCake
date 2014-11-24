@@ -1,33 +1,5 @@
 jQuery(function($) {
 
-    //spinners
-
-    //fuelux
-    $('#ProductLoadMin').ace_spinner({
-        value:0,
-        min:0,
-        max:100,
-        step:5,
-
-        btn_up_class:'btn-info' ,
-        btn_down_class:'btn-info'
-    })
-        .on('change', function(){
-            //alert(this.value)
-        });
-
-    $('#ProductLoadMax').ace_spinner({
-        value:0,
-        min:0,
-        max:100,
-        step:5,
-
-        btn_up_class:'btn-info' ,
-        btn_down_class:'btn-info'
-    })
-        .on('change', function(){
-            //alert(this.value)
-        });
 
     $('#ProductLoadStock').ace_spinner({
         value:0,

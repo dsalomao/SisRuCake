@@ -45,7 +45,7 @@ $this->Html->addCrumb('Adicionar unidade de medida');
                                         'div' => 'col-sm-9',
                                         'type' => 'checkbox',
                                         'class' => 'ace ace-switch ace-switch-5',
-                                        'after' => $this->Html->tag('span', '', array('class' => 'lbl middle'))
+                                        'after' => $this->Html->tag('span', '',  array('class' => 'lbl middle', 'data-lbl' => 'Sim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não', 'escape' => false))
                                     )
                                 ); ?>
 

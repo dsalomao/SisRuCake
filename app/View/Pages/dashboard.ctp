@@ -29,6 +29,30 @@
                 $this->Html->tag(
                     'i',
                     '',
+                    array('class' => 'fa fa-exchange')
+                ).' Ajustes manuais',
+                array(
+                    'controller' => 'ManualAdjustments',
+                    'action' => 'index'
+                ),
+                array('class' => 'btn btn-lg btn-warning', 'escape' => false)
+            ); ?>
+            <?php echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
+                    array('class' => 'fa fa-folder-open-o')
+                ).' Caderno de saída',
+                array(
+                    'controller' => 'productsForEvents',
+                    'action' => 'index'
+                ),
+                array('class' => 'btn btn-lg btn-dafault', 'escape' => false)
+            ); ?>
+            <?php echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
                     array('class' => 'fa fa-plane')
                 ).' Fornecedores',
                 array(
@@ -85,8 +109,8 @@
                     array('class' => 'fa fa-calendar')
                 ).' Calendário',
                 array(
-                    'controller' => 'serviceDates',
-                    'action' => 'calendar'
+                    'controller' => 'events',
+                    'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
             ); ?>

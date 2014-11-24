@@ -109,7 +109,7 @@ $this->Html->addCrumb('Fornecedores');
                                         'title' => 'desativar fornecedor',
                                         'data-trigger' => 'hover'
                                     ),
-                                    __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
+                                    __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
                                 );
                                 ?>
                             </div>

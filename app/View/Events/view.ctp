@@ -88,7 +88,7 @@
 
                 <div class="profile-info-value">
                      <span class="editable" id="event_all_day">
-                        <?php echo $this->Html->link($event['Meal']['code'], array('plugin' => false, 'controller' => 'meals', 'action' => 'view', $event['Meal']['id'])); ?>
+                        <?php echo $this->Html->link($event['MealsForEvent'][0]['Meal']['code'], array('plugin' => false, 'controller' => 'meals', 'action' => 'view', $event['MealsForEvent'][0]['Meal']['id'])); ?>
                      </span>
                 </div>
             </div>
@@ -99,7 +99,7 @@
         <h4 class="header smaller lighter blue"> Receitas </h4>
 
         <div id="accordion" class="accordion-style1 panel-group">
-            <?php foreach($event['Meal']['RecipesForMeal'] as $relatedRecipe): ?>
+            <?php foreach($event['MealsForEvent'][0]['Meal']['RecipesForMeal'] as $relatedRecipe): ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -188,9 +188,9 @@
                                                 <div class="profile-info-name"> Categoria </div>
 
                                                 <div class="profile-info-value">
-                                                                    <span class="label label-md <?php if($relatedRecipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($relatedRecipe['Recipe']['category'] == 'Prato base'){}elseif($relatedRecipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($relatedRecipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($relatedRecipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($relatedRecipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="relatedRecipeCategory">
-                                                                        <?php echo $relatedRecipe['Recipe']['category']; ?>
-                                                                    </span>
+                                                    <span class="label label-md <?php if($relatedRecipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($relatedRecipe['Recipe']['category'] == 'Prato base'){}elseif($relatedRecipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($relatedRecipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($relatedRecipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($relatedRecipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="relatedRecipeCategory">
+                                                        <?php echo $relatedRecipe['Recipe']['category']; ?>
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -198,9 +198,9 @@
                                                 <div class="profile-info-name"> Rendimento </div>
 
                                                 <div class="profile-info-value">
-                                                                    <span class="badge badge-<?php if($relatedRecipe['Recipe']['category'] == 'Entrada'){echo $class = 'yellow';}elseif($relatedRecipe['Recipe']['category'] == 'Prato base'){}elseif($relatedRecipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'danger';}elseif($relatedRecipe['Recipe']['category'] == 'Guarnição'){echo $class = 'purple';}elseif($relatedRecipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'pink';}elseif($relatedRecipe['Recipe']['category'] == 'Suco'){echo $class = 'orange';} ?>" id="relatedRecipeIncome">
-                                                                        <?php echo $relatedRecipe['Recipe']['income']; ?><small> pessoas</small>
-                                                                    </span>
+                                                    <span class="badge badge-<?php if($relatedRecipe['Recipe']['category'] == 'Entrada'){echo $class = 'yellow';}elseif($relatedRecipe['Recipe']['category'] == 'Prato base'){}elseif($relatedRecipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'danger';}elseif($relatedRecipe['Recipe']['category'] == 'Guarnição'){echo $class = 'purple';}elseif($relatedRecipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'pink';}elseif($relatedRecipe['Recipe']['category'] == 'Suco'){echo $class = 'orange';} ?>" id="relatedRecipeIncome">
+                                                        <?php echo $relatedRecipe['Recipe']['income']; ?><small> pessoas</small>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -218,7 +218,7 @@
                                         <div class="widget-box transparent collapsed">
                                             <div class="widget-header widget-header-flat">
                                                 <h4 class="widget-title lighter">
-                                                    <i class="ace-icon fa fa-star orange"></i>Porcionamento padrão (1x) <small>Rendimento Padrão: <?php echo $relatedRecipe['Recipe']['income']; ?> pessoas</small>
+                                                    <i class="ace-icon fa fa-star orange"></i>Rendimento Padrão: <small><?php echo $relatedRecipe['Recipe']['income']; ?> pessoas</small>
                                                 </h4>
 
                                                 <div class="widget-toolbar">
@@ -281,7 +281,7 @@
                                         <div class="widget-box transparent collapsed">
                                             <div class="widget-header widget-header-flat">
                                                 <h4 class="widget-title lighter">
-                                                    <i class="ace-icon fa fa-star orange"></i>Porcionamento Efetivo (<?php echo $relatedRecipe['portion_multiplier']; ?>x)<small> Rendimento aproximado: <?php echo $float_income = $relatedRecipe['Recipe']['income']*$relatedRecipe['portion_multiplier']; ?> pessoas</small>
+                                                    <i class="ace-icon fa fa-star orange"></i>Rendimento aproximado (<?php echo $relatedRecipe['portion_multiplier']; ?>x):<small> <?php echo $float_income = $relatedRecipe['Recipe']['income']*$relatedRecipe['portion_multiplier']; ?> pessoas</small>
                                                 </h4>
 
                                                 <div class="widget-toolbar">
@@ -351,7 +351,8 @@
                                                                                         'controller' => 'products_for_events',
                                                                                         'action' => 'submit_product',
                                                                                         $event['Event']['id'],
-                                                                                        $relatedProduct['Product']['id']
+                                                                                        $relatedProduct['Product']['id'],
+                                                                                        $portion_quantified
                                                                                     ),
                                                                                     array(
                                                                                         'escape' => false,

@@ -2,32 +2,12 @@
  * Created by daniel on 07/07/14.
  */
 jQuery(function($) {
-
-    $('#SuppliesProductQuantity').ace_spinner({
-        value:0,
-        min:0,
-        max:100,
-        step:5,
-
-        btn_up_class:'btn-info' ,
-        btn_down_class:'btn-info'
-    })
-        .on('change', function(){
-            //alert(this.value)
-        });
-
-    $('#SuppliesProductPrice').ace_spinner({
-        value:0,
-        min:0,
-        max:100,
-        step:5,
-
-        btn_up_class:'btn-info' ,
-        btn_down_class:'btn-info'
-    })
-        .on('change', function(){
-            //alert(this.value)
-        });
+    $('#date_of_entry_dtp').datetimepicker({
+        language: 'pt-BR',
+        format: 'yyyy-mm-dd hh:ii',
+        daysOfWeekDisabled:'0,6',
+        minuteStep: 15
+    });
 
     $('.chosen-select').chosen();
 

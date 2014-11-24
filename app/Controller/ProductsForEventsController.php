@@ -119,21 +119,21 @@ class ProductsForEventsController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-    public function submit_product($event_id = null, $product_id = null){
+    public function submit_product($event_id = null, $product_id = null, $quantity = null){
 
-        $event = $this->ProductsForEvent->Event->findEvent($event_id);
+        $event = $this->ProductsForEvent->Event->findById($event_id);
         $target_product = $this->ProductsForEvent->Product->findById($product_id);
 
         if ($this->request->is('post')) {
             $this->ProductsForEvent->create();
             $this->ProductsForEvent->set(array('event_id' => $event_id, 'product_id' => $product_id));
-            if($target_product['Product']['load_stock'] > $this->request->data['ProductsForEvent']['quantity']){
+            if($target_product['Product']['load_stock'] >= $this->request->data['ProductsForEvent']['quantity']){
                 if ($this->ProductsForEvent->save($this->request->data)) {
                     $target_product['Product']['load_stock'] = $target_product['Product']['load_stock'] - $this->request->data['ProductsForEvent']['quantity'];
                     $this->ProductsForEvent->Product->id = $product_id;
                     $this->ProductsForEvent->Product->saveField('load_stock', $target_product['Product']['load_stock']);
                     $this->Session->setFlash(__('The products for event has been saved.'));
-                    return $this->redirect(array('plugin' => 'full_calendar', 'controller' => 'events', 'action' => 'view', $event_id));
+                    return $this->redirect(array('controller' => 'events', 'action' => 'view', $event_id));
                 } else {
                     $this->Session->setFlash(__('The products for event could not be saved. Please, try again.'));
                 }
@@ -141,6 +141,6 @@ class ProductsForEventsController extends AppController {
                 $this->Session->setFlash(__('Este produto não pode ser atualizado devido a falta do mesmo em estoque.'));
             }
         }
-        $this->set(array('event' => $event, 'product' => $target_product));
+        $this->set(array('event' => $event, 'product' => $target_product, 'quantity' => $quantity));
     }
 }

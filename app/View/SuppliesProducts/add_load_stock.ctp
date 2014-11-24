@@ -6,9 +6,12 @@
  * Time: 21:15
  */
 $this->html->css('chosen', array('inline' => false));
+echo $this->Html->css('bootstrap-datetimepicker');
 
+echo $this->Html->script('libs/moment');
+echo $this->Html->script('libs/bootstrap-datetimepicker');
+echo $this->Html->script('libs/bootstrap-datetimepicker.pt-BR');
 $this->html->script('ace/chosen.jquery', array('inline' => false));
-$this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('libs/jquery.mask', array('inline' => false));
 $this->Html->script('suppliesProducts', array('inline' => false));
 
@@ -82,13 +85,19 @@ $this->Html->addCrumb('Adicionar em estoque');
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductDateOfEntryMonth"> dia </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductDateOfEntry"> dia </label>
 
                                     <?php echo $this->Form->input(
                                         'date_of_entry',
                                         array(
-                                            'dateFormat' => 'DMY',
-                                            'div' => 'col-sm-9'
+                                            'div' => array(
+                                                'class' => 'input-group date col-sm-9',
+                                                'style' => 'padding-left:12px;padding-right:12px;',
+                                                'id' => 'date_of_entry_dtp'
+                                            ),
+                                            'type' => 'text',
+                                            'class' => 'form-control',
+                                            'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
                                         )
                                     ); ?>
 

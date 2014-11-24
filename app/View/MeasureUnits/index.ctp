@@ -103,7 +103,7 @@ $this->Html->addCrumb('Unidades de medida');
                                         'title' => 'deletar unidade',
                                         'data-trigger' => 'hover'
                                     ),
-                                    __('Tem certeza que deseja deletar fornecedor: %s?', $measureUnit['MeasureUnit']['name'])
+                                    __('Tem certeza que deseja deletar esta unidade: %s?', $measureUnit['MeasureUnit']['name'])
                                 );
                                 ?>
                             </div>
@@ -171,7 +171,7 @@ $this->Html->addCrumb('Unidades de medida');
                                                     'title' => 'Deletar Unidade',
                                                     'data-trigger' => 'hover'
                                                 ),
-                                                __('Tem certeza que deseja deletar fornecedor: %s?', $measureUnit['MeasureUnit']['name'])
+                                                __('Tem certeza que deseja deletar esta unidade: %s?', $measureUnit['MeasureUnit']['name'])
                                             );
                                             ?>
                                         </li>

@@ -49,16 +49,16 @@ class MealsForEventsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->MealsForEvent->create();
-			if ($this->MealsForEvent->save($this->request->data)) {
+			if ($this->MealsForEvent->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The meals for event has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller' => 'Events', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The meals for event could not be saved. Please, try again.'));
 			}
 		}
 		$meals = $this->MealsForEvent->Meal->find('list');
-		$events = $this->MealsForEvent->Event->find('list');
-		$this->set(compact('meals', 'events'));
+        $eventTypes = $this->MealsForEvent->Event->EventType->find('list');
+		$this->set(compact('meals', 'eventTypes'));
 	}
 
 /**

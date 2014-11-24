@@ -100,12 +100,14 @@ class Event extends AppModel {
             'conditions' => array('Event.id' => $id),
             'recursive' => 0,
             'contain' => array(
-                'Meal' => array(
-                    'RecipesForMeal' => array(
-                        'Recipe' => array(
-                            'ProductsForRecipe' => array(
-                                'Product' => array(
-                                    'MeasureUnit' => array()
+                'MealsForEvent' => array(
+                    'Meal' => array(
+                        'RecipesForMeal' => array(
+                            'Recipe' => array(
+                                'ProductsForRecipe' => array(
+                                    'Product' => array(
+                                        'MeasureUnit' => array()
+                                    )
                                 )
                             )
                         )

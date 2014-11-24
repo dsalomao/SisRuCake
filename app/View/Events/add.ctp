@@ -10,6 +10,13 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
+echo $this->Html->css('bootstrap-datetimepicker');
+
+echo $this->Html->script('libs/moment');
+echo $this->Html->script('libs/bootstrap-datetimepicker');
+echo $this->Html->script('libs/bootstrap-datetimepicker.pt-BR');
+echo $this->Html->script('events_add');
+
 $this->Html->addCrumb('Planejamento do cardápio');
 $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'controller' => 'full_calendar', 'action' => 'index'));
 
@@ -37,7 +44,7 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                             ));?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Nome </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="EventEventTypeId"> Tipo </label>
 
                                 <?php echo $this->Form->input(
                                     'Event.event_type_id',
@@ -75,7 +82,14 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                                 <?php echo $this->Form->input(
                                     'Event.start',
                                     array(
-                                        'div' => 'col-sm-9'
+                                        'div' => array(
+                                            'class' => 'input-group date col-sm-9',
+                                            'style' => 'padding-left:12px;padding-right:12px;',
+                                            'id' => 'start_dtp'
+                                        ),
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
                                     )
                                 ); ?>
 
@@ -86,7 +100,14 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                                 <?php echo $this->Form->input(
                                     'Event.end',
                                     array(
-                                        'div' => 'col-sm-9'
+                                        'div' => array(
+                                            'class' => 'col-sm-9 input-group date',
+                                            'style' => 'padding-left:12px;padding-right:12px;',
+                                            'id' => 'end_dtp'
+                                        ),
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
                                     )
                                 ); ?>
 
@@ -97,7 +118,10 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                                 <?php echo $this->Form->input(
                                     'Event.all_day',
                                     array(
-                                        'div' => 'col-sm-9'
+                                        'div' => 'col-sm-9',
+                                        'type' => 'checkbox',
+                                        'class' => 'ace ace-switch ace-switch-5',
+                                        'after' => $this->Html->tag('span', '', array('class' => 'lbl middle', 'data-lbl' => 'Sim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não', 'escape' => false))
                                     )
                                 ); ?>
 
@@ -110,21 +134,19 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
                                     array(
                                         'div' => 'col-sm-9',
                                         'options' => array(
-                                            'Scheduled' => 'Agendado',
-                                            'Confirmed' => 'Confirmado',
-                                            'In Progress' => 'Em progresso',
-                                            'Rescheduled' => 'Reagendado',
+                                            'agendado' => 'Agendado',
+                                            'confirmado' => 'Confirmado',
                                             'Completed' => 'Completo'
                                         )
                                     )
                                 ); ?>
 
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" name="mealIdFormGroup">
                                 <label class="col-sm-3 control-label no-padding-right" for="EventMealId"> Refeição </label>
 
                                 <?php echo $this->Form->input(
-                                    'Event.event',
+                                    'Event.meal_id',
                                     array(
                                         'div' => 'col-sm-9'
                                     )

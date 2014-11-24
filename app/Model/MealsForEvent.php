@@ -39,4 +39,15 @@ class MealsForEvent extends AppModel {
 			'order' => ''
 		)
 	);
+
+    public function add_from_calendar($data){
+        $this->create();
+        $this->set('meal_id', $data['MealsForEvent']['meal_id']);
+        $this->set('event_id', $data['MealsForEvent']['event_id']);
+        if ($this->save($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

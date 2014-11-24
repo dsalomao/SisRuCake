@@ -317,24 +317,6 @@
                                                                 ).' Calendário',
                                                                 array(
                                                                     'controller' => 'events',
-                                                                    'action' => 'calendar'
-                                                                ),
-                                                                array('escape' => false)
-                                                            );
-                                                            ?>
-
-                                                            <b class="arrow"></b>
-                                                        </li>
-                                                        <li class="">
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                $this->Html->tag(
-                                                                    'i',
-                                                                    '',
-                                                                    array('class' => 'menu-icon fa fa-bell-o')
-                                                                ).' Eventos',
-                                                                array(
-                                                                    'controller' => 'events',
                                                                     'action' => 'index'
                                                                 ),
                                                                 array('escape' => false)
