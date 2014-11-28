@@ -146,4 +146,23 @@ class SuppliersController extends AppController {
         $this->Supplier->recursive = 0;
         $this->set('suppliers', $this->Paginator->paginate('Supplier', array('Supplier.status' => false)));
     }
+
+/**
+ * deleted_index method
+ *
+ * @return void
+ */
+    public function qualify() {
+        if ($this->request->is(array('post', 'put'))) {
+            $this->Supplier->create();
+            $this->Supplier->set('id', $this->request->data['Supplier']['supplier_id']);
+            if ($this->Supplier->save($this->request->data)) {
+                $this->Session->setFlash(__('Este fornecedor foi avaliado com sucesso.'));
+                return $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('O fornecedor não pode ser avaliado, tente novamente'));
+            }
+        }
+        $this->set('suppliers', $this->Supplier->find('list'));
+    }
 }

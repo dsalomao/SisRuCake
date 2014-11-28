@@ -25,15 +25,12 @@ $this->Html->addCrumb('Fornecedores');
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('id'); ?>&nbsp;</th>
                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('name', 'Nome fantasia'); ?>&nbsp;</th>
-                    <th><?php echo $this->Paginator->sort('business_name', 'Razão social'); ?>&nbsp;</th>
                     <th><?php echo $this->Paginator->sort('code', 'Código'); ?>&nbsp;</th>
                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('adress', 'Endereço'); ?>&nbsp;</th>
-                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('cnpj', 'CNPJ'); ?>&nbsp;</th>
                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('contact', 'Contato'); ?>&nbsp;</th>
                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('created', 'Criado'); ?>&nbsp;</th>
-                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?>&nbsp;</th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('qualification', 'Qualificação'); ?>&nbsp;</th>
                     <th class="actions"><?php echo __('Actions'); ?>&nbsp;</th>
                 </tr>
                 </thead>
@@ -41,15 +38,12 @@ $this->Html->addCrumb('Fornecedores');
                 <tbody>
                 <?php foreach ($suppliers as $supplier): ?>
                     <tr>
-                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['id']); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['name']); ?>&nbsp;</td>
-                        <td><?php echo h($supplier['Supplier']['business_name']); ?>&nbsp;</td>
                         <td><?php echo h($supplier['Supplier']['code']); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['adress']); ?>&nbsp;</td>
-                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['cnpj']); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['contact']); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['created']))); ?>&nbsp;</td>
-                        <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['modified']))); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['qualification']); ?>&nbsp;</td>
                         <td class="actions">
                             <div class="hidden-xs hidden-sm btn-group">
                                 <?php
@@ -272,6 +266,20 @@ $this->Html->addCrumb('Fornecedores');
                         'action' => 'add'
                     ),
                     array('class' => 'btn btn-lg btn-primary', 'escape' => false)
+                );
+                ?>
+                <?php
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'fa fa-bar-chart-o')
+                    ).' Qualificar',
+                    array(
+                        'controller' => 'suppliers',
+                        'action' => 'qualify'
+                    ),
+                    array('class' => 'btn btn-lg btn-warning', 'escape' => false)
                 );
                 ?>
                 <?php

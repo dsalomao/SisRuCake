@@ -31,6 +31,12 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+/**
+ * Components
+ *
+ * @var array
+ */
     public $components = array(
         'DebugKit.Toolbar',
         'Session',
@@ -44,114 +50,51 @@ class AppController extends Controller {
                 'controller' => 'users',
                 'action' => 'login'
             ),
-            'authorize' => array('Controller')
+            'authError' => 'Seu papel de usuário não tem permissão para acessar esta área do sistema.',
+            'loginError' => 'Seu nome de usuário e/ou senha estão incorretos, tente novamente.',
+            'authorize' => 'Controller'
         )
     );
 
-    public function isAuthorized($user) {
-        // Administrador can access every action
-        if (isset($user['role']) && $user['role'] === 'Administrador') {
-            return true;
-        }
-
-        // Default deny
-        return false;
-    }
-
-    //function to print needed array at the screen
+/**
+ *  Print_array method
+ *
+ *  @param array $arr
+ */
     public function print_arr($arr) {
         echo '<pre>';
         print_r($arr);
         echo '< /pre>';
     }
 
-    /**
-     * Uploads files to the server
-     * @params:
-     *		$folder 	= the folder to upload the files e.g. 'img/files'
-     *		$formdata 	= the array containing the form files
-     * @return:
-     *		will return an array with the success of each file upload
-     */
-    /*function uploadFile($folder, $formdata) {
-        // setup dir names absolute and relative
-        $folder_url = WWW_ROOT.$folder;
-        $rel_url = $folder;
-        print $formdata;
-        // create the folder if it does not exist
-        if(!is_dir($folder_url)) {
-            mkdir($folder_url);
+/**
+ *  Default isAuthorized method here authorizing admin to acces every action. If not admin deny all
+ *
+ *  @param array $user
+ *  @return boolean
+ */
+    public function isAuthorized($user) {
+        // Admin can access every action
+        if (isset($user['role']) && $user['role'] === 'Administrador') {
+            return true;
         }
 
-        // list of permitted file types, this is only images but documents can be added
-        $permitted = array('image/gif','image/jpeg','image/pjpeg','image/png');
-
-        // loop through and deal with the files
-        foreach($formdata as $file) {
-            // replace spaces with underscores
-            $filename = str_replace(' ', '_', $file['name']);
-            // assume filetype is false
-            $typeOK = false;
-            // check filetype is ok
-            foreach($permitted as $type) {
-                if($type == $file['type']) {
-                    $typeOK = true;
-                    break;
-                }
-            }
-
-            // if file type ok upload the file
-            if($typeOK) {
-                // switch based on error code
-                switch($file['error']) {
-                    case 0:
-                        // check filename already exists
-                        if(!file_exists($folder_url.'/'.$filename)) {
-                            // create full filename
-                            $full_url = $folder_url.'/'.$filename;
-                            $url = $rel_url.'/'.$filename;
-                            // upload the file
-                            $success = move_uploaded_file($file['tmp_name'], $url);
-                        } else {
-                            // create unique filename and upload file
-                            ini_set('date.timezone', 'Europe/London');
-                            $now = date('Y-m-d-His');
-                            $full_url = $folder_url.'/'.$now.$filename;
-                            $url = $rel_url.'/'.$now.$filename;
-                            $success = move_uploaded_file($file['tmp_name'], $url);
-                        }
-                        // if upload was successful
-                        if($success) {
-                            // save the url of the file
-                            $result['urls'][] = $url;
-                        } else {
-                            $result['errors'][] = "Error uploaded $filename. Please try again.";
-                        }
-                        break;
-                    case 3:
-                        // an error occured
-                        $result['errors'][] = "Error uploading $filename. Please try again.";
-                        break;
-                    default:
-                        // an error occured
-                        $result['errors'][] = "System error uploading $filename. Contact webmaster.";
-                        break;
-                }
-            } elseif($file['error'] == 4) {
-                // no file was selected for upload
-                $result['nofiles'][] = "No file Selected";
-            } else {
-                // unacceptable file type
-                $result['errors'][] = "$filename cannot be uploaded. Acceptable file types: gif, jpg, png.";
-            }
+        if (in_array($this->action, array('index', 'deleted_index', 'view'))) {
+            return true;
         }
-        return $result;
+        // Default deny
+        return false;
     }
-    */
 
+/**
+ *  Default beforeFilter method for allowing an action to be visible without authentication
+ *
+ *  @return void
 
     public function beforeFilter() {
-        //$this->Auth->allow('index', 'view');
+        parent::beforeFilter();
+        // Allow users to register and logout.
+        $this->Auth->allow('');
     }
-
+ */
 }

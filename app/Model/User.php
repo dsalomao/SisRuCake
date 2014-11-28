@@ -1,5 +1,11 @@
 <?php
-App::uses('AppModel', 'Model', 'AuthComponent', 'Controller/Component');
+
+/**
+ * The app class is responsible for path management, class location and class loading. Make sure you follow the File and Class Name Conventions.
+ */
+App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
+
 /**
  * User Model
  *
@@ -23,36 +29,68 @@ class User extends AppModel {
 		'username' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Este campo não pode estar vazio.',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 			'alphaNumeric' => array(
 				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve conter apenas letras e números.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este nome de usuário já existe, tente outro.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 6),
+                'message' => 'Este campo deve conter pelo menos 6 caracteres.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
 		'password' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Este campo não pode estar vazio.',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'alphaNumeric' => array(
+                'rule' => array('alphaNumeric'),
+                'message' => 'Este campo deve conter apenas letras e números.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 8),
+                'message' => 'Este campo deve conter pelo menos 8 caracteres.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
 		'first_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Este campo não pode estar vazio.',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -61,8 +99,8 @@ class User extends AppModel {
 		'last_name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Este campo não pode estar vazio.',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -71,8 +109,8 @@ class User extends AppModel {
 		'role' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Este campo não pode estar vazio.',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -89,15 +127,23 @@ class User extends AppModel {
 		'email' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo não pode estar vazio.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este email já foi utilizado, tente outro.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 			'email' => array(
 				'rule' => array('email'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve ser um endereço de email e.g. meuemail@sisrucake.com.br',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -133,6 +179,12 @@ class User extends AppModel {
 		)
 	);
 
+/**
+*   Default beforeSave function for hashing password before it is saved on database and adding the right roles to the user.
+*
+*   @param array $options
+*   @return true
+*/
     public function beforeSave($options = array()) {
         //Role handling
         if ($this->data['User']['role'] == 0) {
@@ -150,12 +202,12 @@ class User extends AppModel {
         return true;
     }
 
-    /**
-     *
-     *  função para trocar o valor booleano do campo "status"
-     *
-     */
-
+/**
+ *  Function to change user status depending on present status
+ *
+ *  @param string $id
+ *  @return boolean $user['User']['status']
+ */
     public function updateStatus($id = null){
         $this->id = $id;
         $user = $this->find('first', array('conditions' => array('User.id' => $id)));

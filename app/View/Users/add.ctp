@@ -59,7 +59,7 @@ $this->Html->addCrumb('Adicionar usuário');
                                     'User.password',
                                     array(
                                         'div' => 'col-sm-9',
-                                        'type' => 'text'
+                                        'type' => 'password'
                                     )
                                 ); ?>
 

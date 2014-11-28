@@ -85,6 +85,7 @@
 
                 <!-- PAGE CONTENT BEGINS -->
                 <?php echo $this->Session->flash(); ?>
+                <?php echo $this->Session->flash('auth'); ?>
 
                 <?php echo $this->fetch('content'); ?>
                 <!-- PAGE CONTENT ENDS -->

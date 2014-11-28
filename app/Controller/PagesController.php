@@ -81,4 +81,18 @@ class PagesController extends AppController {
     public function dashboard(){
 
     }
+
+    /**
+     *  Default isAuthorized method here authorizing admin to acces every action. If not admin deny all
+     *
+     *  @param array $user
+     *  @return boolean
+     */
+    public function isAuthorized($user) {
+        if (in_array($this->action, array('display'))) {
+            return true;
+        }
+        //In case user has already been authorized by AppController
+        return parent::isAuthorized($user);
+    }
 }

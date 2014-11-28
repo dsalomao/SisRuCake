@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * The app class is responsible for path management, class location and class loading. Make sure you follow the File and Class Name Conventions.
+ */
 App::uses('AppController', 'Controller');
 /**
  * Users Controller
@@ -72,11 +76,11 @@ class UsersController extends AppController {
                 //$this->request->data['User']['image_url'] = $fileOK['urls'][0];
             //}
             if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved.'));
+				$this->Session->setFlash(__('O usuário foi salvo com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
 
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O usuário não pôde ser salvo, tente novamente.'));
 			}
 		}
 		$restaurants = $this->User->Restaurant->find('list');
@@ -131,13 +135,13 @@ class UsersController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-    /**
-     * logical_delete method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
+/**
+ * logical_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
     public function logical_delete($id = null) {
         $this->User->id = $id;
         if (!$this->User->exists()) {
@@ -153,40 +157,64 @@ class UsersController extends AppController {
         }
 
     }
-    /**
-     * deleted_index method
-     *
-     * @return void
-     */
+
+/**
+ * deleted_index method
+ *
+ * @return void
+ */
     public function deleted_index() {
         $this->User->recursive = 0;
         $this->set('users', $this->Paginator->paginate('User', array('User.status' => 0)));
     }
 
-    /**
-     * login method
-     *
-     * @return url stored in Auth component
-     */
+/**
+ * login method
+ *
+ * @return url stored in Auth component
+ */
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 return $this->redirect($this->Auth->Redirect());
             }
-            $this->Session->setFlash(__('Invalid username or password, try again'));
+            $this->Session->setFlash(__('Valores de nome de usuário e/ou senha inválidos, tente novamente.'));
         }
     }
 
-    /**
-     * logout method
-     *
-     * @return url stored in Auth component
-     */
+/**
+ * logout method
+ *
+ * @return url stored in Auth component
+ */
     public function logout() {
         return $this->redirect($this->Auth->logout());
     }
 
-    public function beforeFilter() {
-        $this->Auth->allow('edit');
+/**
+ *  Default isAuthorized method been overwriten to allow all registered users to access some methods and limit others
+ *
+ *  @param array $user
+ *  @return boolean
+ */
+    public function isAuthorized($user) {
+        // Every registered user can access these actions
+        if (in_array($this->action, array('logout'))) {
+            return true;
+        }
+
+        // If action been called is in this list.
+        if (in_array($this->action, array('edit', 'logical_delete'))) {
+            $userManipulatedId = (int) $this->request->params['pass'][0];
+            //If user is an Auxiliar, dont authoriza.
+            if($user['role'] == 'Auxiliar'){
+                //If user been edited or deleted is the same accessing the action, authorize.
+                if($userManipulatedId == $user['id'])
+                    return true;
+                return false;
+            }
+        }
+        //In case user has already been authorized by AppController
+        return parent::isAuthorized($user);
     }
 }

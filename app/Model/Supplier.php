@@ -26,7 +26,7 @@ class Supplier extends AppModel {
 				'rule' => array('notEmpty'),
 				'message' => 'Por favor de um nome "fantasia" ao fornecedor.',
 				'allowEmpty' => false,
-				'required' => true,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -45,7 +45,7 @@ class Supplier extends AppModel {
 				'rule' => array('notEmpty'),
 				'message' => 'Por favor de a razão social do fornecedor.',
 				'allowEmpty' => false,
-				'required' => true,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -55,7 +55,7 @@ class Supplier extends AppModel {
 				'rule' => array('notEmpty'),
 				'message' => 'Por favor de o código do fornecedor.',
 				'allowEmpty' => false,
-				'required' => false,
+				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -73,7 +73,7 @@ class Supplier extends AppModel {
 				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
-				'required' => false,
+				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -102,6 +102,12 @@ class Supplier extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+        'qualification' => array(
+            'allowedChoice' => array(
+                'rule' => array('inList', array('A', 'B', 'C', 'D', 'E', 'F')),
+                'message' => 'Qualifique o fornecedor numa escala de A a F.'
+            )
+        ),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
