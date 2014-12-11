@@ -92,14 +92,20 @@ public $helpers = array('Form', 'Html', 'Number');
         if ($this->request->is('post')) {
             $this->SuppliesProduct->create();
             $this->SuppliesProduct->set('product_id', $relatedProduct['Product']['id']);
-            if ($this->SuppliesProduct->save($this->request->data)) {
-                $relatedProduct['Product']['load_stock'] = $relatedProduct['Product']['load_stock'] + $this->request->data['SuppliesProduct']['quantity'];
-                $this->SuppliesProduct->Product->id = $id;
-                $this->SuppliesProduct->Product->saveField('load_stock', $relatedProduct['Product']['load_stock']);
-                $this->Session->setFlash(__('O produto em estoque teve suas quantidades editadas com sucesso.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('Não foi possível editar as quantidades do produto, tente novamente.'));
+            if($this->SuppliesProduct->canILoadStock($id, $this->request->data['SuppliesProduct']['quantity'])){
+                if ($this->SuppliesProduct->save($this->request->data)) {
+                    $relatedProduct['Product']['load_stock'] = $relatedProduct['Product']['load_stock'] + $this->request->data['SuppliesProduct']['quantity'];
+                    $this->SuppliesProduct->Product->id = $id;
+                    $this->SuppliesProduct->Product->saveField('load_stock', $relatedProduct['Product']['load_stock']);
+                    $this->Session->setFlash(__('O produto em estoque teve suas quantidades editadas com sucesso.'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('Não foi possível editar as quantidades do produto, tente novamente.'));
+                }
+            }
+            else{
+                return $this->redirect(array('action' => 'view', $id));
+                $this->Session->setFlash(__('Não foi possível editar as quantidades do produto, limite máximo de estoque atingido.'));
             }
         }
 

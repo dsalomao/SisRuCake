@@ -51,7 +51,7 @@ $this->Html->addCrumb('Receitas');
                         <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['code']); ?>&nbsp;</td>
                         <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['description']); ?>&nbsp;</td>
                         <td>
-                            <span class="label label-md <?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="recipe_status">
+                            <span class="label label-md <?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){echo $class = 'label-light';}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'label-pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'label-info';} ?>" id="recipe_status">
                                     <?php echo $recipe['Recipe']['category']; ?>
                                 </span>
                         </td>

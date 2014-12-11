@@ -29,16 +29,7 @@ class Supplier extends AppModel {
 				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-            'alphaNumeric' => array(
-                'rule' => array('alphaNumeric'),
-                'message' => 'Nomes fantasia devem conter apenas letras e números.',
-                //'allowEmpty' => false,
-                //'required' => false,
-                //'last' => false, // Stop validation after this rule
-                //'on' => 'create', // Limit validation to 'create' or 'update' operations
-            ),
-
+			)
 		),
 		'business_name' => array(
 			'notEmpty' => array(
@@ -93,8 +84,8 @@ class Supplier extends AppModel {
             )
 		),
 		'contact' => array(
-			'phone' => array(
-				'rule' => '/^(\(11\) [9][0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$/',
+			'custom' => array(
+				'rule' => '/^(\(11\) (9\d{4})-\d{4})|((\(1[2-9]{1}\)|\([2-9]{1}\d{1}\)) [5-9]\d{3}-\d{4})$/',
 				'message' => 'Este campo deve ser um número de telefone válido.',
 				'allowEmpty' => true,
 				//'required' => false,

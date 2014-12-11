@@ -17,6 +17,7 @@ $this->Html->script('suppliesProducts', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', '/products');
+$this->Html->addCrumb( $product['Product']['name'], '/products/view/'.+ $product['Product']['id']);
 $this->Html->addCrumb('Adicionar em estoque');
 ?>
 

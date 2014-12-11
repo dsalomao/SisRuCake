@@ -6,8 +6,8 @@ jQuery(function($) {
     $('#RecipeIncome').ace_spinner({
         value:0,
         min:0,
-        max:1000,
-        step:25,
+        max:350,
+        step:5,
 
         btn_up_class:'btn-info' ,
         btn_down_class:'btn-info'

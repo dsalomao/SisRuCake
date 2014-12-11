@@ -234,6 +234,118 @@
                                         <b class="arrow"></b>
 
                                         <ul class="submenu">
+
+
+                                        <li class="">
+                                                    <?php
+                                                    echo $this->Html->link(
+                                                        $this->Html->tag(
+                                                            'i',
+                                                            '',
+                                                            array('class' => 'menu-icon fa fa-caret-right')
+                                                        ).'Logística & <br>Suprimentos'.'<b class="arrow fa fa-angle-down"></b>',
+                                                        '',
+                                                        array(
+                                                            'escape' => false,
+                                                            'class' => 'dropdown-toggle'
+                                                        )
+                                                    );
+                                                    ?>
+
+                                                    <ul class="submenu">
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon fa fa-calendar')
+                                                                ).' Caderno de entrada',
+                                                                array(
+                                                                    'controller' => 'suppliesProducts',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon fa fa-credit-card')
+                                                                ).' Caderno de saída',
+                                                                array(
+                                                                    'controller' => 'productOutput',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon fa fa-fighter-jet')
+                                                                ).' Fornecedores',
+                                                                array(
+                                                                    'controller' => 'suppliers',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'fa fa-glass')
+                                                                ).' Produtos',
+                                                                array(
+                                                                    'controller' => 'products',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'glyphicon glyphicon-tint')
+                                                                ).' Unidades de medida',
+                                                                array(
+                                                                    'controller' => 'measureUnits',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+
                                                 <li class="">
                                                         <?php
                                                         echo $this->Html->link(
@@ -326,116 +438,6 @@
                                                             <b class="arrow"></b>
                                                         </li>
                                                     </ul>
-                                                </li>
-
-                                                <li class="">
-                                                        <?php
-                                                                echo $this->Html->link(
-                                                                        $this->Html->tag(
-                                                                                'i',
-                                                                                '',
-                                                                                array('class' => 'menu-icon fa fa-caret-right')
-                                                                        ).'Logística & <br>Suprimentos'.'<b class="arrow fa fa-angle-down"></b>',
-                                                                        '',
-                                                                        array(
-                                                                                'escape' => false,
-                                                                                'class' => 'dropdown-toggle'
-                                                                        )
-                                                                );
-                                                        ?>
-
-                                                        <ul class="submenu">
-                                                                <li class="">
-                                                                    <?php
-                                                                    echo $this->Html->link(
-                                                                        $this->Html->tag(
-                                                                            'i',
-                                                                            '',
-                                                                            array('class' => 'menu-icon fa fa-calendar')
-                                                                        ).' Caderno de entrada',
-                                                                        array(
-                                                                            'controller' => 'suppliesProducts',
-                                                                            'action' => 'index'
-                                                                        ),
-                                                                        array('escape' => false)
-                                                                    );
-                                                                    ?>
-
-                                                                    <b class="arrow"></b>
-                                                                </li>
-                                                                <li class="">
-                                                                    <?php
-                                                                    echo $this->Html->link(
-                                                                        $this->Html->tag(
-                                                                            'i',
-                                                                            '',
-                                                                            array('class' => 'menu-icon fa fa-credit-card')
-                                                                        ).' Caderno de saída',
-                                                                        array(
-                                                                            'controller' => 'productsForEvents',
-                                                                            'action' => 'index'
-                                                                        ),
-                                                                        array('escape' => false)
-                                                                    );
-                                                                    ?>
-
-                                                                    <b class="arrow"></b>
-                                                                </li>
-                                                                <li class="">
-                                                                        <?php
-                                                                                echo $this->Html->link(
-                                                                                        $this->Html->tag(
-                                                                                                'i',
-                                                                                                '',
-                                                                                                array('class' => 'menu-icon fa fa-fighter-jet')
-                                                                                        ).' Fornecedores',
-                                                                                        array(
-                                                                                            'controller' => 'suppliers',
-                                                                                            'action' => 'index'
-                                                                                        ),
-                                                                                        array('escape' => false)
-                                                                                );
-                                                                        ?>
-
-                                                                        <b class="arrow"></b>
-                                                                </li>
-                                                                <li class="">
-                                                                        <?php
-                                                                                echo $this->Html->link(
-                                                                                        $this->Html->tag(
-                                                                                                'i',
-                                                                                                '',
-                                                                                                array('class' => 'fa fa-glass')
-                                                                                        ).' Produtos',
-                                                                                        array(
-                                                                                            'controller' => 'products',
-                                                                                            'action' => 'index'
-                                                                                        ),
-                                                                                        array('escape' => false)
-                                                                                );
-                                                                        ?>
-
-                                                                        <b class="arrow"></b>
-                                                                </li>
-                                                                <li class="">
-                                                                        <?php
-                                                                        echo $this->Html->link(
-                                                                                $this->Html->tag(
-                                                                                        'i',
-                                                                                        '',
-                                                                                        array('class' => 'glyphicon glyphicon-tint')
-                                                                                ).' Unidades de medida',
-                                                                                array(
-                                                                                    'controller' => 'measureUnits',
-                                                                                    'action' => 'index'
-                                                                                ),
-                                                                                array('escape' => false)
-                                                                        );
-                                                                        ?>
-
-                                                                        <b class="arrow"></b>
-                                                                </li>
-                                                        </ul>
                                                 </li>
 
                                                 <li class="">
@@ -651,7 +653,7 @@
                                                 <!-- PAGE CONTENT ENDS -->
                                         </div><!-- /.col -->
                                 </div><!-- /.row -->
-                                <?php //echo $this->Js->writeBuffer(); // Write cached scripts ?>
+                                <?php echo $this->Js->writeBuffer(); // Write cached scripts ?>
                                 <?php //echo $this->element('sql_dump'); ?>
                         </div><!-- /.page-content -->
                 </div><!-- /.main-content -->

@@ -10,6 +10,7 @@ $this->html->css('chosen', array('inline' => false));
 $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('recipesForMeals', array('inline' => false));
+echo $this->Html->script('ace/bootbox');
 
 $this->Html->addCrumb('Refeições', '/meals');
 $this->Html->addCrumb($meal['Meal']['code'], array('controller' => 'Meals', 'action' => 'view', $meal['Meal']['id']));

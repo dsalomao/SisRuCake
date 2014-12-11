@@ -34,17 +34,17 @@ $this->Html->addCrumb('Ajustes manuais em estoque');
                 </thead>
 
                 <tbody>
-                <?php foreach ($manualAdjustments as $manualAdjustment): ?>
+                <?php foreach ($ProductOutputs as $productOutput): ?>
                     <tr>
-                        <td class="hidden-sm hidden-xs"><?php echo h($manualAdjustment['ManualAdjustment']['id']); ?>&nbsp;</td>
-                        <td style="text-align: right;"><?php echo h($manualAdjustment['ManualAdjustment']['quantity']); ?>&nbsp;</td>
-                        <td><?php echo h($manualAdjustment['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($productOutput['ProductOutput']['id']); ?>&nbsp;</td>
+                        <td style="text-align: right;"><?php echo h($productOutput['ProductOutput']['quantity']); ?>&nbsp;</td>
+                        <td><?php echo h($productOutput['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
                         <td>
-                            <?php echo $this->Html->link($manualAdjustment['Product']['name'], array('controller' => 'products', 'action' => 'view', $manualAdjustment['Product']['id'])); ?>
+                            <?php echo $this->Html->link($productOutput['Product']['name'], array('controller' => 'products', 'action' => 'view', $productOutput['Product']['id'])); ?>
                         </td>
-                        <td><?php echo h(date("d-m-Y", strtotime($manualAdjustment['ManualAdjustment']['created']))); ?>&nbsp;</td>
+                        <td><?php echo h(date("d-m-Y", strtotime($productOutput['ProductOutput']['created']))); ?>&nbsp;</td>
                         <td>
-                            <?php echo h(date("d-m-Y", strtotime($manualAdjustment['ManualAdjustment']['created']))); ?>
+                            <?php echo h(date("d-m-Y", strtotime($productOutput['ProductOutput']['created']))); ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

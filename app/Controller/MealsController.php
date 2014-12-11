@@ -55,10 +55,10 @@ class MealsController extends AppController {
 			$this->Meal->create();
             $this->request->data['Meal']['status'] = 1;
 			if ($this->Meal->save($this->request->data)) {
-				$this->Session->setFlash(__('The meal has been saved.'));
+				$this->Session->setFlash(__('Sua refeição foi salva com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The meal could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Sua refeição não pode ser salva, tente novamente.'));
 			}
 		}
 	}

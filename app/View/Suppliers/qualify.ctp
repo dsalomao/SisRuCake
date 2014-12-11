@@ -56,6 +56,12 @@ $this->html->script('suppliers_qualify', array('inline' => false));
 
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SupplierComment"> Comentário </label>
+
+                                <?php echo $this->Form->input('Supplier.comment', array('type' => 'textarea', 'div' => 'col-sm-9')); ?>
+
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="SupplierId"> Fornecedor </label>
 
                                 <?php echo $this->Form->input(

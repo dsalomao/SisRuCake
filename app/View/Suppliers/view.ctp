@@ -98,7 +98,41 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
             </div>
 
         </div>
+
+        <div class="space-6"></div>
+
+        <?php if($supplier['Supplier']['qualification']) : ?>
+        <div class="col-sm-7 infobox-container">
+
+            <div class="infobox infobox-pink">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-cutlery"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span class="infobox-data-number"><?php echo $supplier['Supplier']['qualification']; ?></span>
+                    <div class="infobox-content">Qualificação</div>
+                </div>
+            </div>
+
+            <!-- /section:pages/dashboard.infobox.dark -->
+        </div>
+
+        <div class="space-6"></div>
+
+        <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+                <div class="profile-info-name"> <?php echo __('Observação'); ?> </div>
+
+                <div class="profile-info-value">
+                    <span class="editable" id="product_name"><?php echo h($supplier['Supplier']['comment']); ?>&nbsp;</span>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
     </div>
+
     <div class="col-xs-12 col-sm-12 col-md-7 widget-container-col ui-sortable" style="min-height: 184px;">
         <!-- #section:custom/widget-box.options.transparent -->
 

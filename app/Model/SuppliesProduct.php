@@ -32,18 +32,10 @@ class SuppliesProduct extends AppModel {
                 ),
 		),
 		'price' => array(
-			'money' => array(
-				'rule' => array('money'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+			'numeric' => array(
+				'rule' => array('numeric'),
+                'message' => 'Este campo tem de ser um número vákido.',
+				'allowEmpty' => true,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -115,26 +107,16 @@ class SuppliesProduct extends AppModel {
         );
     }
 
-    public function findRelatedByProduct($id = null){
+    public function canILoadStock($id = null, $quantity = null) {
         $options = array(
-            'conditions' => array('SuppliesProduct.product_id' => $id),
-            'recursive' => 0,
-            'fields' => array('SuppliesProduct.id', 'SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry', 'SuppliesProduct.expiration'),
-            'contain' => array(
-                'Product' => array(
-                    'MeasureUnit' => array(
-                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name'
-                        )
-                    ),
-                    'fields' => array('Product.id', 'Product.name')
-                ),
-                'Supplier' => array(
-                    'fields' => array('Supplier.id', 'Supplier.name')
-                )
-            )
+            'fields' => array('Product.load_max', 'Product.load_stock'),
+            'conditions' => array('Product.id' => $id)
         );
-        $related = $this->find('all', $options);
-        return $related;
+        $product_properties = $this->Product->find('first', $options);
+        if($product_properties['load_stock']+$quantity <= $product_properties['load_max'])
+            return true;
+        else
+            return false;
     }
 
     public function findRelatedBySupplier($id = null){
@@ -167,7 +149,8 @@ class SuppliesProduct extends AppModel {
                 'Supplier' => array(
                     'fields' => array('Supplier.id', 'Supplier.name')
                 )
-            )
+            ),
+            'order' => array('SuppliesProduct.date_of_entry' => 'desc')
         );
         $related = $this->find('all', $options);
         return $related;

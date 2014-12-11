@@ -63,6 +63,21 @@ $this->Html->addCrumb('Adicionar produto');
 
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="ProductMeasureUnitId"> Unidade de medida </label>
+
+
+                                <?php echo $this->Form->input(
+                                    'Product.measure_unit_id',
+                                    array(
+                                        'type' => 'select',
+                                        'div' => 'col-sm-9',
+                                        'class' => 'chosen-select',
+                                        'placeholder' => 'escolha uma unidade'
+                                    )
+                                ); ?>
+
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ProductLoadMin"> Estoque m&iacute;nimo </label>
 
 
@@ -90,37 +105,6 @@ $this->Html->addCrumb('Adicionar produto');
                                 ); ?>
 
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ProductRestaurantId"> Unidade UNESP </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.restaurant_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma UAN'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ProductMeasureUnitId"> Unidade de medida </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.measure_unit_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma unidade'
-                                    )
-                                ); ?>
-
-                            </div>
-
                         </fieldset>
 
                         <div class="form-actions center">

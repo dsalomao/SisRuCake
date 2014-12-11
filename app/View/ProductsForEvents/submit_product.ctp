@@ -8,6 +8,8 @@
 
 echo $this->Html->css('bootstrap-datetimepicker');
 
+echo $this->Html->script('libs/bootstrap-datetimepicker');
+echo $this->Html->script('libs/bootstrap-datetimepicker.pt-BR');
 echo $this->Html->script('products_for_events_submit');
 ?>
 

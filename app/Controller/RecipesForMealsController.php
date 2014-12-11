@@ -46,21 +46,29 @@ class RecipesForMealsController extends AppController {
  *
  * @return void
  */
-	public function add($id = null) {
+	public function add($meal_id = null) {
 		if ($this->request->is('post')) {
 			$this->RecipesForMeal->create();
-            $this->RecipesForMeal->set('meal_id', $id);
+            $this->RecipesForMeal->set('meal_id', $meal_id);
 			if ($this->RecipesForMeal->save($this->request->data)) {
-				$this->Session->setFlash(__('The recipes for meal has been saved.'));
-				return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
+				$this->Session->setFlash(__('Sua receita foi adicionada com sucesso.'));
+				return $this->redirect(array('controller' => 'Meals', 'action' => 'view', $id));
 			} else {
-				$this->Session->setFlash(__('The recipes for meal could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Sua receita não pode ser adicionada, tente novamente.'));
 			}
 		}
         $this->RecipesForMeal->Meal->recursive = -1;
-		$meal = $this->RecipesForMeal->Meal->findById($id);
-		$recipes = $this->RecipesForMeal->Recipe->find('list');
-		$this->set(compact('meal', 'recipes'));
+		$meal = $this->RecipesForMeal->Meal->findById($meal_id);
+        $alreadySavedRecipes = $this->RecipesForMeal->getAlreadySavedRecipesForThisMeal($meal_id);
+        $options = array(
+            'conditions' => array(
+                'NOT' => array(
+                    'Recipe.id' => $alreadySavedRecipes
+                ),
+            )
+        );
+		$recipes = $this->RecipesForMeal->Recipe->find('list', $options);
+		$this->set(compact('meal', 'recipes', 'alreadySavedRecipes'));
 	}
 
 /**
@@ -108,7 +116,7 @@ class RecipesForMealsController extends AppController {
 		} else {
 			$this->Session->setFlash(__('The recipes for meal could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
 	}
 
     /**

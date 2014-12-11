@@ -175,15 +175,15 @@ class Recipe extends AppModel {
         return true;
     }
 
-    /**
-     *
-     *  função para trocar o valor booleano do campo "status"
-     *
-     */
-
+/**
+ *
+ *  função para trocar o valor booleano do campo "status"
+ *
+ */
     public function updateStatus($id = null){
         $this->id = $id;
         $recipe = $this->find('first', array('conditions' => array('Recipe.id' => $id)));
+
         if($recipe['Recipe']['status']){
             $this->saveField('status', NULL);
         }else
@@ -192,15 +192,31 @@ class Recipe extends AppModel {
         return $recipe['Recipe']['status'];
     }
 
-    public function testeJoin($id = null){
-        $this->id = $id;
-        $options = array('conditions' => array('ProductsForRecipe.recipe_id' => $id), 'recursive' => 2);
-        $related = $this->ProductsForRecipe->find('all', $options);
-        //$relatedProducts = $related['Products'];
-        //$relatedMeasureUnit = $related['MeasureUnits'];
-        return $related;
-        //return compact('relatedProducts', 'relatedMeasureUnit');
+    public function findMyRecipe($id = null) {
+
+        $options = array(
+            'conditions' => array('Recipe.id' => $id),
+            'recursive' => -1
+        );
+
+        return $this->find( 'first', $options);
     }
 
-
+    public function getMyRecipeIngredients($id = null){
+        $options = array(
+            'recursive' => 0,
+            'contain' => array(
+                'ProductsForRecipe' => array(
+                    'Product' => array(
+                        'MeasureUnit' => array(
+                            'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                        ),
+                        'fields' => array('Product.name'),
+                    )
+                )
+            ),
+            'fields' => array('id', 'name', 'code', 'income', 'category')
+        );
+        return $this->find('first', $options);
+    }
 }

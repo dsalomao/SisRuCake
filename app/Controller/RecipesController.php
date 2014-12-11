@@ -55,10 +55,10 @@ class RecipesController extends AppController {
 			$this->Recipe->create();
             $this->request->data['Recipe']['status'] = 1;
 			if ($this->Recipe->save($this->request->data)) {
-				$this->Session->setFlash(__('The recipe has been saved.'));
+				$this->Session->setFlash(__('Sua receita foi salva com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The recipe could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Sua receita não pode ser salva, tente novamente.'));
 			}
 		}
         $categories = array('Entrada', 'Prato base', 'Prato proteico', 'Guarnição', 'Sobremesa', 'Suco');
@@ -141,5 +141,12 @@ class RecipesController extends AppController {
     public function deleted_index() {
         $this->Recipe->recursive = 0;
         $this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => 0)));
+    }
+
+    public function get_full_recipe($id = null){
+        $recipe = $this->Recipe->getMyRecipeIngredients($id);
+
+        echo json_encode($recipe);
+        $this->autoRender = false;
     }
 }

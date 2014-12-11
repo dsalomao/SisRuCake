@@ -122,8 +122,6 @@ class ProductsForRecipesController extends AppController {
      */
     public function add_ingredient($id = null) {
 
-
-
         if ($this->request->is('post')) {
             $this->ProductsForRecipe->create();
             //find the related product been posted
@@ -136,35 +134,23 @@ class ProductsForRecipesController extends AppController {
             }
             //find related recipe been posted
             $thisRecipe = $this->ProductsForRecipe->getRelatedRecipe($id);
-            //this productsForRecipe object = recipe id
+            //this productsForRecipe object created in line 126 = recipe id
             $this->ProductsForRecipe->set('recipe_id', $thisRecipe['Recipe']['id']);
             if ($this->ProductsForRecipe->save($this->request->data)) {
-                $this->Session->setFlash(__('Deu certo.'));
+                $this->Session->setFlash(__('Seu ingrediente foi salvo com sucesso.'));
                 return $this->redirect(array('controller' => 'recipes','action' => 'view', $id));
             } else {
-                $this->Session->setFlash(__('The supplies product could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Seu ingrediente não pode ser salvo, tente novamente.'));
             }
         }
-
+        //Loading the MeasureUnits model THIS NEEDS TO BE CHANGED
         $this->loadModel('MeasureUnit');
+        //Acess the newly created relationship
         $measure_units = $this->MeasureUnit->getMeasureUnits();
 
-        $products = $this->ProductsForRecipe->Product->find(
-            'all',
-            array(
-                'conditions' => array('Product.status' => 1),
-                'fields' => array('Product.id', 'Product.name', 'Product.measure_unit_id'),
-                'recursive' => -1
-            )
-        );
+        $products = $this->ProductsForRecipe->Product->findAllByStatus('1',array('Product.id', 'Product.name', 'Product.measure_unit_id'),array('Product.name' => 'asc'));
 
-        $thisRecipe = $this->ProductsForRecipe->Recipe->find(
-            'first',
-            array(
-                'conditions' => array('Recipe.id' => $id),
-                'recursive' => -1
-            )
-        );
+        $thisRecipe = $this->ProductsForRecipe->Recipe->findMyRecipe($id);
         $this->set(compact('thisRecipe', 'products', 'measure_units'));
     }
 }

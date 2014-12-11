@@ -14,40 +14,18 @@ class RecipesForMeal extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'recipe_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'meal_id' => array(
-            'numeric' => array(
-                'rule' => array('numeric'),
-                //'message' => 'Your custom message here',
+        'portion_multiplier' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Este campo não pode estar vazio.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
-		),
-        'category' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
-                //'allowEmpty' => false,
-                //'required' => false,
-                //'last' => false, // Stop validation after this rule
-                //'on' => 'create', // Limit validation to 'create' or 'update' operations
-            ),
-        ),
-        'quantity' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
+            'naturalNumber' => array(
+                'rule' => array('naturalNumber'),
+                'message' => 'Este campo tem de ser um valor inteiro.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
@@ -80,26 +58,26 @@ class RecipesForMeal extends AppModel {
 		)
 	);
 
-    public function findRelatedByMeal($id = null){
+    public function hasRecipeForMeal($recipe_id = null, $meal_id = null){
         $options = array(
-            'conditions' => array('RecipesForMeal.meal_id' => $id),
+            'conditions' => array('RecipesForMeal.meal_id' => $meal_id, 'RecipesForMeal.recipe_id' => $recipe_id),
             'recursive' => -1
         );
-        /*$options = array(
-            'conditions' => array('RecipesForMeal.meal_id' => $id),
-            'recursive' => 2,
-            'contain' => array(
-                'Recipe' => array(
-                    'ProductsForRecipe' => array(
-                        'Product' => array()
-                    )
-                ),
-                'Meal' => array(
-                )
-            )
-        );*/
-        $related = $this->find('all', $options);
-        return $related;
+        $count = $this->find('count', $options);
+        if($count)
+            return true;
+        else
+            return false;
+    }
+
+    public function getAlreadySavedRecipesForThisMeal($meal_id = null){
+        $options = array(
+            'fields' => 'RecipesForMeal.recipe_id',
+            'conditions' => array('RecipesForMeal.meal_id' => $meal_id),
+            'recursive' => -1
+        );
+        $recipesForMeal = $this->find('list', $options);
+        return $recipesForMeal;
     }
 
     public function findActiveRecipes(){

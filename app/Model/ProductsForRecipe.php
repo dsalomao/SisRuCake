@@ -18,7 +18,15 @@ class ProductsForRecipe extends AppModel {
         'quantity' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este campo não pode estar vazio.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'numeric' => array(
+                'rule' => array('numeric'),
+                'message' => 'Este campo deve ser uma quantidade numérica válida.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule

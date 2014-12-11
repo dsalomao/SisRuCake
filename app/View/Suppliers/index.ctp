@@ -279,7 +279,7 @@ $this->Html->addCrumb('Fornecedores');
                         'controller' => 'suppliers',
                         'action' => 'qualify'
                     ),
-                    array('class' => 'btn btn-lg btn-warning', 'escape' => false)
+                    array('class' => 'btn btn-lg btn-warning    ', 'escape' => false)
                 );
                 ?>
                 <?php

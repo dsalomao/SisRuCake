@@ -14,7 +14,30 @@ class ProductsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Session');
+	public $components = array('Paginator', 'Session', 'Auth');
+
+    public $paginate = array(
+        'Product' => array(
+            'conditions' => array('Product.status' => true),
+            'limit' => 10,
+            'order' => array(
+                'Product.name' => 'asc'
+            )
+        ),
+        'SuppliesProduct' => array(
+            'recursive' => 0,
+            'fields' => array('SuppliesProduct.id', 'SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry', 'SuppliesProduct.expiration'),
+            'contain' => array(
+                'Supplier' => array(
+                    'fields' => array('Supplier.id', 'Supplier.name')
+                )
+            ),
+            'limit' => 5,
+            'order' => array(
+                'SuppliesProduct.date_of_entry' => 'desc'
+            )
+        )
+    );
 
 /**
  * index method
@@ -24,10 +47,7 @@ class ProductsController extends AppController {
 	public function index() {
 		$this->Product->recursive = 0;
 
-        $this->Paginator->settings = array(
-            'conditions' => array('Product.status' => true),
-            'limit' => 10
-        );
+        $this->Paginator->settings = $this->paginate['Product'];
 		$this->set('products', $this->Paginator->paginate('Product'));
 	}
 
@@ -42,12 +62,18 @@ class ProductsController extends AppController {
 		if (!$this->Product->exists($id)) {
 			throw new NotFoundException(__('Invalid product'));
 		}
-        $this->Product->recursive = 0;
-        $product = $this->Product->findProductById($id);
-        $related = $this->Product->SuppliesProduct->findRelatedByProduct($id);
-		$this->set(array('product' => $product, 'related' => $related));
-        $this->Paginator->paginate();
 
+        if($this->request->is('ajax')){
+            $this->layout = 'ajax';
+        }
+
+        $this->Product->recursive = 0;
+
+        $product = $this->Product->findProductById($id);
+        $this->Paginator->settings = $this->paginate['SuppliesProduct'];
+        $lastEntrys = $this->Paginator->paginate('SuppliesProduct', array('SuppliesProduct.product_id' => $id));
+
+		$this->set(array('product' => $product, 'lastEntrys' => $lastEntrys));
 	}
 
 /**
@@ -60,6 +86,7 @@ class ProductsController extends AppController {
 			$this->Product->create();
             $this->request->data['Product']['load_stock'] = 0;
             $this->request->data['Product']['status'] = 1;
+            $this->request->data['Product']['restaurant_id'] = $this->Auth->user('restaurant_id');
             if ($this->Product->save($this->request->data)) {
 				$this->Session->setFlash(__('O produto foi adicionado com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
@@ -67,7 +94,6 @@ class ProductsController extends AppController {
 				$this->Session->setFlash(__('O produto não pode ser adicionado, tente novamente.'));
 			}
 		}
-		$restaurants = $this->Product->Restaurant->find('list');
 		$measureUnits = $this->Product->MeasureUnit->find('list');
 		$this->set(compact('restaurants', 'measureUnits'));
 	}

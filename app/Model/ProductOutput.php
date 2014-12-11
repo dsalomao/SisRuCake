@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * ManualAdjustment Model
+ * ProductOutput Model
  *
  * @property Product $Product
  */
-class ManualAdjustment extends AppModel {
+class ProductOutput extends AppModel {
 
 /**
  * Display field

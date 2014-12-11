@@ -104,7 +104,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#recipeTabId<?php echo $relatedRecipe['Recipe']['id']; ?>">
-                                <i class="ace-icon fa fa-angle-down bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
                                 <?php echo $relatedRecipe['Recipe']['category']; ?>
                             </a>
                         </h4>
@@ -331,7 +331,7 @@
                                                                     <td class="hidden-480"><?php echo $relatedProduct['Product']['code']; ?></td>
 
                                                                     <td>
-                                                                        <span class="label label-sm <?php echo $class = ($relatedProduct['quantity'] <= $relatedProduct['Product']['load_stock']) ? 'label-success':'label-danger';?>" id="certify_quantity"><?php echo $relatedProduct['Product']['load_stock']; echo $tagI = ($class == 'label-success') ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="glyphicon glyphicon-remove"></i>'; ?></span>
+                                                                        <span class="label label-sm <?php echo $class = ($portion_quantified <= $relatedProduct['Product']['load_stock']) ? 'label-success':'label-danger';?>" id="certify_quantity"><?php echo $relatedProduct['Product']['load_stock']; echo $tagI = ($class == 'label-success') ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="glyphicon glyphicon-remove"></i>'; ?></span>
                                                                     </td>
 
                                                                     <td class="hidden-480"><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
@@ -347,12 +347,9 @@
                                                                                         array('class' => 'ace-icon fa fa-cog')
                                                                                     ),
                                                                                     array(
-                                                                                        'plugin' => false,
-                                                                                        'controller' => 'products_for_events',
-                                                                                        'action' => 'submit_product',
-                                                                                        $event['Event']['id'],
-                                                                                        $relatedProduct['Product']['id'],
-                                                                                        $portion_quantified
+                                                                                        'controller' => 'productOutput',
+                                                                                        'action' => 'manual_submit',
+                                                                                        $relatedProduct['Product']['id']
                                                                                     ),
                                                                                     array(
                                                                                         'escape' => false,
@@ -384,47 +381,4 @@
             <?php endforeach; ?>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <h4 class="header smaller lighter blue"> Ações </h4>
-        <p>
-            <?php
-                echo $this->Html->link(
-                    $this->Html->tag(
-                        'i',
-                        '',
-                        array('class' => 'ace-icon fa fa-eye')
-                    ).' Assegurar quantidades',
-                    array(
-                        'controller' => 'RecipesForMeals',
-                        'action' => 'add',
-                    ),
-                    array(
-                        'escape' => false,
-                        'class' => 'btn btn-lg btn-info'
-                    )
-                );
-            ?>&nbsp;
-            <?php
-            echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'ace-icon fa fa-pencil')
-                ).' Editar refeição',
-                array(
-                    'controller' => 'meals',
-                    'action' => 'edit',
-                ),
-                array(
-                    'escape' => false,
-                    'class' => 'btn btn-lg btn-yellow'
-                )
-            );
-            ?>
-            &nbsp;
-        </p>
-    </div>
-</div>
+</div>\

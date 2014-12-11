@@ -11,22 +11,6 @@ jQuery(function($) {
         $('#'+tag_name).toggleClass('hidden');
     });
 
-    $('#ProductsForRecipeQuantity').ace_spinner({
-        value:0,
-        min:0,
-        max:100,
-        step:0.1,
-
-        hold: true,
-        numberFormat: "n" ,
-        btn_up_class:'btn-info' ,
-        btn_down_class:'btn-info',
-    })
-        .on('change', function(){
-            //alert(this.value)
-        });
-    $( ".selector" ).spinner( "option", "numberFormat", "n" );
-
     $('.chosen-select').chosen();
 
     $(window).on('resize.chosen', function() {

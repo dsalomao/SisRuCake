@@ -97,7 +97,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#recipeTabId<?php echo $related['Recipe']['id']; ?>">
-                        <i class="ace-icon fa fa-angle-down bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                        <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
                         <?php echo $related['Recipe']['category']; ?>
                     </a>
                 </h4>
@@ -236,7 +236,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                 <div class="widget-box transparent collapsed">
                                     <div class="widget-header widget-header-flat">
                                         <h4 class="widget-title lighter">
-                                            <i class="ace-icon fa fa-star orange"></i>Porcionamento padrão (1x) <small>Rendimento Padrão: <?php echo $related['Recipe']['income']; ?> pessoas</small>
+                                            <i class="ace-icon fa fa-star orange"></i>Rendimento Padrão: <small><?php echo $related['Recipe']['income']; ?> pessoas</small>
                                         </h4>
 
                                         <div class="widget-toolbar">
@@ -285,7 +285,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                 <div class="widget-box transparent collapsed">
                                     <div class="widget-header widget-header-flat">
                                         <h4 class="widget-title lighter">
-                                            <i class="ace-icon fa fa-star orange"></i>Porcionamento com Multiplicador de porcionamento (<?php echo $related['RecipesForMeal']['portion_multiplier'] ?>x)<small> Rendimento aproximado: <?php echo $float_income = $related['Recipe']['income']*$related['RecipesForMeal']['portion_multiplier']; ?> pessoas</small>
+                                            <i class="ace-icon fa fa-star orange"></i>Rendimento Aproximado (<?php echo $related['RecipesForMeal']['portion_multiplier'] ?>x):<small> <?php echo $float_income = $related['Recipe']['income']*$related['RecipesForMeal']['portion_multiplier']; ?> pessoas</small>
                                         </h4>
 
                                         <div class="widget-toolbar">

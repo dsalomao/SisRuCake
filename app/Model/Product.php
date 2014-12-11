@@ -27,7 +27,7 @@ class Product extends AppModel {
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo não pode estar vazio.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -37,7 +37,7 @@ class Product extends AppModel {
 		'code' => array(
 			'alphaNumeric' => array(
 				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve conter apenas letras e números.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -45,17 +45,25 @@ class Product extends AppModel {
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Este campo não pode estar vazio.',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este código de produto já existe, tente outro.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
 		'load_min' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Apenas números neste campo.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -63,7 +71,7 @@ class Product extends AppModel {
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo não pode estar vazio.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -73,7 +81,7 @@ class Product extends AppModel {
 		'load_max' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Apenas números neste campo.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -81,7 +89,7 @@ class Product extends AppModel {
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo não pode estar vazio.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -91,7 +99,7 @@ class Product extends AppModel {
 		'load_stock' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Apenas números neste campo.',
 				//'allowEmpty' => false,
 				'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -101,7 +109,7 @@ class Product extends AppModel {
 		'status' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
-				//'message' => 'Your custom message here',
+				'message' => 'Apenas valores booleanos.',
 				//'allowEmpty' => false,
 				'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -166,21 +174,8 @@ class Product extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-        'ProductsForEvent' => array(
-            'className' => 'ProductsForEvent',
-            'foreignKey' => 'product_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'ManualAdjustment' => array(
-            'className' => 'ManualAdjustments',
+        'ProductOutput' => array(
+            'className' => 'ProductOutput',
             'foreignKey' => 'product_id',
             'dependent' => false,
             'conditions' => '',
@@ -210,14 +205,6 @@ class Product extends AppModel {
         //this status been returned is a boolean retrieved before saveField
         return $product['Product']['status'];
     }
-    public function algumaCoisa($id = null){
-        $options = array(
-            'conditions' => array('Product.id' => $id),
-            'recursive' => 2
-        );
-        $related = $this->find('all', $options);
-        return $related;
-    }
 
     public function findProductById($id = null){
         $options = array(
@@ -228,7 +215,8 @@ class Product extends AppModel {
                 ),
                 'Restaurant' => array(
                     'fields' => array('Restaurant.id', 'Restaurant.name')
-                )
+                ),
+                'ProductOutput' => array(),
             )
         );
         return $this->find('all', $options);

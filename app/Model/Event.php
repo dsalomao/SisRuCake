@@ -67,19 +67,6 @@ class Event extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'ProductsForEvent' => array(
-			'className' => 'ProductsForEvent',
-			'foreignKey' => 'event_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
         'MealsForEvent' => array(
             'className' => 'MealsForEvent',
             'foreignKey' => 'event_id',

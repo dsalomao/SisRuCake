@@ -1,13 +1,13 @@
 <?php
 App::uses('AppController', 'Controller');
 /**
- * ManualAdjustments Controller
+ * ProductOutput Controller
  *
- * @property ManualAdjustment $ManualAdjustment
+ * @property ProductOutput $ManualAdjustment
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
-class ManualAdjustmentsController extends AppController {
+class ProductOutputController extends AppController {
 
 /**
  * Components
@@ -16,22 +16,37 @@ class ManualAdjustmentsController extends AppController {
  */
 	public $components = array('Paginator', 'Session');
 
+    public $paginate = array(
+        'limit' => 10,
+        'order' => array(
+            'ProductOutput.date_of_submission' => 'desc'
+        ),
+        'contain' => array(
+            'Product' => array(
+                'MeasureUnit' => array(
+                    'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                )
+            )
+        )
+    );
+
 /**
  * index method
  *
  * @return void
  */
 	public function index() {
-        $this->ManualAdjustment->recursive = -1;
-        $manualAdjustments = $this->ManualAdjustment->find('all', array(
+        $this->ProductOutput->recursive = -1;
+        $ProductOutputs = $this->ProductOutput->find('all', array(
             'contain' => array(
                 'Product' => array(
                     'MeasureUnit' => array()
                 )
-            )
+            ),
+            'order' => array('ProductOutput.created' => 'desc')
         ));
         $this->Paginator->paginate();
-        $this->set(array('manualAdjustments' => $manualAdjustments));
+        $this->set(array('ProductOutputs' => $ProductOutputs));
 	}
 
 /**
@@ -42,11 +57,11 @@ class ManualAdjustmentsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->ManualAdjustment->exists($id)) {
+		if (!$this->ProductOutput->exists($id)) {
 			throw new NotFoundException(__('Invalid manual adjustment'));
 		}
-		$options = array('conditions' => array('ManualAdjustment.' . $this->ManualAdjustment->primaryKey => $id));
-		$this->set('manualAdjustment', $this->ManualAdjustment->find('first', $options));
+		$options = array('conditions' => array('ProductOutput.' . $this->ProductOutput->primaryKey => $id));
+		$this->set('ProductOutput', $this->ProductOutput->find('first', $options));
 	}
 
 /**
@@ -56,15 +71,15 @@ class ManualAdjustmentsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->ManualAdjustment->create();
-			if ($this->ManualAdjustment->save($this->request->data)) {
+			$this->ProductOutput->create();
+			if ($this->ProductOutput->save($this->request->data)) {
 				$this->Session->setFlash(__('The manual adjustment has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The manual adjustment could not be saved. Please, try again.'));
 			}
 		}
-		$products = $this->ManualAdjustment->Product->find('list');
+		$products = $this->ProductOutput->Product->find('list');
 		$this->set(compact('products'));
 	}
 
@@ -76,21 +91,21 @@ class ManualAdjustmentsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (!$this->ManualAdjustment->exists($id)) {
+		if (!$this->ProductOutput->exists($id)) {
 			throw new NotFoundException(__('Invalid manual adjustment'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->ManualAdjustment->save($this->request->data)) {
+			if ($this->ProductOutput->save($this->request->data)) {
 				$this->Session->setFlash(__('The manual adjustment has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The manual adjustment could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('ManualAdjustment.' . $this->ManualAdjustment->primaryKey => $id));
-			$this->request->data = $this->ManualAdjustment->find('first', $options);
+			$options = array('conditions' => array('ProductOutput.' . $this->ProductOutput->primaryKey => $id));
+			$this->request->data = $this->ProductOutput->find('first', $options);
 		}
-		$products = $this->ManualAdjustment->Product->find('list');
+		$products = $this->ProductOutput->Product->find('list');
 		$this->set(compact('products'));
 	}
 
@@ -102,12 +117,12 @@ class ManualAdjustmentsController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
-		$this->ManualAdjustment->id = $id;
-		if (!$this->ManualAdjustment->exists()) {
+		$this->ProductOutput->id = $id;
+		if (!$this->ProductOutput->exists()) {
 			throw new NotFoundException(__('Invalid manual adjustment'));
 		}
 		$this->request->allowMethod('post', 'delete');
-		if ($this->ManualAdjustment->delete()) {
+		if ($this->ProductOutput->delete()) {
 			$this->Session->setFlash(__('The manual adjustment has been deleted.'));
 		} else {
 			$this->Session->setFlash(__('The manual adjustment could not be deleted. Please, try again.'));
@@ -117,16 +132,16 @@ class ManualAdjustmentsController extends AppController {
 
     public function manual_submit($product_id = null){
 
-        $target_product = $this->ManualAdjustment->Product->findById($product_id);
+        $target_product = $this->ProductOutput->Product->findById($product_id);
 
         if ($this->request->is('post')) {
-            $this->ManualAdjustment->create();
-            $this->ManualAdjustment->set(array('product_id' => $product_id));
-            if($target_product['Product']['load_stock'] >= $this->request->data['ManualAdjustment']['quantity']){
-                if ($this->ManualAdjustment->save($this->request->data)) {
-                    $target_product['Product']['load_stock'] = $target_product['Product']['load_stock'] - $this->request->data['ManualAdjustment']['quantity'];
-                    $this->ManualAdjustment->Product->id = $product_id;
-                    $this->ManualAdjustment->Product->saveField('load_stock', $target_product['Product']['load_stock']);
+            $this->ProductOutput->create();
+            $this->ProductOutput->set(array('product_id' => $product_id));
+            if($target_product['Product']['load_stock'] - $this->request->data['ProductOutput']['quantity'] >= $target_product['Product']['load_min']){
+                if ($this->ProductOutput->save($this->request->data)) {
+                    $target_product['Product']['load_stock'] = $target_product['Product']['load_stock'] - $this->request->data['ProductOutput']['quantity'];
+                    $this->ProductOutput->Product->id = $product_id;
+                    $this->ProductOutput->Product->saveField('load_stock', $target_product['Product']['load_stock']);
                     $this->Session->setFlash(__('The products for event has been saved.'));
                     return $this->redirect(array('controller' => 'products', 'action' => 'view', $product_id));
                 } else {
@@ -138,5 +153,15 @@ class ManualAdjustmentsController extends AppController {
             }
         }
         $this->set(array('product' => $target_product));
+    }
+
+    public function output_history($product_id = null){
+        if (!$this->ProductOutput->Product->exists($product_id)) {
+            throw new NotFoundException(__('Invalid manual adjustment'));
+        }
+        $this->Paginator->settings = $this->paginate;
+
+        $options = array('ProductOutput.product_id' => $product_id);
+        $this->set('ProductOutputs', $this->Paginator->paginate('ProductOutput', $options));
     }
 }

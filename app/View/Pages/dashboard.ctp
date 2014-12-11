@@ -44,7 +44,7 @@
                     array('class' => 'fa fa-folder-open-o')
                 ).' Caderno de saída',
                 array(
-                    'controller' => 'productsForEvents',
+                    'controller' => 'productOutputs',
                     'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-dafault', 'escape' => false)
@@ -88,6 +88,23 @@
         </div>
     </div>
     <div class="row">
+        <h2>Receituário padrão</h2>
+        <div class="well text-center">
+            <?php echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
+                    array('class' => 'fa fa-book')
+                ).' Livro de receitas',
+                array(
+                    'controller' => 'recipes',
+                    'action' => 'index'
+                ),
+                array('class' => 'btn btn-lg btn-default', 'escape' => false)
+            ); ?>
+        </div>
+    </div>
+    <div class="row">
         <h2>Planejamento de cardápio</h2>
         <div class="well text-center">
             <?php echo $this->Html->link(
@@ -95,7 +112,7 @@
                     'i',
                     '',
                     array('class' => 'fa fa-book')
-                ).' Livro de cardápios',
+                ).' Livro de refeições',
                 array(
                     'controller' => 'meals',
                     'action' => 'index'
@@ -113,23 +130,6 @@
                     'action' => 'index'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
-            ); ?>
-        </div>
-    </div>
-    <div class="row">
-        <h2>Receituário padrão</h2>
-        <div class="well text-center">
-            <?php echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'fa fa-book')
-                ).' Livro de receitas',
-                array(
-                    'controller' => 'recipes',
-                    'action' => 'index'
-                ),
-                array('class' => 'btn btn-lg btn-default', 'escape' => false)
             ); ?>
         </div>
     </div>
