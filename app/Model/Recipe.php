@@ -153,6 +153,27 @@ class Recipe extends AppModel {
 		)
 	);
 
+    /**
+     * belongsTo associations
+     *
+     * @var array
+     */
+    public $belongsTo = array(
+        'Restaurant' => array(
+            'className' => 'Restaurant',
+            'foreignKey' => 'restaurant_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
+    );
+
     public function beforeSave($options = array()) {
         if ($this->data['Recipe']['category'] == 0) {
             $this->data['Recipe']['category'] = 'Entrada';

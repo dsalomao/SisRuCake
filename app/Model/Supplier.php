@@ -124,11 +124,32 @@ class Supplier extends AppModel {
 		)
 	);
 
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+    public $belongsTo = array(
+        'Restaurant' => array(
+            'className' => 'Restaurant',
+            'foreignKey' => 'restaurant_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
+    );
+
     public function getAllSuppliers(){
         $conditions = array(
             'created BETWEEN (curdate() - interval 7 day)' .
             ' and (curdate() - interval 0 day))'
-        );;
+        );
     }
 
     public function updateStatus($id = null){

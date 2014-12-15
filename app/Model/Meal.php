@@ -136,4 +136,22 @@ class Meal extends AppModel {
         return $meal = $this->find('first', $options);
     }
 
+    public function findMealToOutput($id = null){
+        $options = array(
+            'conditions' => array('Meal.id' => $id),
+            'recursive' => 0,
+            'contain' => array(
+                'RecipesForMeal' => array(
+                    'Recipe' => array(
+                        'ProductsForRecipe' => array(
+                            'Product' => array(
+                                'MeasureUnit' => array()
+                            )
+                        )
+                    )
+                ),
+            )
+        );
+        return $meal = $this->find('first', $options);
+    }
 }

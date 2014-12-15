@@ -23,19 +23,7 @@
                     'controller' => 'suppliesProducts',
                     'action' => 'index'
                 ),
-                array('class' => 'btn btn-lg btn-dafault', 'escape' => false)
-            ); ?>
-            <?php echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'fa fa-exchange')
-                ).' Ajustes manuais',
-                array(
-                    'controller' => 'ManualAdjustments',
-                    'action' => 'index'
-                ),
-                array('class' => 'btn btn-lg btn-warning', 'escape' => false)
+                array('class' => 'btn btn-lg btn-success', 'escape' => false)
             ); ?>
             <?php echo $this->Html->link(
                 $this->Html->tag(
@@ -44,10 +32,10 @@
                     array('class' => 'fa fa-folder-open-o')
                 ).' Caderno de saída',
                 array(
-                    'controller' => 'productOutputs',
+                    'controller' => 'productOutput',
                     'action' => 'index'
                 ),
-                array('class' => 'btn btn-lg btn-dafault', 'escape' => false)
+                array('class' => 'btn btn-lg btn-danger', 'escape' => false)
             ); ?>
             <?php echo $this->Html->link(
                 $this->Html->tag(
@@ -83,7 +71,7 @@
                     'controller' => 'measureUnits',
                     'action' => 'index'
                 ),
-                array('class' => 'btn btn-lg btn-success', 'escape' => false)
+                array('class' => 'btn btn-lg btn-warning', 'escape' => false)
             ); ?>
         </div>
     </div>
@@ -123,11 +111,23 @@
                 $this->Html->tag(
                     'i',
                     '',
+                    array('class' => 'fa fa-beer')
+                ).' Eventos',
+                array(
+                    'controller' => 'events',
+                    'action' => 'index'
+                ),
+                array('class' => 'btn btn-lg btn-warning', 'escape' => false)
+            ); ?>
+            <?php echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
                     array('class' => 'fa fa-calendar')
                 ).' Calendário',
                 array(
                     'controller' => 'events',
-                    'action' => 'index'
+                    'action' => 'calendar'
                 ),
                 array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
             ); ?>

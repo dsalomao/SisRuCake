@@ -11,13 +11,22 @@ class EventsController extends AppController {
 
 	var $name = 'Events';
 
-    public $components = array('RequestHandler');
+    public $components = array('RequestHandler', 'Paginator');
 
     var $paginate = array(
-            'limit' => 15
+            'recursive' => 0,
+            'contain' => array(
+                'EventType' => array(
+                    'fields' => array('color', 'name')
+                ),
+                'MealsForEvent' => array(
+                    'Meal' => array()
+                )
+            ),
+            'fields' => array('id', 'title', 'status', 'details', 'start', 'end', 'all_day')
     );
 
-    function index(){
+    public function calendar(){
         $events = $this->Event->find(
             'all',
             array(
@@ -36,51 +45,46 @@ class EventsController extends AppController {
         $this->set(array('events' => $events));
     }
 
-    function post_event(){
-        if($this->request->is('post')){
-            $this->Event->create();
-            if ($this->Event->save($this->request->data)) {
-                if($this->request->data['Event']['event_type_id'] == 0) {
-                    $data = array(
-                        'MealsForEvent' => array(
-                            'meal_id' => $this->request->data['Event']['meal_id'],
-                            'event_id' => $this->Event->getLastInsertID()
-                        )
+    public function output_meal($meal_id = null, $event_id = null){
+        $this->Event->recursive = -1;
+        $event = $this->Event->findById($event_id);
+        $meal = $this->Event->MealsForEvent->Meal->findMealToOutput($meal_id);
+        $mealIngredients = array();
+        $quantityToOutput = array();
+        foreach($meal['RecipesForMeal'] as $recipes):
+            foreach($recipes['Recipe']['ProductsForRecipe'] as $product):
+                if(!isset($mealIngredients[$product['Product']['id']])){
+                    $mealIngredients[$product['Product']['id']] =  array(
+                        'product_id' => $product['Product']['id'],
+                        'code' => $product['Product']['code'],
+                        'quantity' => $product['quantity']*$recipes['portion_multiplier'],
+                        'name' => $product['Product']['name'],
+                        'measure_unit' => $product['Product']['MeasureUnit']['name'],
                     );
-                    $this->Event->MealsForEvent->add_from_calendar($data);
                 }
 
-                $event = $this->Event->findById($this->Event->getLastInsertID());
-
-                if($event['Event']['all_day'] == 1) {
-                    $allday = true;
-                    $end = $event['Event']['start'];
-                } else {
-                    $allday = false;
-                    $end = $event['Event']['end'];
+                if(isset($quantityToOutput[$product['Product']['id']])){
+                    $quantityToOutput[$product['Product']['id']]['quantity'] += $product['quantity']*$recipes['portion_multiplier'];
+                }else{
+                    $quantityToOutput[$product['Product']['id']] =  array(
+                        'product_id' => $product['Product']['id'],
+                        'quantity' => $product['quantity']*$recipes['portion_multiplier'],
+                        'date_of_submission' => $event['Event']['start'],
+                    );
                 }
-                $data[] = array(
-                    'id' => $event['Event']['id'],
-                    'title'=>$event['Event']['title'],
-                    'allDay' => $allday,
-                    'start'=>$event['Event']['start'],
-                    'end' => $end,
-                    'url' => Router::url('/') . 'events/view/'.$event['Event']['id'],
-                    'className' => $event['EventType']['color']
-                );
-                $this->response->body(json_encode($data), 'Ok, seu evento foi salvo com sucesso.');
-                $this->response->statusCode(200);
-                $this->response->send();
-            } else {
-                $response[] = array('response' =>'Erro ao salvar o evento.');
-                $this->response->body(json_encode($response));
-                $this->response->statusCode(500);
-                $this->response->send();
-            }
-        }
+            endforeach;
+        endforeach;
+        $this->set(array('mealIngredients' => $mealIngredients, 'event' => $event, 'quantityToOutput' => $quantityToOutput));
     }
 
-    function get_all() {
+    public function index(){
+        $this->Paginator->settings = $this->paginate;
+        $events = $this->Paginator->paginate('Event');
+
+        $this->set(array('events' => $events));
+    }
+
+    public function get_all() {
         $events = $this->Event->find(
             'all',
             array(
@@ -123,7 +127,7 @@ class EventsController extends AppController {
         $this->autoRender = false;
 	}
 
-	function view($id = null) {
+    public function view($id = null) {
 		if (!$this->Event->exists($id)) {
 			$this->Session->setFlash(__('Invalid event', true));
 			$this->redirect(array('action' => 'index'));
@@ -164,10 +168,6 @@ class EventsController extends AppController {
         $this->set(compact('eventTypes', 'meals'));
     }
 
-    function edit_calendarjs($event){
-
-    }
-
     public function edit($id = null) {
         if (!$this->Event->exists($id)) {
             throw new NotFoundException(__('Invalid meals for event'));
@@ -191,7 +191,7 @@ class EventsController extends AppController {
 
     }
 
-	function delete($id = null) {
+    public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for event', true));
 			$this->redirect(array('action'=>'index'));
@@ -203,43 +203,5 @@ class EventsController extends AppController {
 		$this->Session->setFlash(__('Event was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
-
-        // The feed action is called from "webroot/js/ready.js" to get the list of events (JSON)
-	function feed($id=null) {
-		$this->layout = "ajax";
-		$vars = $this->params['url'];
-		$conditions = array('conditions' => array('UNIX_TIMESTAMP(start) >=' => $vars['start'], 'UNIX_TIMESTAMP(start) <=' => $vars['end']));
-		$events = $this->Event->find('all', $conditions);
-		foreach($events as $event) {
-			if($event['Event']['all_day'] == 1) {
-				$allday = true;
-				$end = $event['Event']['start'];
-			} else {
-				$allday = false;
-				$end = $event['Event']['end'];
-			}
-			$data[] = array(
-					'id' => $event['Event']['id'],
-					'title'=>$event['Event']['title'],
-					'start'=>$event['Event']['start'],
-					'end' => $end,
-					'allDay' => $allday,
-					'url' => Router::url('/') . 'full_calendar/events/view/'.$event['Event']['id'],
-					'details' => $event['Event']['details'],
-					'className' => $event['EventType']['color']
-			);
-		}
-		$this->set("json", json_encode($data));
-	}
-
-        // The update action is called from "webroot/js/ready.js" to update date/time when an event is dragged or resized
-	function update() {
-		$vars = $this->params['url'];
-		$this->Event->id = $vars['id'];
-		$this->Event->saveField('start', $vars['start']);
-		$this->Event->saveField('end', $vars['end']);
-		$this->Event->saveField('all_day', $vars['allday']);
-	}
-
 }
 ?>

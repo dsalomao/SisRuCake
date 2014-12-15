@@ -23,7 +23,7 @@ class RecipesController extends AppController {
  */
 	public function index() {
 		$this->Recipe->recursive = 0;
-		$this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => true)));
+		$this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => true, 'Recipe.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
 /**
@@ -34,13 +34,12 @@ class RecipesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-        $this->loadModel('ProductsForRecipe');
 		if (!$this->Recipe->exists($id)) {
 			throw new NotFoundException(__('Invalid recipe'));
 		}
         $this->Recipe->recursive = -1;
         $recipe = $this->Recipe->findById($id);
-        $related = $this->ProductsForRecipe->findByRecipeId($id);
+        $related = $this->Recipe->ProductsForRecipe->findByRecipeId($id);
         $this->set(array('recipe' => $recipe, 'related' => $related));
         $this->Paginator->paginate();
     }
@@ -54,6 +53,7 @@ class RecipesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Recipe->create();
             $this->request->data['Recipe']['status'] = 1;
+            $this->request->data['Recipe']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Recipe->save($this->request->data)) {
 				$this->Session->setFlash(__('Sua receita foi salva com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
@@ -110,13 +110,13 @@ class RecipesController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-    /**
-     * logical_delete method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
+/**
+ * logical_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
     public function logical_delete($id = null) {
         $this->Recipe->id = $id;
         if (!$this->Recipe->exists()) {
@@ -133,20 +133,13 @@ class RecipesController extends AppController {
 
     }
 
-    /**
-     * deleted_index method
-     *
-     * @return void
-     */
+/**
+ * deleted_index method
+ *
+ * @return void
+ */
     public function deleted_index() {
         $this->Recipe->recursive = 0;
-        $this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => 0)));
-    }
-
-    public function get_full_recipe($id = null){
-        $recipe = $this->Recipe->getMyRecipeIngredients($id);
-
-        echo json_encode($recipe);
-        $this->autoRender = false;
+        $this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => 0, 'recipes.restaurant_id' => $this->Auth->user('restaurant_id'))));
     }
 }

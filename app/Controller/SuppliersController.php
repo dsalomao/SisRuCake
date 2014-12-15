@@ -23,7 +23,7 @@ class SuppliersController extends AppController {
  */
 	public function index() {
 		$this->Supplier->recursive = 0;
-		$this->set('suppliers', $this->Paginator->paginate('Supplier',  array('Supplier.status' => true)));
+		$this->set('suppliers', $this->Paginator->paginate('Supplier',  array('Supplier.status' => true, 'Supplier.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
 /**
@@ -60,6 +60,7 @@ class SuppliersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Supplier->create();
             $this->request->data['Supplier']['status'] = 1;
+            $this->request->data['Supplier']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Supplier->save($this->request->data)) {
                 $supplier = $this->Supplier->findById($this->Supplier->getLastInsertID());
 				$this->Session->setFlash(__("O fornecedor '%s' foi salvo com sucesso.", $supplier['Supplier']['name']));
@@ -144,7 +145,7 @@ class SuppliersController extends AppController {
  */
     public function deleted_index() {
         $this->Supplier->recursive = 0;
-        $this->set('suppliers', $this->Paginator->paginate('Supplier', array('Supplier.status' => false)));
+        $this->set('suppliers', $this->Paginator->paginate('Supplier', array('Supplier.status' => false, 'Supplier.restaurant_id' => $this->Auth->user('restaurant_id'))));
     }
 
 /**
