@@ -30,6 +30,7 @@ class EventsController extends AppController {
         $events = $this->Event->find(
             'all',
             array(
+                'conditions' => array('Event.restaurant_id' => $this->Auth->user('restaurant_id')),
                 'recursive' => 0,
                 'contain' => array(
                     'EventType' => array(
@@ -79,7 +80,7 @@ class EventsController extends AppController {
 
     public function index(){
         $this->Paginator->settings = $this->paginate;
-        $events = $this->Paginator->paginate('Event');
+        $events = $this->Paginator->paginate('Event', array('Event.restaurant_id' => $this->Auth->user('restaurant_id')));
 
         $this->set(array('events' => $events));
     }
@@ -88,6 +89,7 @@ class EventsController extends AppController {
         $events = $this->Event->find(
             'all',
             array(
+                'conditions' => array('Event.restaurant_id' => $this->Auth->user('restaurant_id')),
                 'recursive' => 0,
                 'contain' => array(
                     'EventType' => array(
@@ -139,6 +141,7 @@ class EventsController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
             $this->Event->create();
+            $this->request->data['Event']['restaurant_id'] = $this->Auth->user('restaurant_id');
             if ($this->Event->save($this->request->data)) {
                 if($this->request->data['Event']['event_type_id'] == 0) {
                     $data = array(
@@ -164,7 +167,7 @@ class EventsController extends AppController {
             }
         }
         $eventTypes = $this->Event->EventType->find('list');
-        $meals = $this->Event->MealsForEvent->Meal->find('list');
+        $meals = $this->Event->MealsForEvent->Meal->find('list', array('conditions' => array('Meal.restaurant_id' => $this->Auth->user('restaurant_id'))));
         $this->set(compact('eventTypes', 'meals'));
     }
 

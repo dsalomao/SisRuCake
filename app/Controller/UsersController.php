@@ -26,7 +26,7 @@ class UsersController extends AppController {
  */
 	public function index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate('User', array('User.status' => true)));
+		$this->set('users', $this->Paginator->paginate('User', array('User.status' => true, 'User.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
 /**
@@ -165,7 +165,7 @@ class UsersController extends AppController {
  */
     public function deleted_index() {
         $this->User->recursive = 0;
-        $this->set('users', $this->Paginator->paginate('User', array('User.status' => 0)));
+        $this->set('users', $this->Paginator->paginate('User', array('User.status' => 0, 'User.restaurant_id' => $this->Auth->user('restaurant_id'))));
     }
 
 /**

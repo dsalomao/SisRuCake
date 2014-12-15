@@ -38,6 +38,7 @@ class ProductOutputController extends AppController {
 	public function index() {
         $this->ProductOutput->recursive = -1;
         $ProductOutputs = $this->ProductOutput->find('all', array(
+            'conditions' => array('ProductOutput.restaurant_id' => $this->Auth->user('restaurant_id')),
             'contain' => array(
                 'Product' => array(
                     'MeasureUnit' => array()
@@ -72,6 +73,7 @@ class ProductOutputController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->ProductOutput->create();
+            $this->request->data['ProductOutput']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->ProductOutput->save($this->request->data)) {
 				$this->Session->setFlash(__('The manual adjustment has been saved.'));
 				return $this->redirect(array('action' => 'index'));
@@ -138,14 +140,15 @@ class ProductOutputController extends AppController {
             $this->ProductOutput->create();
             $this->ProductOutput->set(array('product_id' => $product_id));
             if($target_product['Product']['load_stock'] - $this->request->data['ProductOutput']['quantity'] >= $target_product['Product']['load_min']){
+                $this->request->data['ProductOutput']['restaurant_id'] = $this->Auth->user('restaurant_id');
                 if ($this->ProductOutput->save($this->request->data)) {
-                    $target_product['Product']['load_stock'] = $target_product['Product']['load_stock'] - $this->request->data['ProductOutput']['quantity'];
+                    $target_product['Product']['load_stock'] -= $this->request->data['ProductOutput']['quantity'];
                     $this->ProductOutput->Product->id = $product_id;
                     $this->ProductOutput->Product->saveField('load_stock', $target_product['Product']['load_stock']);
-                    $this->Session->setFlash(__('The products for event has been saved.'));
+                    $this->Session->setFlash(__('A baixa em estoque de seu produto foi realizada com sucesso.'));
                     return $this->redirect(array('controller' => 'products', 'action' => 'view', $product_id));
                 } else {
-                    $this->Session->setFlash(__('The products for event could not be saved. Please, try again.'));
+                    $this->Session->setFlash(__('As quantidades do produto não poderam ser alteradas.'));
                 }
             }
             else {

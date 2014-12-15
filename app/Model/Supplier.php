@@ -145,13 +145,6 @@ class Supplier extends AppModel {
         )
     );
 
-    public function getAllSuppliers(){
-        $conditions = array(
-            'created BETWEEN (curdate() - interval 7 day)' .
-            ' and (curdate() - interval 0 day))'
-        );
-    }
-
     public function updateStatus($id = null){
         $this->id = $id;
         $supplier = $this->find('first', array('conditions' => array('Supplier.id' => $id)));

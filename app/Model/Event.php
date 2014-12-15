@@ -58,7 +58,14 @@ class Event extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+        'Restaurant' => array(
+            'className' => 'Restaurant',
+            'foreignKey' => 'restaurant_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
 	);
 
 /**

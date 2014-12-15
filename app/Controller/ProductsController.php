@@ -48,7 +48,7 @@ class ProductsController extends AppController {
 		$this->Product->recursive = 0;
 
         $this->Paginator->settings = $this->paginate['Product'];
-		$this->set('products', $this->Paginator->paginate('Product'));
+		$this->set('products', $this->Paginator->paginate('Product', array('Product.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
 /**
@@ -183,6 +183,6 @@ class ProductsController extends AppController {
  */
     public function deleted_index() {
         $this->Product->recursive = 0;
-        $this->set('products', $this->Paginator->paginate('Product', array('Product.status' => 0)));
+        $this->set('products', $this->Paginator->paginate('Product', array('Product.status' => 0, 'Product.restaurant_id' => $this->Auth->user('restaurant_id'))));
     }
 }

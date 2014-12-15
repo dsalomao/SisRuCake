@@ -87,34 +87,32 @@ class Meal extends AppModel {
         )
 	);
 
-
 /**
- * hasAndBelongsToMany associations
+ * belongsTo associations
  *
  * @var array
  */
-    /*
-	public $hasAndBelongsToMany = array(
-		'Event' => array(
-			'className' => 'Event',
-			'joinTable' => 'events_meals',
-			'foreignKey' => 'meal_id',
-			'associationForeignKey' => 'event_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		)
-	);
-*/
-    /**
-     *
-     *  função para trocar o valor booleano do campo "status"
-     *
-     */
+    public $belongsTo = array(
+        'Restaurant' => array(
+            'className' => 'Restaurant',
+            'foreignKey' => 'restaurant_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
+    );
+
+/**
+ *
+ *  função para trocar o valor booleano do campo "status"
+ *
+ */
     public function updateStatus($id = null){
         $this->id = $id;
         $meal = $this->find('first', array('conditions' => array('Meal.id' => $id)));

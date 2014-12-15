@@ -23,7 +23,7 @@ class MealsController extends AppController {
  */
 	public function index() {
 		$this->Meal->recursive = 0;
-		$this->set('meals', $this->Paginator->paginate('Meal', array('Meal.status' => true)));
+		$this->set('meals', $this->Paginator->paginate('Meal', array('Meal.status' => true, 'Meal.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
 /**
@@ -54,6 +54,7 @@ class MealsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Meal->create();
             $this->request->data['Meal']['status'] = 1;
+            $this->request->data['Meal']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Meal->save($this->request->data)) {
 				$this->Session->setFlash(__('Sua refeição foi salva com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
@@ -115,7 +116,7 @@ class MealsController extends AppController {
  */
     public function deleted_index() {
         $this->Meal->recursive = 0;
-        $this->set('meals', $this->Paginator->paginate('Meal', array('Meal.status' => 0)));
+        $this->set('meals', $this->Paginator->paginate('Meal', array('Meal.status' => 0, 'Meal.restaurant_id' => $this->Auth->user('restaurant_id'))));
     }
 
 /**
@@ -132,10 +133,10 @@ class MealsController extends AppController {
         }
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Meal->updateStatus($id)) {
-            $this->Session->setFlash(__('O produto foi deletado'));
+            $this->Session->setFlash(__('A refeição foi desativada com sucesso.'));
             return $this->redirect(array('action' => 'deleted_index'));
         } else {
-            $this->Session->setFlash(__('O produto foi restaurado.'));
+            $this->Session->setFlash(__('A refeição foi restaurada com sucesso.'));
             return $this->redirect(array('action' => 'index'));
         }
 

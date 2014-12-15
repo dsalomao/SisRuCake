@@ -2,7 +2,6 @@
 
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
-c
 ?>
 
 <div class="row">

@@ -68,6 +68,45 @@ class Restaurant extends AppModel {
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
+        ),
+        'Meal' => array(
+            'className' => 'Meal',
+            'foreignKey' => 'restaurant_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
+        'Event' => array(
+            'className' => 'Event',
+            'foreignKey' => 'restaurant_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
+        'ProductOutput' => array(
+            'className' => 'ProductOutput',
+            'foreignKey' => 'restaurant_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
         )
 	);
 
