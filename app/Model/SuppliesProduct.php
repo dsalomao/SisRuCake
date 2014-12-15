@@ -94,7 +94,14 @@ class SuppliesProduct extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+        'Restaurant' => array(
+            'className' => 'Restaurant',
+            'foreignKey' => 'restaurant_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        )
 	);
 
     public function getRelatedProduct($id = null) {
@@ -113,7 +120,7 @@ class SuppliesProduct extends AppModel {
             'conditions' => array('Product.id' => $id)
         );
         $product_properties = $this->Product->find('first', $options);
-        if($product_properties['load_stock']+$quantity <= $product_properties['load_max'])
+        if($product_properties['Product']['load_stock'] + $quantity <= $product_properties['Product']['load_max'])
             return true;
         else
             return false;
@@ -132,25 +139,6 @@ class SuppliesProduct extends AppModel {
                     'fields' => array('Product.id', 'Product.name','Product.code')
                 )
             )
-        );
-        $related = $this->find('all', $options);
-        return $related;
-    }
-
-    public function findAllSupplied(){
-        $options = array(
-            'contain' => array(
-                'Product' => array(
-                    'MeasureUnit' => array(
-                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
-                    ),
-                    'fields' => array('Product.id', 'Product.name')
-                ),
-                'Supplier' => array(
-                    'fields' => array('Supplier.id', 'Supplier.name')
-                )
-            ),
-            'order' => array('SuppliesProduct.date_of_entry' => 'desc')
         );
         $related = $this->find('all', $options);
         return $related;

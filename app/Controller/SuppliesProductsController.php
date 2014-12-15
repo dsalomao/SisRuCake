@@ -17,12 +17,31 @@ class SuppliesProductsController extends AppController {
 	public $components = array('Paginator', 'Session');
 
 /**
- * Components
+ * Helpers
  *
  * @var array
  */
-public $helpers = array('Form', 'Html', 'Number');
+    public $helpers = array('Form', 'Html', 'Number');
 
+/**
+ * Paginate variable
+ *
+ * @var array
+ */
+    public $paginate = array(
+        'contain' => array(
+            'Product' => array(
+                'MeasureUnit' => array(
+                    'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                ),
+                'fields' => array('Product.id', 'Product.name')
+            ),
+            'Supplier' => array(
+                'fields' => array('Supplier.id', 'Supplier.name')
+            )
+        ),
+        'order' => array('SuppliesProduct.date_of_entry' => 'desc')
+    );
 
 /**
  * index method
@@ -31,8 +50,9 @@ public $helpers = array('Form', 'Html', 'Number');
  */
 	public function index() {
 		$this->SuppliesProduct->recursive = -1;
-        $suppliesProducts = $this->SuppliesProduct->findAllSupplied();
-        $this->Paginator->paginate();
+        $this->Paginator->settings = $this->paginate;
+        $suppliesProducts = $this->Paginator->paginate('SuppliesProduct', array('SuppliesProduct.restaurant_id' => $this->Auth->user('restaurant_id')));
+
 		$this->set(array('suppliesProducts' => $suppliesProducts));
 	}
 
@@ -59,6 +79,7 @@ public $helpers = array('Form', 'Html', 'Number');
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->SuppliesProduct->create();
+            $this->request->data['SuppliesProduct']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->SuppliesProduct->save($this->request->data)) {
 				$this->Session->setFlash(__('The supplies product has been saved.'));
 				return $this->redirect(array('action' => 'index'));
@@ -93,6 +114,7 @@ public $helpers = array('Form', 'Html', 'Number');
             $this->SuppliesProduct->create();
             $this->SuppliesProduct->set('product_id', $relatedProduct['Product']['id']);
             if($this->SuppliesProduct->canILoadStock($id, $this->request->data['SuppliesProduct']['quantity'])){
+                $this->request->data['SuppliesProduct']['restaurant_id'] = $this->Auth->user('restaurant_id');
                 if ($this->SuppliesProduct->save($this->request->data)) {
                     $relatedProduct['Product']['load_stock'] = $relatedProduct['Product']['load_stock'] + $this->request->data['SuppliesProduct']['quantity'];
                     $this->SuppliesProduct->Product->id = $id;
@@ -109,17 +131,12 @@ public $helpers = array('Form', 'Html', 'Number');
             }
         }
 
-        $product = $this->SuppliesProduct->Product->find(
-                'first',
-                array(
-                    'conditions' => array('Product.id' => $id),
-                    'recursive' => 0
-                )
-        );
+        $product = $this->SuppliesProduct->Product->findById($id);
+
         $suppliers = $this->SuppliesProduct->Supplier->find(
                 'list',
                 array(
-                        'conditions' => array('Supplier.status' => 1),
+                        'conditions' => array('Supplier.status' => 1, 'Supplier.restaurant_id' => $this->Auth->user('restaurant_id')),
                         'recursive' => -1
                 )
         );
