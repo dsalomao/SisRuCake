@@ -11,7 +11,7 @@ $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('products_indexes', array('inline' => false));
 
-$this->Html->css('products-index', array('inline' => false));
+$this->Html->css('products', array('inline' => false));
 
 /* adding node in breadcrumb menu */
 $this->Html->addCrumb('Logística & Suprimentos');
@@ -254,6 +254,7 @@ $this->Html->addCrumb('Produtos');
                                                    )
                                                ),
                                                array(
+                                                   'controller' => 'products',
                                                    'action' => 'logical_delete',
                                                    $product['Product']['id']
                                                ),
@@ -329,9 +330,10 @@ $this->Html->addCrumb('Produtos');
                <?php endforeach; ?>
                </tbody>
            </table>
+
            <div class="row">
                <div class="col-xs-12 col-sm-6">
-                   <div class="dataTables_info" id="products-list-info">
+                   <div class="dataTables_info products-list-info">
                        <?php
                        echo $this->Paginator->counter(array(
                            'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
@@ -340,7 +342,7 @@ $this->Html->addCrumb('Produtos');
                    </div>
                </div>
                <div class="col-xs-12 col-sm-6">
-                   <div class="dataTables_paginate paging_bootstrap" id="products-list-pagging">
+                   <div class="dataTables_paginate paging_bootstrap products-list-pagging">
                        <ul class="pagination">
                            <?php
                            echo $this->Paginator->prev(

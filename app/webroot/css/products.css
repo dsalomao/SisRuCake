@@ -78,3 +78,11 @@ and open the template in the editor.
     -moz-border-radius-topright: 4px;
     -moz-border-radius-bottomright: 4px;
 }
+
+.products-list-info {
+    margin-bottom: 10px;
+}
+
+.products-list-pagging {
+    margin-bottom: 20px;
+}
