@@ -1,7 +1,11 @@
 <?php
 
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
+$this->Html->css('products', array('inline' => false));
 
+$this->Html->addCrumb('Logística & Suprimentos');
+$this->Html->addCrumb('Produtos', '/products');
+$this->Html->addCrumb($product[0]['Product']['name']);
 ?>
 
 <div class="row">
@@ -172,7 +176,7 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
 
                         <!-- <div class="dataTables_borderWrap"> -->
                         <div id="productsIncome">
-                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                            <table id="last-entrys" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
@@ -210,8 +214,8 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                                 </tbody>
                             </table>
                             <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="dataTables_info" id="sample-table-1_info">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="dataTables_info products-list-info">
                                         <?php
                                         echo $this->Paginator->counter(array(
                                             'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
@@ -219,8 +223,8 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
                                         ?>
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
-                                    <div class="dataTables_paginate paging_bootstrap">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="dataTables_paginate paging_bootstrap products-list-pagging">
                                         <ul class="pagination">
                                             <?php
                                             echo $this->Paginator->prev(
@@ -263,135 +267,116 @@ $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
     </div>
     <div class="col-sm-12">
         <h3 class="header smaller lighter blue"> A&ccedil;&otilde;es </h3>
-        <div class="row">
-            <div class="col-sm-6">
-                <p>
-                    <?php
-                    if($product[0]['Product']['status']){
-                        echo $this->Html->link(
-                            $this->Html->tag(
-                                'i',
-                                '',
-                                array('class' => 'glyphicon glyphicon-plus')
-                            ).' Adicionar quantidade',
-                            array(
-                                'controller' => 'suppliesProducts',
-                                'action' => 'add_load_stock',
-                                $product[0]['Product']['id']
-                            ),
-                            array(
-                                'escape' => false,
-                                'class' => 'btn btn-lg btn-success'
-                            )
-                        );
-                    }
-                    ?>
-                    <?php
-                    echo $this->Html->link(
-                        $this->Html->tag(
-                            'i',
-                            '',
-                            array('class' => 'ace-icon fa fa-pencil')
-                        ).' Editar',
-                        array(
-                            'controller' => 'products',
-                            'action' => 'edit',
-                            $product[0]['Product']['id']
-                        ),
-                        array(
-                            'escape' => false,
-                            'class' => 'btn btn-lg btn-yellow'
-                        )
-                    );
-                    ?>
-
-                    <?php
-                    if($product[0]['Product']['status']){
-                        echo $this->Form->postlink(
-                            $this->Html->tag(
-                                'i',
-                                '',
-                                array('class' => 'glyphicon glyphicon-remove')
-                            ).' Desativar',
-                            array(
-                                'action' => 'logical_delete',
-                                $product[0]['Product']['id']
-                            ),
-                            array(
-                                'escape' => false,
-                                'class' => 'btn btn-lg btn-inverse'
-                            ),
-                            __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
-                        );
-                    }
-                    else{
-                        echo $this->Form->postlink(
-                            $this->Html->tag(
-                                'i',
-                                '',
-                                array('class' => 'glyphicon glyphicon-ok')
-                            ).' Reativar',
-                            array(
-                                'action' => 'logical_delete',
-                                $product[0]['Product']['id']
-                            ),
-                            array(
-                                'escape' => false,
-                                'class' => 'btn btn-lg btn-success'
-                            ),
-                            __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
-                        );
-                    }
-                    ?>
-                </p>
-            </div>
-            <div class="col-sm-6">
-                <p>
-                    <?php
-                    if($product[0]['Product']['load_stock'] > $product[0]['Product']['load_min']){
-                        echo $this->Html->link(
-                            $this->Html->tag(
-                                'i',
-                                '',
-                                array('class' => 'ace-icon fa fa-cloud-download')
-                            ).' Remover em estoque',
-                            array(
-                                'controller' => 'product_output',
-                                'action' => 'manual_submit',
-                                $product[0]['Product']['id']
-                            ),
-                            array(
-                                'escape' => false,
-                                'class' => 'btn btn-lg btn-danger'
-                            )
-                        );
-                    }
-                    ?>
-                </p>
-                <p>
-                    <?php
-                    if(!empty($product[0]['ProductOutput'])){
-                        echo $this->Html->link(
-                            $this->Html->tag(
-                                'i',
-                                '',
-                                array('class' => 'ace-icon fa fa-cloud-upload')
-                            ).' Histórico de saída',
-                            array(
-                                'controller' => 'product_output',
-                                'action' => 'output_history',
-                                $product[0]['Product']['id']
-                            ),
-                            array(
-                                'escape' => false,
-                                'class' => 'btn btn-lg'
-                            )
-                        );
-                    }
-                    ?>
-                </p>
-            </div>
-            <p></p>
+        <div class="btn-group">
+            <?php
+            if($product[0]['Product']['status']){
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-plus')
+                    ).' Adicionar quantidade',
+                    array(
+                        'controller' => 'suppliesProducts',
+                        'action' => 'add_load_stock',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-success btn-products'
+                    )
+                );
+            }
+            echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
+                    array('class' => 'ace-icon fa fa-pencil')
+                ).' Editar',
+                array(
+                    'controller' => 'products',
+                    'action' => 'edit',
+                    $product[0]['Product']['id']
+                ),
+                array(
+                    'escape' => false,
+                    'class' => 'btn btn-lg btn-yellow btn-products'
+                )
+            );
+            if($product[0]['Product']['status']){
+                echo $this->Form->postlink(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-remove')
+                    ).' Desativar',
+                    array(
+                        'action' => 'logical_delete',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-inverse btn-products'
+                    ),
+                    __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
+                );
+            }
+            else{
+                echo $this->Form->postlink(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-ok')
+                    ).' Reativar',
+                    array(
+                        'action' => 'logical_delete',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-success btn-products'
+                    ),
+                    __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
+                );
+            }
+            if($product[0]['Product']['load_stock'] > $product[0]['Product']['load_min']){
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'ace-icon fa fa-cloud-download')
+                    ).' Remover em estoque',
+                    array(
+                        'controller' => 'product_output',
+                        'action' => 'manual_submit',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-danger btn-products'
+                    )
+                );
+            }
+            if(!empty($product[0]['ProductOutput'])){
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'ace-icon fa fa-cloud-upload')
+                    ).' Histórico de saída',
+                    array(
+                        'controller' => 'product_output',
+                        'action' => 'output_history',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-products'
+                    )
+                );
+            }
+            ?>
         </div>
+        <div class="space"></div>
     </div>
 </div>

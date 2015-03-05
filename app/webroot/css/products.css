@@ -84,5 +84,9 @@ and open the template in the editor.
 }
 
 .products-list-pagging {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.btn-products {
+    width: 250px;
 }

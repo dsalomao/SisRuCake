@@ -241,7 +241,7 @@ $this->Html->addCrumb('Produtos');
 
                                        <li>
                                            <?php
-                                           echo $this->Html->link(
+                                           echo $this->form->postLink(
                                                $this->Html->tag(
                                                    'span',
                                                    $this->Html->tag(
@@ -263,7 +263,8 @@ $this->Html->addCrumb('Produtos');
                                                    'class' => ' actions-tooltip tooltip-default',
                                                    'data-rel' => 'tooltip',
                                                    'data-original-title' => 'desativar produto'
-                                               )
+                                               ),
+                                               __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $product['Product']['name'])
                                            );
                                            ?>
                                        </li>
@@ -309,7 +310,7 @@ $this->Html->addCrumb('Produtos');
                                                    )
                                                ),
                                                array(
-                                                   'controller' => 'manual_adjustments',
+                                                   'controller' => 'ProductOutput',
                                                    'action' => 'manual_submit',
                                                    $product['Product']['id']
                                                ),
@@ -392,7 +393,7 @@ $this->Html->addCrumb('Produtos');
                 'controller' => 'products',
                 'action' => 'add'
             ),
-            array('class' => 'btn btn-lg btn-primary', 'escape' => false, 'id' => 'new-product')
+            array('class' => 'btn btn-lg btn-primary btn-products', 'escape' => false, 'id' => 'new-product')
         );
         ?>
         <?php
@@ -406,7 +407,7 @@ $this->Html->addCrumb('Produtos');
                 'controller' => 'products',
                 'action' => 'deleted_index'
             ),
-            array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
+            array('class' => 'btn btn-lg btn-inverse btn-products', 'escape' => false)
         );
         ?>
     </div>

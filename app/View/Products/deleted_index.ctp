@@ -170,7 +170,7 @@ $this->Html->addCrumb('Produtos desativados');
                                         </li>
                                         <li>
                                             <?php
-                                            echo $this->Html->postLink(
+                                            echo $this->form->postLink(
                                                 $this->Html->tag(
                                                     'span',
                                                     $this->Html->tag(
@@ -198,7 +198,7 @@ $this->Html->addCrumb('Produtos desativados');
                                         </li>
                                         <li>
                                             <?php
-                                            echo $this->Html->postLink(
+                                            echo $this->form->postLink(
                                                 $this->Html->tag(
                                                     'span',
                                                     $this->Html->tag(
@@ -296,7 +296,7 @@ $this->Html->addCrumb('Produtos desativados');
                     'controller' => 'products',
                     'action' => 'add'
                 ),
-                array('class' => 'btn btn-lg btn-primary', 'escape' => false)
+                array('class' => 'btn btn-lg btn-primary btn-products', 'escape' => false)
             );
             echo $this->Html->link(
                 $this->Html->tag(
@@ -308,7 +308,7 @@ $this->Html->addCrumb('Produtos desativados');
                     'controller' => 'products',
                     'action' => 'index'
                 ),
-                array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
+                array('class' => 'btn btn-lg btn-inverse btn-products', 'escape' => false)
             );
             ?>
         </div>
