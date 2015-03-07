@@ -5,6 +5,9 @@ $this->Html->css('products', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', '/products');
+if(!$product[0]['Product']['status']) {
+    $this->Html->addCrumb('Produtos desativados', '/products/deleted_index');
+}
 $this->Html->addCrumb($product[0]['Product']['name']);
 ?>
 

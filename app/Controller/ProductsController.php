@@ -84,6 +84,8 @@ class ProductsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Product->create();
+            $this->request->data['Product']['name'] = ucfirst($this->request->data['Product']['name']);
+            $this->request->data['Product']['code'] = strtoupper($this->request->data['Product']['code']);
             $this->request->data['Product']['load_stock'] = 0;
             $this->request->data['Product']['status'] = 1;
             $this->request->data['Product']['restaurant_id'] = $this->Auth->user('restaurant_id');
@@ -107,7 +109,7 @@ class ProductsController extends AppController {
  */
 	public function edit($id = null) {
         if (!$this->Product->exists($id)) {
-            throw new NotFoundException(__('Invalid product'));
+            throw new NotFoundException(__('Produto inválido.'));
         }
         $product = $this->Product->findProductById($id);
         if($product[0]['Product']['load_stock']){
@@ -116,6 +118,8 @@ class ProductsController extends AppController {
         }
         else{
             if ($this->request->is(array('post', 'put'))) {
+                $this->request->data['Product']['name'] = ucfirst($this->request->data['Product']['name']);
+                $this->request->data['Product']['code'] = strtoupper($this->request->data['Product']['code']);
                 if ($this->Product->save($this->request->data)) {
                     $this->Session->setFlash(__('O produto foi editado com sucesso.'));
                     return $this->redirect(array('action' => 'index'));
