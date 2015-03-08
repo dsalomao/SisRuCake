@@ -7,6 +7,7 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('measure_units', array('inline' => false));
+$this->Html->css('measure-units', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Unidades de medida');
@@ -184,8 +185,8 @@ $this->Html->addCrumb('Unidades de medida');
                 </tbody>
             </table>
             <div class="row">
-                <div class="col-xs-6">
-                    <div class="dataTables_info" id="sample-table-2_info">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="dataTables_info measure-units-list-info">
                         <?php
                         echo $this->Paginator->counter(array(
                             'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
@@ -193,8 +194,8 @@ $this->Html->addCrumb('Unidades de medida');
                         ?>
                     </div>
                 </div>
-                <div class="col-xs-6">
-                    <div class="dataTables_paginate paging_bootstrap">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap measure-units-list-paging">
                         <ul class="pagination">
                             <?php
                             echo $this->Paginator->prev(
@@ -229,20 +230,23 @@ $this->Html->addCrumb('Unidades de medida');
         </div>
         <div class="col-xs-12">
             <h3 class="header smaller lighter blue"> A&ccedil;&otilde;es </h3>
-            <?php
-            echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'glyphicon glyphicon-plus')
-                ).' Novo',
-                array(
-                    'controller' => 'MeasureUnits',
-                    'action' => 'add'
-                ),
-                array('class' => 'btn btn-lg btn-primary', 'escape' => false)
-            );
-            ?>
+            <div class="btn-group">
+                <?php
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-plus')
+                    ).' Novo',
+                    array(
+                        'controller' => 'MeasureUnits',
+                        'action' => 'add'
+                    ),
+                    array('class' => 'btn btn-lg btn-primary', 'escape' => false)
+                );
+                ?>
+            </div>
+            <div class="space"></div>
         </div>
     </div>
 </div>

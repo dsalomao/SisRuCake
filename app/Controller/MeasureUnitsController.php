@@ -49,6 +49,7 @@ class MeasureUnitsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->MeasureUnit->create();
+            $this->request->data['MeasureUnit']['name'] = ucfirst($this->request->data['MeasureUnit']['name']);
 			if ($this->MeasureUnit->save($this->request->data)) {
                 $measureUnit = $this->MeasureUnit->findById($this->MeasureUnit->getLastInsertID());
 				$this->Session->setFlash(__("A unidade de medida '%s' foi adicionada com sucesso.", $measureUnit['MeasureUnit']['name']));
@@ -71,6 +72,7 @@ class MeasureUnitsController extends AppController {
 			throw new NotFoundException(__('Invalid measure unit'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+            $this->request->data['MeasureUnit']['name'] = ucfirst($this->request->data['MeasureUnit']['name']);
 			if ($this->MeasureUnit->save($this->request->data)) {
 				$this->Session->setFlash(__('Sua unidade de medida foi editada com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
