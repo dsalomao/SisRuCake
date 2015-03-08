@@ -7,6 +7,7 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('suppliers_indexes', array('inline' => false));
+$this->Html->css('suppliers', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Fornecedores');
@@ -103,7 +104,7 @@ $this->Html->addCrumb('Fornecedores');
                                         'title' => 'desativar fornecedor',
                                         'data-trigger' => 'hover'
                                     ),
-                                    __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
+                                    __('Ao ser desativado este fornecedor perderá qualquer informação sobre seus produtos. Deseja continuar com a operação?', $supplier['Supplier']['id'])
                                 );
                                 ?>
                             </div>
@@ -195,7 +196,7 @@ $this->Html->addCrumb('Fornecedores');
                                                     'title' => 'desativar fornecedor',
                                                     'data-trigger' => 'hover'
                                                 ),
-                                                __('Ao ser deletado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $supplier['Supplier']['id'])
+                                                __('Ao ser desativado este fornecedor perderá qualquer informação sobre seus produtos. Deseja continuar com a operação?', $supplier['Supplier']['id'])
                                             );
                                             ?>
                                         </li>
@@ -208,8 +209,8 @@ $this->Html->addCrumb('Fornecedores');
                 </tbody>
             </table>
             <div class="row">
-                <div class="col-xs-6">
-                    <div class="dataTables_info" id="sample-table-2_info">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="dataTables_info suppliers-list-info" id="sample-table-2_info">
                         <?php
                         echo $this->Paginator->counter(array(
                             'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
@@ -217,8 +218,8 @@ $this->Html->addCrumb('Fornecedores');
                         ?>
                     </div>
                 </div>
-                <div class="col-xs-6">
-                    <div class="dataTables_paginate paging_bootstrap">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap suppliers-list-paging">
                         <ul class="pagination">
                             <?php
                             echo $this->Paginator->prev(
@@ -253,7 +254,7 @@ $this->Html->addCrumb('Fornecedores');
         </div>
         <div class="col-xs-12">
             <h3 class="header smaller lighter blue"> A&ccedil;&otilde;es </h3>
-            <p>
+            <div class="btn-group">
                 <?php
                 echo $this->Html->link(
                     $this->Html->tag(
@@ -265,10 +266,8 @@ $this->Html->addCrumb('Fornecedores');
                         'controller' => 'suppliers',
                         'action' => 'add'
                     ),
-                    array('class' => 'btn btn-lg btn-primary', 'escape' => false)
+                    array('class' => 'btn btn-lg btn-primary btn-suppliers', 'escape' => false)
                 );
-                ?>
-                <?php
                 echo $this->Html->link(
                     $this->Html->tag(
                         'i',
@@ -279,10 +278,8 @@ $this->Html->addCrumb('Fornecedores');
                         'controller' => 'suppliers',
                         'action' => 'qualify'
                     ),
-                    array('class' => 'btn btn-lg btn-warning    ', 'escape' => false)
+                    array('class' => 'btn btn-lg btn-warning btn-suppliers', 'escape' => false)
                 );
-                ?>
-                <?php
                 echo $this->Html->link(
                     $this->Html->tag(
                         'i',
@@ -293,10 +290,11 @@ $this->Html->addCrumb('Fornecedores');
                         'controller' => 'suppliers',
                         'action' => 'deleted_index'
                     ),
-                    array('class' => 'btn btn-lg btn-inverse', 'escape' => false)
+                    array('class' => 'btn btn-lg btn-inverse btn-suppliers', 'escape' => false)
                 );
                 ?>
-            </p>
+            </div>
+            <div class="space"></div>
         </div>
     </div>
 </div>

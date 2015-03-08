@@ -16,6 +16,25 @@ class SuppliersController extends AppController {
  */
 	public $components = array('Paginator', 'Session');
 
+    public $paginate = array(
+        'SuppliesProduct' => array(
+            'limit' => 4,
+            'fields' => array('SuppliesProduct.quantity', 'SuppliesProduct.price', 'SuppliesProduct.date_of_entry'),
+            'contain' => array(
+                'Product' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name'
+                        )
+                    ),
+                    'fields' => array('Product.id', 'Product.name','Product.code')
+                )
+            )
+        ),
+        'Supplier' => array(
+            'limit' => 2,
+        )
+    );
+
 /**
  * index method
  *
@@ -23,6 +42,7 @@ class SuppliersController extends AppController {
  */
 	public function index() {
 		$this->Supplier->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
 		$this->set('suppliers', $this->Paginator->paginate('Supplier',  array('Supplier.status' => true, 'Supplier.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
@@ -38,13 +58,8 @@ class SuppliersController extends AppController {
             throw new NotFoundException(__('Invalid supplier'));
         }
         $this->Supplier->SuppliesProduct->recursive = -1;
-        $suppliedProducts = $this->Supplier->SuppliesProduct->findRelatedBySupplier($id);
-        //$related = $this->SuppliesProduct->findRelatedBySupplier($id);
-        /*foreach($supplier['SuppliesProduct'] as $suppliedProduct):
-            $this->Supplier->SuppliesProduct->Product->recursive = 0;
-            $supplier['RelatedProducts'][] = $this->Supplier->SuppliesProduct->Product->findById($suppliedProduct['product_id']);
-            $i = $i + 1;
-        endforeach;*/
+        $this->Paginator->settings = $this->paginate;
+        $suppliedProducts = $this->Paginator->paginate('SuppliesProduct', array('SuppliesProduct.supplier_id' => $id));
         $this->Supplier->recursive = -1;
         $supplier = $this->Supplier->findById($id);
         $this->set(array('suppliedProducts' => $suppliedProducts, 'supplier' => $supplier));
@@ -59,6 +74,9 @@ class SuppliersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Supplier->create();
+            $this->request->data['Supplier']['business_name'] = ucfirst($this->request->data['Supplier']['business_name']);
+            $this->request->data['Supplier']['name'] = ucfirst($this->request->data['Supplier']['name']);
+            $this->request->data['Supplier']['code'] = strtoupper($this->request->data['Supplier']['code']);
             $this->request->data['Supplier']['status'] = 1;
             $this->request->data['Supplier']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Supplier->save($this->request->data)) {
@@ -83,6 +101,9 @@ class SuppliersController extends AppController {
 			throw new NotFoundException(__('Invalid supplier'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+            $this->request->data['Supplier']['business_name'] = ucfirst($this->request->data['Supplier']['business_name']);
+            $this->request->data['Supplier']['name'] = ucfirst($this->request->data['Supplier']['name']);
+            $this->request->data['Supplier']['code'] = strtoupper($this->request->data['Supplier']['code']);
 			if ($this->Supplier->save($this->request->data)) {
 				$this->Session->setFlash(__('Este fornecedor foi editado com sucesso.'));
 				return $this->redirect(array('action' => 'index'));

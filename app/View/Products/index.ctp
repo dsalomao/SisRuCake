@@ -402,7 +402,7 @@ $this->Html->addCrumb('Produtos');
                 'i',
                 '',
                 array('class' => 'fa fa-eye')
-            ).' Desativados',
+            ).' Produtos desativados',
             array(
                 'controller' => 'products',
                 'action' => 'deleted_index'

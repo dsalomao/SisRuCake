@@ -2,6 +2,7 @@
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
 $this->Html->script('suppliers_view', array('inline' => false));
+$this->Html->css('suppliers', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 if($supplier['Supplier']['status'])
@@ -104,7 +105,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
         <?php if($supplier['Supplier']['qualification']) : ?>
         <div class="col-sm-7 infobox-container">
 
-            <div class="infobox infobox-pink">
+            <div class="infobox infobox-pink qualification-box">
                 <div class="infobox-icon">
                     <i class="ace-icon fa fa-cutlery"></i>
                 </div>
@@ -137,9 +138,9 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
         <!-- #section:custom/widget-box.options.transparent -->
 
         <!-- /section:custom/widget-box.options.transparent -->
-        <div class="widget-box transparent" style="opacity: 1; z-index: 0;">
-            <div class="widget-header">
-                <h4 class="widget-title lighter"> Últimos produtos fornecidos por: <?php echo h($supplier['Supplier']['name']); ?>&nbsp; </h4>
+        <div class="widget-box transparent" style="opacity: 1; z-index: 0;margin-top: 12px;">
+            <div class="widget-header" style="margin-bottom: 10px">
+                <h3 class="widget-title lighter"> Últimos produtos fornecidos por: <?php echo h($supplier['Supplier']['name']); ?>&nbsp; </h3>
 
                 <div class="widget-toolbar no-border">
                     <a href="#" data-action="settings">
@@ -171,11 +172,11 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                 <thead>
                                 <tr>
                                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('name', 'Nome'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
+                                    <th class="hidden-md"><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
                                     <th><?php echo $this->Paginator->sort('quantity', 'Qtd.'); ?></th>
                                     <th><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
                                     <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
+                                    <th class="hidden-md"><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
                                     <th class="actions"><?php echo __('Ações'); ?></th>
                                 </tr>
                                 </thead>
@@ -184,15 +185,15 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                 <?php foreach ($suppliedProducts as $suppliedProduct): ?>
                                     <tr>
                                         <td class="hidden-sm hidden-xs"><?php echo h($suppliedProduct['Product']['name']); ?>&nbsp;</td>
-                                        <td><?php echo h($suppliedProduct['Product']['code']); ?>&nbsp;</td>
+                                        <td class="hidden-md"><?php echo h($suppliedProduct['Product']['code']); ?>&nbsp;</td>
                                         <td style="text-align: right"><?php echo h($suppliedProduct['SuppliesProduct']['quantity']); ?>&nbsp;</td>
                                         <td><?php echo h($suppliedProduct['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
-                                        <td class="hidden-sm hidden-xs"><?php
+                                        <td class="hidden-xs hidden-sm"><?php
                                             $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
                                             echo $this->Number->currency($suppliedProduct['SuppliesProduct']['price'], 'BRL');
                                             ?>&nbsp;
                                         </td>
-                                        <td><?php echo h(date("d-m-Y", strtotime($suppliedProduct['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
+                                        <td class="hidden-md"><?php echo h(date("d-m-Y", strtotime($suppliedProduct['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
                                         <td class="actions">
                                             <div class="hidden-xs hidden-sm btn-group">
                                                 <?php
@@ -200,7 +201,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                         $this->Html->tag(
                                                             'i',
                                                             '',
-                                                            array('class' => 'ace-icon fa fa-search-plus bigger-120')
+                                                            array('class' => 'ace-icon fa fa-search-plus')
                                                         ),
                                                         array(
                                                             'controller' => 'products',
@@ -238,7 +239,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                     );
                                                 ?>
                                             </div>
-                                            <div class="hidden-lg hidden-md">
+                                            <div class="hidden-md hidden-lg">
                                                 <div class="inline position-relative">
                                                     <?php
                                                     echo $this->Html->link(
@@ -266,7 +267,7 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                                                     $this->Html->tag(
                                                                         'i',
                                                                         '',
-                                                                        array('class' => 'ace-icon fa fa-pencil bigger-120')
+                                                                        array('class' => 'ace-icon fa fa-search-plus bigger-120')
                                                                     ),
                                                                     array(
                                                                         'class' => 'blue'
@@ -323,15 +324,59 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                                 <?php endforeach; ?>
                                 </tbody>
                             </table>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="dataTables_info suppliers-list-info" id="sample-table-2_info">
+                                        <?php
+                                        echo $this->Paginator->counter(array(
+                                            'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
+                                        ));
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="dataTables_paginate paging_bootstrap suppliers-list-paging">
+                                        <ul class="pagination">
+                                            <?php
+                                            echo $this->Paginator->prev(
+                                                $this->Html->tag('i', '', array('class' => 'fa fa-angle-double-left')),
+                                                array(
+                                                    'tag' => 'li',
+                                                    'escape' => false,
+                                                ),
+                                                $this->Html->link($this->Html->tag('i', '', array('class' => 'fa fa-angle-double-left')), '', array('escape' => false)),
+                                                array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false,)
+                                            );
+                                            echo $this->Paginator->numbers(array(
+                                                'separator' => '',
+                                                'tag' => 'li',
+                                                'currentClass' => 'active',
+                                                'currentTag' => 'a'
+                                            ));
+                                            echo $this->Paginator->next(
+                                                $this->Html->tag('i', '', array('class' => 'fa fa-angle-double-right')),
+                                                array(
+                                                    'tag' => 'li',
+                                                    'escape' => false,
+                                                ),
+                                                $this->Html->link($this->Html->tag('i', '', array('class' => 'fa fa-angle-double-right')), '', array('escape' => false)),
+                                                array('class' => 'next disabled', 'tag' => 'li', 'escape' => false,)
+                                            );
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div class="col-xs-12 col-sm-12 col-md-12">
         <h4 class="header smaller lighter blue"> Ações </h4>
-        <p>
+        <div class="btn-group">
             <?php
             echo $this->Html->link(
                 $this->Html->tag(
@@ -345,29 +390,46 @@ $this->Html->addCrumb($supplier['Supplier']['name']);
                 ),
                 array(
                     'escape' => false,
-                    'class' => 'btn btn-lg btn-yellow'
+                    'class' => 'btn btn-lg btn-warning btn-suppliers'
                 )
             );
+            if($supplier['Supplier']['status']) {
+                echo $this->Form->postlink(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-remove')
+                    ).' Desativar fornecedor',
+                    array(
+                        'action' => 'logical_delete',
+                        $supplier['Supplier']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-inverse btn-suppliers'
+                    ),
+                    __('Ao ser desativado este fornecedor perderá qualquer informação. Deseja continuar com a operação?')
+                );
+            } else {
+                echo $this->Form->postlink(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-ok')
+                    ).' Reativar fornecedor',
+                    array(
+                        'action' => 'logical_delete',
+                        $supplier['Supplier']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-success btn-suppliers'
+                    ),
+                    __('Esta ação irá reativar o fornecedor e liberar sua utilização. Deseja continuar com a operação?')
+                );
+            }
             ?>
-            &nbsp;
-            <?php
-            echo $this->Form->postlink(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'glyphicon glyphicon-remove')
-                ).' Desativar fornecedor',
-                array(
-                    'action' => 'logical_delete',
-                    $supplier['Supplier']['id']
-                ),
-                array(
-                    'escape' => false,
-                    'class' => 'btn btn-lg btn-inverse'
-                ),
-                __('Ao ser desativado este fornecedor perderá qualquer informação. Deseja continuar com a operação?')
-            );
-            ?>
-        </p>
+        </div>
+        <div class="space"></div>
     </div>
 </div>

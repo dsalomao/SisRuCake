@@ -6,10 +6,10 @@
  * Time: 14:59
  */
 
-$this->html->css('chosen', array('inline' => false));
-
 $this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->html->script('suppliers_qualify', array('inline' => false));
+
+$this->html->css('chosen', array('inline' => false));
 
 $this->Html->addCrumb('Fornecedores', '/suppliers');
 $this->Html->addCrumb('Qualificação');
