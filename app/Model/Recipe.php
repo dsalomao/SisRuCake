@@ -48,26 +48,14 @@ class Recipe extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'description' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'instructions' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
 		'status' => array(
 			'boolean' => array(
@@ -153,11 +141,11 @@ class Recipe extends AppModel {
 		)
 	);
 
-    /**
-     * belongsTo associations
-     *
-     * @var array
-     */
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
     public $belongsTo = array(
         'Restaurant' => array(
             'className' => 'Restaurant',
@@ -206,7 +194,7 @@ class Recipe extends AppModel {
         $recipe = $this->find('first', array('conditions' => array('Recipe.id' => $id)));
 
         if($recipe['Recipe']['status']){
-            $this->saveField('status', NULL);
+            $this->saveField('status', false);
         }else
             $this->saveField('status', true);
         //this status been returned is a boolean retrieved before saveField
@@ -214,7 +202,6 @@ class Recipe extends AppModel {
     }
 
     public function findMyRecipe($id = null) {
-
         $options = array(
             'conditions' => array('Recipe.id' => $id),
             'recursive' => -1

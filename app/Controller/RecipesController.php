@@ -52,6 +52,8 @@ class RecipesController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Recipe->create();
+            $this->request->data['Recipe']['name'] = ucfirst($this->request->data['Recipe']['name']);
+            $this->request->data['Recipe']['code'] = strtoupper($this->request->data['Recipe']['code']);
             $this->request->data['Recipe']['status'] = 1;
             $this->request->data['Recipe']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Recipe->save($this->request->data)) {
@@ -77,6 +79,8 @@ class RecipesController extends AppController {
 			throw new NotFoundException(__('Invalid recipe'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+            $this->request->data['Recipe']['name'] = ucfirst($this->request->data['Recipe']['name']);
+            $this->request->data['Recipe']['code'] = strtoupper($this->request->data['Recipe']['code']);
 			if ($this->Recipe->save($this->request->data)) {
 				$this->Session->setFlash(__('A receita foi salva com sucesso.'));
 				return $this->redirect(array('action' => 'index'));
@@ -119,15 +123,16 @@ class RecipesController extends AppController {
  */
     public function logical_delete($id = null) {
         $this->Recipe->id = $id;
+        $recipe = $this->Recipe->findById($id);
         if (!$this->Recipe->exists()) {
             throw new NotFoundException(__('Invalid Recipe'));
         }
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Recipe->updateStatus($id)) {
-            $this->Session->setFlash(__('O produto foi deletado'));
+            $this->Session->setFlash(__("'%s' foi desativada com sucesso", $recipe['Recipe']['code']));
             return $this->redirect(array('action' => 'deleted_index'));
         } else {
-            $this->Session->setFlash(__('O produto foi restaurado.'));
+            $this->Session->setFlash(__("'%s' foi reativada com sucesso", $recipe['Recipe']['code']));
             return $this->redirect(array('action' => 'index'));
         }
 
@@ -140,6 +145,6 @@ class RecipesController extends AppController {
  */
     public function deleted_index() {
         $this->Recipe->recursive = 0;
-        $this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => 0, 'recipes.restaurant_id' => $this->Auth->user('restaurant_id'))));
+        $this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => 0, 'Recipe.restaurant_id' => $this->Auth->user('restaurant_id'))));
     }
 }
