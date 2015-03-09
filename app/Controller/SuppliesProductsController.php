@@ -29,6 +29,7 @@ class SuppliesProductsController extends AppController {
  * @var array
  */
     public $paginate = array(
+        'limit' => 10,
         'contain' => array(
             'Product' => array(
                 'MeasureUnit' => array(

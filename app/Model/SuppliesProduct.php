@@ -32,9 +32,9 @@ class SuppliesProduct extends AppModel {
                 ),
 		),
 		'price' => array(
-			'numeric' => array(
+			'money' => array(
 				'rule' => array('numeric'),
-                'message' => 'Este campo tem de ser um número vákido.',
+                'message' => 'Este campo tem de ser um número válido.',
 				'allowEmpty' => true,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

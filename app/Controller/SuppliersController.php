@@ -42,7 +42,7 @@ class SuppliersController extends AppController {
  */
 	public function index() {
 		$this->Supplier->recursive = 0;
-        $this->Paginator->settings = $this->paginate;
+        $this->Paginator->settings = $this->paginate['Supplier'];
 		$this->set('suppliers', $this->Paginator->paginate('Supplier',  array('Supplier.status' => true, 'Supplier.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
@@ -58,7 +58,7 @@ class SuppliersController extends AppController {
             throw new NotFoundException(__('Invalid supplier'));
         }
         $this->Supplier->SuppliesProduct->recursive = -1;
-        $this->Paginator->settings = $this->paginate;
+        $this->Paginator->settings = $this->paginate['SuppliesProduct'];
         $suppliedProducts = $this->Paginator->paginate('SuppliesProduct', array('SuppliesProduct.supplier_id' => $id));
         $this->Supplier->recursive = -1;
         $supplier = $this->Supplier->findById($id);

@@ -104,7 +104,7 @@ $this->Html->addCrumb('Unidades de medida');
                                         'title' => 'deletar unidade',
                                         'data-trigger' => 'hover'
                                     ),
-                                    __('Tem certeza que deseja deletar esta unidade: %s?', $measureUnit['MeasureUnit']['name'])
+                                    __("Esta ação apagará todos os produtos vinculados a '%s', deseja continuar?", $measureUnit['MeasureUnit']['name'])
                                 );
                                 ?>
                             </div>
@@ -169,10 +169,10 @@ $this->Html->addCrumb('Unidades de medida');
                                                     'class' => 'actions-tooltip tooltip-error',
                                                     'data-toggle' => 'tooltip',
                                                     'data-placement' => 'top',
-                                                    'title' => 'Deletar Unidade',
+                                                    'title' => 'deletar Unidade',
                                                     'data-trigger' => 'hover'
                                                 ),
-                                                __('Tem certeza que deseja deletar esta unidade: %s?', $measureUnit['MeasureUnit']['name'])
+                                                __("Esta ação apagará todos os produtos vinculados a '%s', deseja continuar?", $measureUnit['MeasureUnit']['name'])
                                             );
                                             ?>
                                         </li>

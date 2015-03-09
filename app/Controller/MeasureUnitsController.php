@@ -27,21 +27,6 @@ class MeasureUnitsController extends AppController {
 	}
 
 /**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->MeasureUnit->exists($id)) {
-			throw new NotFoundException(__('Unidade de medida não existente.'));
-		}
-		$options = array('conditions' => array('MeasureUnit.' . $this->MeasureUnit->primaryKey => $id));
-		$this->set('measureUnit', $this->MeasureUnit->find('first', $options));
-	}
-
-/**
  * add method
  *
  * @return void
@@ -101,7 +86,7 @@ class MeasureUnitsController extends AppController {
 		if ($this->MeasureUnit->delete()) {
 			$this->Session->setFlash(__('Sua unidade foi deletada com sucesso.'));
 		} else {
-			$this->Session->setFlash(__('Não pudemos deletar esta unidade, por favor tente novamente.'));
+			$this->Session->setFlash(__('Não podemos deletar esta unidade, por favor tente novamente.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

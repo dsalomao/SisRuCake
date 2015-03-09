@@ -29,6 +29,14 @@ class MeasureUnit extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Esta unidade de medida já existe.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
 		'int_only' => array(
 			'boolean' => array(
