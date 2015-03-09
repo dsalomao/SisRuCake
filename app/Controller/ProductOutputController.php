@@ -51,90 +51,20 @@ class ProductOutputController extends AppController {
 	}
 
 /**
- * view method
+ * manual_submit method
  *
- * @throws NotFoundException
- * @param string $id
+ * @param string $product_id
  * @return void
  */
-	public function view($id = null) {
-		if (!$this->ProductOutput->exists($id)) {
-			throw new NotFoundException(__('Invalid manual adjustment'));
-		}
-		$options = array('conditions' => array('ProductOutput.' . $this->ProductOutput->primaryKey => $id));
-		$this->set('ProductOutput', $this->ProductOutput->find('first', $options));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->ProductOutput->create();
-            $this->request->data['ProductOutput']['restaurant_id'] = $this->Auth->user('restaurant_id');
-			if ($this->ProductOutput->save($this->request->data)) {
-				$this->Session->setFlash(__('The manual adjustment has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The manual adjustment could not be saved. Please, try again.'));
-			}
-		}
-		$products = $this->ProductOutput->Product->find('list');
-		$this->set(compact('products'));
-	}
-
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->ProductOutput->exists($id)) {
-			throw new NotFoundException(__('Invalid manual adjustment'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->ProductOutput->save($this->request->data)) {
-				$this->Session->setFlash(__('The manual adjustment has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The manual adjustment could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('ProductOutput.' . $this->ProductOutput->primaryKey => $id));
-			$this->request->data = $this->ProductOutput->find('first', $options);
-		}
-		$products = $this->ProductOutput->Product->find('list');
-		$this->set(compact('products'));
-	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->ProductOutput->id = $id;
-		if (!$this->ProductOutput->exists()) {
-			throw new NotFoundException(__('Invalid manual adjustment'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->ProductOutput->delete()) {
-			$this->Session->setFlash(__('The manual adjustment has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The manual adjustment could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}
 
     public function manual_submit($product_id = null){
 
         $target_product = $this->ProductOutput->Product->findById($product_id);
+
+        if($target_product['MeasureUnit']['int_only']){
+            //change validation to naturalNumber type
+            $this->ProductOutput->changeQuantityValidation();
+        }
 
         if ($this->request->is('post')) {
             $this->ProductOutput->create();
@@ -157,6 +87,13 @@ class ProductOutputController extends AppController {
         }
         $this->set(array('product' => $target_product));
     }
+
+/**
+ * output_history method
+ *
+ * @param string $product_id
+ * @return void
+ */
 
     public function output_history($product_id = null){
         if (!$this->ProductOutput->Product->exists($product_id)) {

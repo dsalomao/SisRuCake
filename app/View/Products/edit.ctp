@@ -93,21 +93,6 @@ $this->Html->addCrumb('Editar produto');
 
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ProductRestaurantId"> Unidade UNESP </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.restaurant_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma UAN'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ProductMeasureUnitId"> Unidade de medida </label>
 
 
@@ -136,7 +121,7 @@ $this->Html->addCrumb('Editar produto');
                                 ),
                                 array(
                                     'type' => 'submit',
-                                    'class' => 'btn btn-sm btn-success',
+                                    'class' => 'btn btn-sm btn-warning',
                                     'escape' => false
                                 )
                             ); ?>

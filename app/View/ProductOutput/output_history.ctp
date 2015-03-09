@@ -6,6 +6,8 @@
  * Time: 20:52
  */
 
+$this->Html->css('product-output', array('inline' => false));
+
 $this->Html->addCrumb('Logística & Suprimentos');
 if($ProductOutputs[0]['Product']['status'])
     $this->Html->addCrumb('Produtos', '/products');
@@ -46,8 +48,8 @@ $this->Html->addCrumb('Histórico de baixa em estoque');
         </tbody>
     </table>
     <div class="row">
-        <div class="col-xs-6">
-            <div class="dataTables_info" id="lastInput_info">
+        <div class="col-xs-12 col-sm-6">
+            <div class="dataTables_info output-history-list-info">
                 <?php
                 echo $this->Paginator->counter(array(
                     'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
@@ -55,8 +57,8 @@ $this->Html->addCrumb('Histórico de baixa em estoque');
                 ?>
             </div>
         </div>
-        <div class="col-xs-6">
-            <div class="dataTables_paginate paging_bootstrap">
+        <div class="col-xs-12 col-sm-6">
+            <div class="dataTables_paginate paging_bootstrap output-history-list-paging">
                 <ul class="pagination">
                     <?php
                     echo $this->Paginator->prev(

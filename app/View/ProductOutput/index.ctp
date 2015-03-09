@@ -6,6 +6,8 @@
 
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
+$this->Html->css('product-output', array('inline' => false));
+
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Ajustes manuais em estoque');
@@ -24,7 +26,6 @@ $this->Html->addCrumb('Ajustes manuais em estoque');
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('id'); ?></th>
                     <th><?php echo $this->Paginator->sort('quantity', 'Quantidade debitada'); ?></th>
                     <th><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
                     <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
@@ -36,7 +37,6 @@ $this->Html->addCrumb('Ajustes manuais em estoque');
                 <tbody>
                 <?php foreach ($ProductOutputs as $productOutput): ?>
                     <tr>
-                        <td class="hidden-sm hidden-xs"><?php echo h($productOutput['ProductOutput']['id']); ?>&nbsp;</td>
                         <td style="text-align: right;"><?php echo h($productOutput['ProductOutput']['quantity']); ?>&nbsp;</td>
                         <td><?php echo h($productOutput['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
                         <td>
@@ -51,8 +51,8 @@ $this->Html->addCrumb('Ajustes manuais em estoque');
                 </tbody>
             </table>
             <div class="row">
-                <div class="col-xs-6">
-                    <div class="dataTables_info" id="sample-table-2_info">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="dataTables_info output-history-list-info">
                         <?php
                         echo $this->Paginator->counter(array(
                             'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
@@ -60,8 +60,8 @@ $this->Html->addCrumb('Ajustes manuais em estoque');
                         ?>
                     </div>
                 </div>
-                <div class="col-xs-6">
-                    <div class="dataTables_paginate paging_bootstrap">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap output-history-list-paging">
                         <ul class="pagination">
                             <?php
                             echo $this->Paginator->prev(

@@ -47,26 +47,6 @@ class SuppliersController extends AppController {
 	}
 
 /**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-    public function view($id = null) {
-        if (!$this->Supplier->exists($id)) {
-            throw new NotFoundException(__('Invalid supplier'));
-        }
-        $this->Supplier->SuppliesProduct->recursive = -1;
-        $this->Paginator->settings = $this->paginate['SuppliesProduct'];
-        $suppliedProducts = $this->Paginator->paginate('SuppliesProduct', array('SuppliesProduct.supplier_id' => $id));
-        $this->Supplier->recursive = -1;
-        $supplier = $this->Supplier->findById($id);
-        $this->set(array('suppliedProducts' => $suppliedProducts, 'supplier' => $supplier));
-        $this->Paginator->paginate();
-    }
-
-/**
  * add method
  *
  * @return void

@@ -63,4 +63,18 @@ class ProductOutput extends AppModel {
             'order' => ''
         )
 	);
+
+    public function changeQuantityValidation(){
+        $this->validator()->add(
+            'quantity',
+            array(
+                'naturalNumber' => array(
+                    'rule'    => 'naturalNumber',
+                    'message' => 'Esta unidade de medida recebe apenas valores inteiros'
+                ),
+            )
+        );
+        $this->validator()->remove('quantity', 'decimal');
+        return false;
+    }
 }

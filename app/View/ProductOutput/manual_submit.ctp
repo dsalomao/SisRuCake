@@ -41,60 +41,56 @@ $this->Html->addCrumb('Remover do estoque');
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
 
-                                    <?php echo $this->Form->input(
-                                        'ProductOutput.quantity',
+                                <?php echo $this->Form->input(
+                                    'ProductOutput.quantity',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-xs-6 col-sm-2',
+                                        'class' => 'input-mini'
+                                    )
+                                ); ?>
+                                <div class="col-xs-6 col-sm-7">
+                                    <?php echo $this->Html->link(
+                                        $product['MeasureUnit']['name'],
+                                        array('controller' => 'measure_units', 'action' => 'index'),
                                         array(
-                                            'type' => 'text',
-                                            'div' => 'col-sm-1',
-                                            'class' => 'input-mini'
+                                            'class' => 'label label-lg label-info arrowed-right',
+                                            'id' => 'measure-unit-tag'
                                         )
                                     ); ?>
-                                    <div class="col-sm-8">
-                                        <?php echo $this->Html->tag(
-                                            'span',
-                                            $product['MeasureUnit']['name'],
-                                            array(
-                                                'class' => 'label label-lg label-info arrowed-right',
-                                                'id' => 'tag_'.$product['MeasureUnit']['id']
-                                            )
-                                        ); ?>
-                                    </div>
-
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Dia da retirada </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Dia da retirada </label>
 
-                                    <?php echo $this->Form->input(
-                                        'ProductOutput.date_of_submission',
-                                        array(
-                                            'div' => array(
-                                                'class' => 'input-group date col-sm-9',
-                                                'style' => 'padding-left:12px;padding-right:12px;',
-                                                'id' => 'date_of_submission_dtp'
-                                            ),
-                                            'type' => 'text',
-                                            'class' => 'form-control',
-                                            'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
-                                        )
-                                    ); ?>
+                                <?php echo $this->Form->input(
+                                    'ProductOutput.date_of_submission',
+                                    array(
+                                        'div' => array(
+                                            'class' => 'input-group date col-sm-9',
+                                            'style' => 'padding-left:12px;padding-right:12px;',
+                                            'id' => 'date_of_submission_dtp'
+                                        ),
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'after' => $this->html->tag('span', $this->html->tag('span', '', array('class' => 'glyphicon glyphicon-calendar')), array('class' => 'input-group-addon'))
+                                    )
+                                ); ?>
+                            </div>
+                            <div class="form-group">
 
-                                </div>
-                                <div class="form-group">
-
-                                    <?php echo $this->Form->input(
-                                        'product_id',
-                                        array(
-                                            'div' => 'col-sm-9',
-                                            'type' => 'hidden',
-                                            'class' => 'form-control',
-                                            'value' => $product['Product']['id']
-                                        )
-                                    ); ?>
-
-                                </div>
+                                <?php echo $this->Form->input(
+                                    'product_id',
+                                    array(
+                                        'div' => 'col-sm-9',
+                                        'type' => 'hidden',
+                                        'class' => 'form-control',
+                                        'value' => $product['Product']['id']
+                                    )
+                                ); ?>
+                            </div>
                         </fieldset>
 
                         <div class="form-actions center">
