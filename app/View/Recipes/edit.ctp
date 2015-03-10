@@ -97,7 +97,7 @@ $this->Html->addCrumb('Editar receita');
                                 ),
                                 array(
                                     'type' => 'submit',
-                                    'class' => 'btn btn-sm btn-success',
+                                    'class' => 'btn btn-sm btn-warning              ',
                                     'escape' => false
                                 )
                             ); ?>

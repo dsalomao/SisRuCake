@@ -96,9 +96,6 @@ $this->Html->addCrumb('Produtos');
                                        'data-trigger' => 'hover'
                                    )
                                );
-                               ?>
-                               &nbsp;
-                               <?php
                                echo $this->Form->postlink(
                                    $this->Html->tag(
                                        'i',
