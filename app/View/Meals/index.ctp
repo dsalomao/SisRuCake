@@ -17,16 +17,10 @@ $this->Html->addCrumb('Refeições');
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th class="center">
-                        <label class="position-relative">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>
-                        </label>
-                    </th>
                     <th><?php echo $this->Paginator->sort('code'); ?></th>
-                    <th class="hidden-md"><?php echo $this->Paginator->sort('description'); ?></th>
+                    <th><?php echo $this->Paginator->sort('description'); ?></th>
                     <th><?php echo $this->Paginator->sort('created'); ?></th>
-                    <th><?php echo $this->Paginator->sort('modified'); ?></th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('modified'); ?></th>
                     <th class="actions"><?php echo __('Ações'); ?></th>
                 </tr>
                 </thead>
@@ -34,17 +28,10 @@ $this->Html->addCrumb('Refeições');
                 <tbody>
                 <?php foreach ($meals as $meal): ?>
                     <tr>
-                        <td class="center">
-                            <label class="position-relative">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
-
                         <td><?php echo h($meal['Meal']['code']); ?>&nbsp;</td>
-                        <td class="hidden-md"><?php echo h($meal['Meal']['description']); ?>&nbsp;</td>
+                        <td><?php echo h($meal['Meal']['description']); ?>&nbsp;</td>
                         <td><?php echo h($meal['Meal']['created']); ?>&nbsp;</td>
-                        <td><?php echo h($meal['Meal']['modified']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs"><?php echo h($meal['Meal']['modified']); ?>&nbsp;</td>
                         <td class="actions">
                             <div class="hidden-xs hidden-sm action-buttons btn-group">
                                 <?php
@@ -279,8 +266,6 @@ $this->Html->addCrumb('Refeições');
                 ),
                 array('class' => 'btn btn-lg btn-primary btn-meals', 'escape' => false)
             );
-            ?>
-            <?php
             echo $this->Html->link(
                 $this->Html->tag(
                     'i',
