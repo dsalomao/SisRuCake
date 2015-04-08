@@ -249,8 +249,7 @@ $this->Html->addCrumb('Refeições');
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <h4> A&ccedil;&otilde;es </h4>
-        <div class="hr dotted"></div>
+        <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
         <div class="btn-group">
             <?php
             echo $this->Html->link(

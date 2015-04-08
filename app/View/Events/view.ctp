@@ -9,6 +9,8 @@
  * Licensed under MIT
  * http://www.opensource.org/licenses/mit-license.php
  */
+$this->Html->css('events', array('inline' => false));
+
 $this->Html->addCrumb('Planejamento de cardápio');
 $this->Html->addCrumb('Eventos', '/events');
 $this->Html->addCrumb($event['Event']['title']);
@@ -386,28 +388,23 @@ $this->Html->addCrumb($event['Event']['title']);
     </div>
 
     <div class="col-sm-12">
-        <h3 class="header smaller lighter blue"> A&ccedil;&otilde;es </h3>
-        <div class="row">
-            <div class="col-sm-6">
-                <p>
-                    <?php
-                    echo $this->Html->link(
-                        $this->Html->tag(
-                            'i',
-                            '',
-                            array('class' => 'glyphicon glyphicon-minus')
-                        ).' Retirar refeição em estoque',
-                        '/events/output_meal/'.$event['MealsForEvent'][0]['id'].'/'.+$event['Event']['id'],
-                        array(
-                            'escape' => false,
-                            'class' => 'btn btn-lg btn-danger'
-                        )
-                    );
-                    ?>
-                </p>
-            </div>
-            <div class="col-sm-6">
-            </div>
+        <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
+        <div class="btn-group">
+            <?php
+            echo $this->Html->link(
+                $this->Html->tag(
+                    'i',
+                    '',
+                    array('class' => 'glyphicon glyphicon-minus')
+                ).' Retirar refeição em estoque',
+                '/events/output_meal/'.$event['MealsForEvent'][0]['id'].'/'.+$event['Event']['id'],
+                array(
+                    'escape' => false,
+                    'class' => 'btn btn-lg btn-danger'
+                )
+            );
+            ?>
         </div>
+        <div class="space"></div>
     </div>
-</div>\
+</div>

@@ -12,6 +12,8 @@
     echo $this->Html->script('libs/jquery.datetimepicker');
     echo $this->Html->script('libs/jquery.qtip');
 
+    $this->Html->css('events', array('inline' => false));
+
     $this->Html->addCrumb('Planejamento de cardápio');
     $this->Html->addCrumb('Calendário');
 ?>
@@ -36,9 +38,8 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <h4> A&ccedil;&otilde;es </h4>
-        <div class="hr dotted"></div>
-        <p>
+        <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
+        <div class="btn-group"></div>
             <?php
             echo $this->Html->link(
                 $this->Html->tag(
@@ -51,14 +52,14 @@
                     'action' => 'add'
                 ),
                 array(
-                    'class' => 'btn btn-lg btn-primary',
+                    'class' => 'btn btn-lg btn-primary btn-events',
                     'escape' => false,
                     'id' => 'new_event',
                     'data-toggle' => 'modal'
                 )
             );
             ?>
-        </p>
+        </div>
     </div>
 </div>
 
