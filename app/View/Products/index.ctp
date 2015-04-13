@@ -9,7 +9,6 @@
 /* scripts used in this view */
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
-$this->Html->script('products_indexes', array('inline' => false));
 
 $this->Html->css('products', array('inline' => false));
 
@@ -202,6 +201,7 @@ $this->Html->addCrumb('Produtos');
                                                    'escape' => false,
                                                    'class' => 'actions-tooltip tooltip-info',
                                                    'data-rel' => 'tooltip',
+                                                   'data-placement' => 'left',
                                                    'data-original-title' => 'ver produto'
                                                )
                                            );
@@ -230,6 +230,7 @@ $this->Html->addCrumb('Produtos');
                                                    'escape' => false,
                                                    'class' => 'actions-tooltip tooltip-warning',
                                                    'data-rel' => 'tooltip',
+                                                   'data-placement' => 'left',
                                                    'data-original-title' => 'editar produto'
                                                )
                                            );
@@ -259,6 +260,7 @@ $this->Html->addCrumb('Produtos');
                                                    'escape' => false,
                                                    'class' => ' actions-tooltip tooltip-default',
                                                    'data-rel' => 'tooltip',
+                                                   'data-placement' => 'left',
                                                    'data-original-title' => 'desativar produto'
                                                ),
                                                __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $product['Product']['name'])
@@ -287,6 +289,7 @@ $this->Html->addCrumb('Produtos');
                                                    'escape' => false,
                                                    'class' => ' actions-tooltip tooltip-success',
                                                    'data-rel' => 'tooltip',
+                                                   'data-placement' => 'left',
                                                    'data-original-title' => 'adicionar quantidade'
                                                )
                                            );
@@ -315,6 +318,7 @@ $this->Html->addCrumb('Produtos');
                                                    'escape' => false,
                                                    'class' => ' actions-tooltip tooltip-error',
                                                    'data-rel' => 'tooltip',
+                                                   'data-placement' => 'left',
                                                    'data-original-title' => 'retirar quantidade'
                                                )
                                            );
@@ -410,3 +414,9 @@ $this->Html->addCrumb('Produtos');
     </div>
     <div class="space"></div>
 </div>
+
+<script>
+    jQuery(function($) {
+        $('.actions-tooltip').tooltip();
+    });
+</script>

@@ -225,7 +225,7 @@
                         <ul class="nav nav-list">
                                 <li class="">
                                         <a href="#" class="dropdown-toggle">
-                                                <i class="menu-icon fa fa-tachometer"></i>
+                                                <i class="menu-icon glyphicon glyphicon-list"></i>
                                                 <span class="menu-text"> Tarefas</span>
 
                                                 <b class="arrow fa fa-angle-down"></b>
@@ -259,61 +259,7 @@
                                                                 $this->Html->tag(
                                                                     'i',
                                                                     '',
-                                                                    array('class' => 'menu-icon fa fa-calendar')
-                                                                ).' Caderno de entrada',
-                                                                array(
-                                                                    'controller' => 'suppliesProducts',
-                                                                    'action' => 'index'
-                                                                ),
-                                                                array('escape' => false)
-                                                            );
-                                                            ?>
-
-                                                            <b class="arrow"></b>
-                                                        </li>
-                                                        <li class="">
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                $this->Html->tag(
-                                                                    'i',
-                                                                    '',
-                                                                    array('class' => 'menu-icon fa fa-credit-card')
-                                                                ).' Caderno de saída',
-                                                                array(
-                                                                    'controller' => 'productOutput',
-                                                                    'action' => 'index'
-                                                                ),
-                                                                array('escape' => false)
-                                                            );
-                                                            ?>
-
-                                                            <b class="arrow"></b>
-                                                        </li>
-                                                        <li class="">
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                $this->Html->tag(
-                                                                    'i',
-                                                                    '',
-                                                                    array('class' => 'menu-icon fa fa-fighter-jet')
-                                                                ).' Fornecedores',
-                                                                array(
-                                                                    'controller' => 'suppliers',
-                                                                    'action' => 'index'
-                                                                ),
-                                                                array('escape' => false)
-                                                            );
-                                                            ?>
-
-                                                            <b class="arrow"></b>
-                                                        </li>
-                                                        <li class="">
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                $this->Html->tag(
-                                                                    'i',
-                                                                    '',
-                                                                    array('class' => 'fa fa-glass')
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-shopping-cart')
                                                                 ).' Produtos',
                                                                 array(
                                                                     'controller' => 'products',
@@ -322,7 +268,6 @@
                                                                 array('escape' => false)
                                                             );
                                                             ?>
-
                                                             <b class="arrow"></b>
                                                         </li>
                                                         <li class="">
@@ -331,7 +276,7 @@
                                                                 $this->Html->tag(
                                                                     'i',
                                                                     '',
-                                                                    array('class' => 'glyphicon glyphicon-tint')
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-scale')
                                                                 ).' Unidades de medida',
                                                                 array(
                                                                     'controller' => 'measureUnits',
@@ -340,7 +285,57 @@
                                                                 array('escape' => false)
                                                             );
                                                             ?>
-
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-refresh')
+                                                                ).' Fornecedores',
+                                                                array(
+                                                                    'controller' => 'suppliers',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-download')
+                                                                ).' Caderno de entrada',
+                                                                array(
+                                                                    'controller' => 'suppliesProducts',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
+                                                            <b class="arrow"></b>
+                                                        </li>
+                                                        <li class="">
+                                                            <?php
+                                                            echo $this->Html->link(
+                                                                $this->Html->tag(
+                                                                    'i',
+                                                                    '',
+                                                                    array('class' => 'menu-icon  glyphicon glyphicon-upload')
+                                                                ).' Caderno de saída',
+                                                                array(
+                                                                    'controller' => 'productOutput',
+                                                                    'action' => 'index'
+                                                                ),
+                                                                array('escape' => false)
+                                                            );
+                                                            ?>
                                                             <b class="arrow"></b>
                                                         </li>
                                                     </ul>
@@ -369,7 +364,7 @@
                                                                         $this->Html->tag(
                                                                             'i',
                                                                             '',
-                                                                            array('class' => 'menu-icon fa fa-book')
+                                                                            array('class' => 'menu-icon glyphicon glyphicon-book')
                                                                         ).' Livro de receitas',
                                                                         array(
                                                                             'controller' => 'Recipes',
@@ -407,7 +402,7 @@
                                                                 $this->Html->tag(
                                                                     'i',
                                                                     '',
-                                                                    array('class' => 'menu-icon fa fa-book')
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-cutlery')
                                                                 ).' Livro de refeições',
                                                                 array(
                                                                     'controller' => 'meals',
@@ -425,11 +420,11 @@
                                                                 $this->Html->tag(
                                                                     'i',
                                                                     '',
-                                                                    array('class' => 'menu-icon fa fa-calendar')
-                                                                ).' Calendário',
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-bell')
+                                                                ).' Eventos',
                                                                 array(
                                                                     'controller' => 'events',
-                                                                    'action' => 'calendar'
+                                                                    'action' => 'index'
                                                                 ),
                                                                 array('escape' => false)
                                                             );
@@ -443,11 +438,11 @@
                                                                 $this->Html->tag(
                                                                     'i',
                                                                     '',
-                                                                    array('class' => 'menu-icon fa fa-beer')
-                                                                ).' Eventos',
+                                                                    array('class' => 'menu-icon glyphicon glyphicon-calendar')
+                                                                ).' Calendário',
                                                                 array(
                                                                     'controller' => 'events',
-                                                                    'action' => 'index'
+                                                                    'action' => 'calendar'
                                                                 ),
                                                                 array('escape' => false)
                                                             );

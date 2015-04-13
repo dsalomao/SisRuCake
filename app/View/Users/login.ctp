@@ -9,7 +9,8 @@
     $this->layout = 'login_layout';
 ?>
 
-<?php echo $this->Form->create(
+<?php
+echo $this->Form->create(
     'User',
     array(
         'class' => 'form-horizontal',
