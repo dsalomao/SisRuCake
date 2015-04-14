@@ -27,7 +27,7 @@ $this->Html->addCrumb('Usuários desativados');
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header" style="background-color: darkred;">
-            Usuários desativados.
+            Lista de usuários desativados.
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -160,9 +160,10 @@ $this->Html->addCrumb('Usuários desativados');
                                                 array(
                                                     'escape' => false,
                                                     'class' => 'actions-tooltip tooltip-info',
-                                                    'data-rel' => 'tooltip',
+                                                    'data-toggle' => 'tooltip',
                                                     'data-placement' => 'right',
-                                                    'data-original-title' => 'ver usuário'
+                                                    'title' => 'ver usuário',
+                                                    'data-trigger' => 'hover'
                                                 )
                                             );
                                             ?>
@@ -189,9 +190,10 @@ $this->Html->addCrumb('Usuários desativados');
                                                 array(
                                                     'escape' => false,
                                                     'class' => 'actions-tooltip tooltip-warning',
-                                                    'data-rel' => 'tooltip',
+                                                    'data-toggle' => 'tooltip',
                                                     'data-placement' => 'right',
-                                                    'data-original-title' => 'editar usuário'
+                                                    'title' => 'editar usuário',
+                                                    'data-trigger' => 'hover'
                                                 )
                                             );
                                             ?>
@@ -218,9 +220,10 @@ $this->Html->addCrumb('Usuários desativados');
                                                 array(
                                                     'escape' => false,
                                                     'class' => ' actions-tooltip tooltip-success',
-                                                    'data-rel' => 'tooltip',
+                                                    'data-toggle' => 'tooltip',
                                                     'data-placement' => 'right',
-                                                    'data-original-title' => 'ativar usuário'
+                                                    'title' => 'ativar usuário',
+                                                    'data-trigger' => 'hover'
                                                 )
                                             );
                                             ?>

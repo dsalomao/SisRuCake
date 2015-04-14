@@ -200,9 +200,9 @@ $this->Html->addCrumb('Produtos');
                                                array(
                                                    'escape' => false,
                                                    'class' => 'actions-tooltip tooltip-info',
-                                                   'data-rel' => 'tooltip',
-                                                   'data-placement' => 'left',
-                                                   'data-original-title' => 'ver produto'
+                                                   'data-toggle' => 'tooltip',
+                                                   'title' => 'ver produto',
+                                                   'data-trigger' => 'hover'
                                                )
                                            );
                                            ?>
@@ -229,9 +229,9 @@ $this->Html->addCrumb('Produtos');
                                                array(
                                                    'escape' => false,
                                                    'class' => 'actions-tooltip tooltip-warning',
-                                                   'data-rel' => 'tooltip',
-                                                   'data-placement' => 'left',
-                                                   'data-original-title' => 'editar produto'
+                                                   'data-toggle' => 'tooltip',
+                                                   'title' => 'editar produto',
+                                                   'data-trigger' => 'hover'
                                                )
                                            );
                                            ?>
@@ -259,9 +259,9 @@ $this->Html->addCrumb('Produtos');
                                                array(
                                                    'escape' => false,
                                                    'class' => ' actions-tooltip tooltip-default',
-                                                   'data-rel' => 'tooltip',
-                                                   'data-placement' => 'left',
-                                                   'data-original-title' => 'desativar produto'
+                                                   'data-toggle' => 'tooltip',
+                                                   'title' => 'desativar produto',
+                                                   'data-trigger' => 'hover'
                                                ),
                                                __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?', $product['Product']['name'])
                                            );
@@ -288,9 +288,9 @@ $this->Html->addCrumb('Produtos');
                                                array(
                                                    'escape' => false,
                                                    'class' => ' actions-tooltip tooltip-success',
-                                                   'data-rel' => 'tooltip',
-                                                   'data-placement' => 'left',
-                                                   'data-original-title' => 'adicionar quantidade'
+                                                   'data-toggle' => 'tooltip',
+                                                   'title' => 'adicionar quantidade',
+                                                   'data-trigger' => 'hover'
                                                )
                                            );
                                            ?>
@@ -317,9 +317,9 @@ $this->Html->addCrumb('Produtos');
                                                array(
                                                    'escape' => false,
                                                    'class' => ' actions-tooltip tooltip-error',
-                                                   'data-rel' => 'tooltip',
-                                                   'data-placement' => 'left',
-                                                   'data-original-title' => 'retirar quantidade'
+                                                   'data-toggle' => 'tooltip',
+                                                   'title' => 'retirar quantidade',
+                                                   'data-trigger' => 'hover'
                                                )
                                            );
                                            ?>

@@ -21,7 +21,7 @@ $this->Html->addCrumb('Usuários');
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header">
-            Usuários do SisRuCake do <?php echo $users[0]['Restaurant']['name']; ?>.
+            Lista de usuários ativos.
         </div>
 
         <!-- <div class="table-responsive"> -->

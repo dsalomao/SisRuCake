@@ -18,7 +18,6 @@
 
 $this->Html->script('ace/jquery.dataTables', array('inline' => false));
 $this->Html->script('ace/jquery.dataTables.bootstrap', array('inline' => false));
-$this->Html->script('products_indexes', array('inline' => false));
 
 $this->Html->css('products', array('inline' => false));
 
@@ -95,7 +94,11 @@ $this->Html->addCrumb('Produtos desativados');
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'btn btn-xs btn-success'
+                                        'class' => 'btn btn-xs btn-success actions-tooltip tooltip-success',
+                                        'data-toggle' => 'tooltip',
+                                        'data-placement' => 'top',
+                                        'title' => 'ativar produto',
+                                        'data-trigger' => 'hover'
                                     ),
                                     __('Esta operação irá restaurar este produto entre os produtos em estoque. Deseja continuar?', $product['Product']['name'])
                                 );
@@ -114,7 +117,11 @@ $this->Html->addCrumb('Produtos desativados');
                                     ),
                                     array(
                                         'escape' => false,
-                                        'class' => 'btn btn-xs btn-danger actions-tooltip tooltip-info'
+                                        'class' => 'btn btn-xs btn-danger actions-tooltip tooltip-error',
+                                        'data-toggle' => 'tooltip',
+                                        'data-placement' => 'top',
+                                        'title' => 'deletar produto',
+                                        'data-trigger' => 'hover'
                                     ),
                                     __('Tem certeza que deseja deletar permanentemente o produto: %s?', $product['Product']['name'])
                                 );
@@ -162,8 +169,9 @@ $this->Html->addCrumb('Produtos desativados');
                                                 array(
                                                     'escape' => false,
                                                     'class' => 'actions-tooltip tooltip-info',
-                                                    'data-rel' => 'tooltip',
-                                                    'data-original-title' => 'ver produto'
+                                                    'data-toggle' => 'tooltip',
+                                                    'title' => 'ver produto',
+                                                    'data-trigger' => 'hover'
                                                 )
                                             );
                                             ?>
@@ -176,7 +184,7 @@ $this->Html->addCrumb('Produtos desativados');
                                                     $this->Html->tag(
                                                         'i',
                                                         '',
-                                                        array('class' => 'glyphicon glyphicon-ok')
+                                                        array('class' => 'glyphicon glyphicon-ok bigger-120')
                                                     ),
                                                     array(
                                                         'class' => 'green'
@@ -189,8 +197,9 @@ $this->Html->addCrumb('Produtos desativados');
                                                 array(
                                                     'escape' => false,
                                                     'class' => 'actions-tooltip tooltip-success',
-                                                    'data-rel' => 'tooltip',
-                                                    'data-original-title' => 'ativar produto'
+                                                    'data-toggle' => 'tooltip',
+                                                    'data-original-title' => 'ativar produto',
+                                                    'data-trigger' => 'hover'
                                                 ),
                                                 __('Esta operação irá restaurar este produto entre os produtos em estoque. Deseja continuar?', $product['Product']['name'])
                                             );
@@ -217,6 +226,7 @@ $this->Html->addCrumb('Produtos desativados');
                                                 array(
                                                     'escape' => false,
                                                     'class' => 'actions-tooltip tooltip-error',
+                                                    'data-trigger' => 'hover',
                                                     'data-rel' => 'tooltip',
                                                     'data-original-title' => 'deletar produto'
                                                 ),
@@ -316,3 +326,9 @@ $this->Html->addCrumb('Produtos desativados');
         <div class="space"></div>
     </div>
 </div>
+
+<script>
+    jQuery(function($) {
+        $('.actions-tooltip').tooltip();
+    });
+</script>
