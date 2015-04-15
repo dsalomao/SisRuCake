@@ -46,31 +46,6 @@ class MeasureUnitsController extends AppController {
 	}
 
 /**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->MeasureUnit->exists($id)) {
-			throw new NotFoundException(__('Invalid measure unit'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-            $this->request->data['MeasureUnit']['name'] = ucfirst($this->request->data['MeasureUnit']['name']);
-			if ($this->MeasureUnit->save($this->request->data)) {
-				$this->Session->setFlash(__('Sua unidade de medida foi editada com sucesso.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('Não pudemos editar esta unidade, por favor tente novamente.'));
-			}
-		} else {
-			$options = array('conditions' => array('MeasureUnit.' . $this->MeasureUnit->primaryKey => $id));
-			$this->request->data = $this->MeasureUnit->find('first', $options);
-		}
-	}
-
-/**
  * delete method
  *
  * @throws NotFoundException

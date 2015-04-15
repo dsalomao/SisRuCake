@@ -31,7 +31,7 @@ class SuppliersController extends AppController {
             )
         ),
         'Supplier' => array(
-            'limit' => 2,
+            'limit' => 5,
         )
     );
 
@@ -150,7 +150,7 @@ class SuppliersController extends AppController {
     }
 
 /**
- * deleted_index method
+ * qualify method
  *
  * @return void
  */

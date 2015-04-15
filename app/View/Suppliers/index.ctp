@@ -44,29 +44,28 @@ $this->Html->addCrumb('Fornecedores');
                         <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['adress']); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['contact']); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($supplier['Supplier']['created']))); ?>&nbsp;</td>
-                        <td class="hidden-sm hidden-xs"><?php echo h($supplier['Supplier']['qualification']); ?>&nbsp;</td>
+                        <td class="hidden-sm hidden-xs">
+                            <?php
+                                if($supplier['Supplier']['qualification']) {
+                                    $qualify = $this->Html->tag(
+                                        'i',
+                                        $supplier['Supplier']['qualification'],
+                                        array(
+                                            'class' => 'actions-tooltip tooltip-default',
+                                            'data-toggle' => 'tooltip',
+                                            'title' => $supplier['Supplier']['comment'],
+                                            'data-trigger' => 'hover'
+                                        )
+                                    );
+                                } else {
+                                    $qualify = $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-ban-circle'));
+                                }
+                                echo $qualify;
+                            ?>&nbsp;
+                        </td>
                         <td class="actions">
                             <div class="hidden-xs hidden-sm btn-group">
                                 <?php
-                                echo $this->Html->link(
-                                    $this->Html->tag(
-                                        'i',
-                                        '',
-                                        array('class' => 'ace-icon fa fa-search-plus  bigger-120')
-                                    ),
-                                    array(
-                                        'action' => 'view',
-                                        $supplier['Supplier']['id']
-                                    ),
-                                    array(
-                                        'escape' => false,
-                                        'class' => 'btn btn-xs btn-info actions-tooltip tooltip-info',
-                                        'data-toggle' => 'tooltip',
-                                        'data-placement' => 'top',
-                                        'title' => 'ver fornecedor',
-                                        'data-trigger' => 'hover'
-                                    )
-                                );
                                 echo $this->Html->link(
                                     $this->Html->tag(
                                         'i',
@@ -81,7 +80,6 @@ $this->Html->addCrumb('Fornecedores');
                                         'escape' => false,
                                         'class' => 'btn btn-xs btn-warning actions-tooltip tooltip-warning',
                                         'data-toggle' => 'tooltip',
-                                        'data-placement' => 'top',
                                         'title' => 'editar fornecedor',
                                         'data-trigger' => 'hover'
                                     )
@@ -133,30 +131,6 @@ $this->Html->addCrumb('Fornecedores');
                                             echo $this->Html->link(
                                                 $this->Html->tag(
                                                     'span',
-                                                    $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-search-plus')),
-                                                    array('class' => 'blue')
-                                                ),
-                                                array(
-                                                    'action' => 'view',
-                                                    $supplier['Supplier']['id']
-                                                ),
-                                                array(
-                                                    'escape' => false,
-                                                    'class' => 'actions-tooltip tooltip-info bigger-130',
-                                                    'data-toggle' => 'tooltip',
-                                                    'data-placement' => 'top',
-                                                    'title' => 'Ver Fornecedor',
-                                                    'data-trigger' => 'hover'
-                                                )
-                                            );
-                                            ?>
-                                        </li>
-
-                                        <li>
-                                            <?php
-                                            echo $this->Html->link(
-                                                $this->Html->tag(
-                                                    'span',
                                                     $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-pencil bigger-130')),
                                                     array('class' => 'orange')
                                                 ),
@@ -175,7 +149,6 @@ $this->Html->addCrumb('Fornecedores');
                                             );
                                             ?>
                                         </li>
-
                                         <li>
                                             <?php
                                             echo $this->Form->postlink(

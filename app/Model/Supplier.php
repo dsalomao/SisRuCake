@@ -58,6 +58,14 @@ class Supplier extends AppModel {
                 //'last' => false, // Stop validation after this rule
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este código de fornecedor já existe, tente outro.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
 		),
 		'status' => array(
 			'boolean' => array(

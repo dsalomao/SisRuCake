@@ -27,6 +27,7 @@ $this->Html->addCrumb('Fornecedores desativados');
 
         <!-- <div class="dataTables_borderWrap"> -->
         <div>
+        <?php if($suppliers): ?>
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
@@ -259,6 +260,11 @@ $this->Html->addCrumb('Fornecedores desativados');
                     </div>
                 </div>
             </div>
+        <?php else: ?>
+            <h3 class="lighter smaller red">
+                Não há nenhum fornecedor com status desativado.
+            </h3>
+        <?php endif; ?>
         </div>
         <div class="col-xs-12">
             <h3 class="header smaller lighter blue"> A&ccedil;&otilde;es </h3>

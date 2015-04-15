@@ -65,27 +65,8 @@ $this->Html->addCrumb('Unidades de medida');
                         <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($measureUnit['MeasureUnit']['created']))); ?>&nbsp;</td>
                         <td class="hidden-sm hidden-xs"><?php echo h(date("d-m-Y", strtotime($measureUnit['MeasureUnit']['modified']))); ?>&nbsp;</td>
                         <td class="actions">
-                            <div class="hidden-xs hidden-sm btn-group">
+                            <div class=" btn-group">
                                 <?php
-                                echo $this->Html->link(
-                                    $this->Html->tag(
-                                        'i',
-                                        '',
-                                        array('class' => 'ace-icon fa fa-pencil bigger-120')
-                                    ),
-                                    array(
-                                        'action' => 'edit',
-                                        $measureUnit['MeasureUnit']['id']
-                                    ),
-                                    array(
-                                        'escape' => false,
-                                        'class' => 'btn btn-xs btn-warning actions-tooltip tooltip-warning',
-                                        'data-toggle' => 'tooltip',
-                                        'data-placement' => 'top',
-                                        'title' => 'editar unidade',
-                                        'data-trigger' => 'hover'
-                                    )
-                                );
                                 echo $this->Form->postLink(
                                     $this->Html->tag(
                                         'i',
@@ -107,77 +88,6 @@ $this->Html->addCrumb('Unidades de medida');
                                     __("Esta ação apagará todos os produtos vinculados a '%s', deseja continuar?", $measureUnit['MeasureUnit']['name'])
                                 );
                                 ?>
-                            </div>
-                            <div class="hidden-md hidden-lg">
-                                <div class="inline position-relative">
-                                    <?php
-                                    echo $this->Html->link(
-                                        $this->Html->tag(
-                                            'i',
-                                            '',
-                                            array('class' => 'ace-icon fa fa-cog icon-only bigger-110')
-                                        ),
-                                        '',
-                                        array(
-                                            'escape' => false,
-                                            'class' => 'btn btn-minier btn-primary dropdown-toggle',
-                                            'data-toggle' => 'dropdown',
-                                            'data-position' => 'auto'
-                                        )
-                                    );
-                                    ?>
-
-                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                        <li>
-                                            <?php
-                                            echo $this->Html->link(
-                                                $this->Html->tag(
-                                                    'span',
-                                                    $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-pencil bigger-120')),
-                                                    array('class' => 'orange')
-                                                ),
-                                                array(
-                                                    'action' => 'edit',
-                                                    $measureUnit['MeasureUnit']['id']
-                                                ),
-                                                array(
-                                                    'escape' => false,
-                                                    'class' => 'actions-tooltip tooltip-warning',
-                                                    'data-toggle' => 'tooltip',
-                                                    'data-placement' => 'top',
-                                                    'title' => 'Editar Unidade',
-                                                    'data-trigger' => 'hover'
-                                                )
-                                            );
-                                            ?>
-                                        </li>
-
-                                        <li>
-                                            <?php
-                                            echo $this->Form->postLink(
-                                                $this->Html->tag(
-                                                    'span',
-                                                    $this->Html->tag('i', '', array('class' => 'ace-icon fa fa-trash-o bigger-120')),
-                                                    array('class' => 'red')
-                                                ),
-                                                array(
-                                                    'action' => 'delete',
-                                                    $measureUnit['MeasureUnit']['id']
-                                                ),
-                                                array(
-                                                    'escape' => false,
-                                                    'class' => 'actions-tooltip tooltip-error',
-                                                    'data-toggle' => 'tooltip',
-                                                    'data-placement' => 'top',
-                                                    'title' => 'deletar Unidade',
-                                                    'data-trigger' => 'hover'
-                                                ),
-                                                __("Esta ação apagará todos os produtos vinculados a '%s', deseja continuar?", $measureUnit['MeasureUnit']['name'])
-                                            );
-                                            ?>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </td>
                     </tr>
@@ -242,7 +152,7 @@ $this->Html->addCrumb('Unidades de medida');
                         'controller' => 'MeasureUnits',
                         'action' => 'add'
                     ),
-                    array('class' => 'btn btn-lg btn-primary', 'escape' => false)
+                    array('class' => 'btn btn-lg btn-primary', 'escape' => false, 'style' => 'width: 240px;')
                 );
                 ?>
             </div>
