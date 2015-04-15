@@ -89,8 +89,8 @@ class SuppliesProductsController extends AppController {
                 }
             }
             else{
-                return $this->redirect(array('action' => 'view', $id));
                 $this->Session->setFlash(__('Não foi possível editar as quantidades do produto, limite máximo de estoque atingido.'));
+                return $this->redirect(array('action' => 'index'));
             }
         }
 

@@ -11,6 +11,10 @@ $this->Html->script('suppliers_edit', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Fornecedores', '/suppliers');
+if(!$this->data['Supplier']['status']) {
+    $this->Html->addCrumb('Fornecedores desativados', '/suppliers/deleted_index');
+}
+$this->Html->addCrumb($this->data['Supplier']['name']);
 $this->Html->addCrumb('Editar fornecedor');
 ?>
 
@@ -18,7 +22,7 @@ $this->Html->addCrumb('Editar fornecedor');
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title">Editar fornecedor: <?php echo $this->data['Supplier']['name']?></h4>
+                <h4 class="widget-title">Editar fornecedor: <?php echo $this->data['Supplier']['name']; ?></h4>
             </div>
 
             <div class="widget-body">

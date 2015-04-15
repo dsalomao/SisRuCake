@@ -22,49 +22,55 @@ class SuppliesProduct extends AppModel {
  */
 	public $validate = array(
 		'quantity' => array(
-                'notEmpty' => array(
-                    'rule' => array('notEmpty'),
-                    //'message' => 'Your custom message here',
-                    //'allowEmpty' => false,
-                    //'required' => false,
-                    //'last' => false, // Stop validation after this rule
-                    //'on' => 'create', // Limit validation to 'create' or 'update' operations
-                ),
-		),
-		'price' => array(
-			'money' => array(
-				'rule' => array('numeric'),
-                'message' => 'Este campo tem de ser um número válido.',
-				'allowEmpty' => true,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'date_of_entry' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-        'expiration' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este campo deve ser preenchido.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
-        ),
+            'numeric' => array(
+                'rule' => array('numeric'),
+                'message' => 'Apenas números neste campo.',
+                //'allowEmpty' => false,
+                'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+		),
+		'price' => array(
+			'money' => array(
+				'rule' => array('numeric'),
+                'message' => 'Este campo tem de ser um valor monetário válido.',
+				'allowEmpty' => true,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			)
+		),
+		'date_of_entry' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Este campo deve ser preenchido.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+            'datetime' => array(
+                'rule' => array('datetime'),
+                'message' => 'Este campo deve ser uma data.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+		),
         'invoice' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este campo deve ser preenchido.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule

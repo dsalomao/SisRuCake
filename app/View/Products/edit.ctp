@@ -14,7 +14,9 @@ $this->Html->script('products', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', '/products');
-$this->Html->addCrumb('Produtos desativados', '/products/deleted_index');
+if(!$this->data['Product']['status']){
+    $this->Html->addCrumb('Produtos desativados', '/products/deleted_index');
+}
 $this->Html->addCrumb($this->data['Product']['name'], '/products/view/'.$this->data['Product']['id']);
 $this->Html->addCrumb('Editar produto');
 ?>

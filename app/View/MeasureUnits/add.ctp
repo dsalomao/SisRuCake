@@ -1,4 +1,5 @@
 <?php
+$this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Unidades de medida', '/measure_units');
 $this->Html->addCrumb('Adicionar unidade de medida');
 ?>

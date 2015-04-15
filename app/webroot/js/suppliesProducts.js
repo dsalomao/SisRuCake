@@ -6,7 +6,8 @@ jQuery(function($) {
         language: 'pt-BR',
         format: 'yyyy-mm-dd hh:ii',
         daysOfWeekDisabled:'0,6',
-        minuteStep: 15
+        minuteStep: 15,
+        todayBtn: true
     });
 
     $('#expiration').datetimepicker({

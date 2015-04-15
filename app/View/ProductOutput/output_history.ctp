@@ -28,7 +28,7 @@ $this->Html->addCrumb('Histórico de baixa em estoque');
             <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
             <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
             <th class="hidden-480"><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
-            <th><?php echo $this->Paginator->sort('date_of_submission', 'Data de entrada'); ?></th>
+            <th><?php echo $this->Paginator->sort('date_of_submission', 'Data de saída'); ?></th>
         </tr>
         </thead>
 
