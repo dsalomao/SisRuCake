@@ -17,13 +17,43 @@ class RecipesController extends AppController {
 	public $components = array('Paginator', 'Session');
 
 /**
+ * Pagination
+ *
+ * @var array
+ */
+
+    public $paginate = array(
+        'Recipe' => array(
+            'conditions' => array('Recipe.status' => true),
+            'limit' => 10,
+            'order' => array(
+                'Recipe.name' => 'asc'
+            )
+        ),
+        'ProductsForRecipe' => array(
+            'recursive' => 0,
+            'contain' => array(
+                'Product' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                    ),
+                    'fields' => array('Product.id', 'Product.name')
+                )
+            ),
+            'fields' => array('ProductsForRecipe.id', 'ProductsForRecipe.quantity'),
+            'limit' => 10
+        )
+    );
+
+/**
  * index method
  *
  * @return void
  */
 	public function index() {
 		$this->Recipe->recursive = 0;
-		$this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.status' => true, 'Recipe.restaurant_id' => $this->Auth->user('restaurant_id'))));
+        $this->Paginator->settings = $this->paginate['Recipe'];
+		$this->set('recipes', $this->Paginator->paginate('Recipe', array('Recipe.restaurant_id' => $this->Auth->user('restaurant_id'))));
 	}
 
 /**
@@ -39,9 +69,9 @@ class RecipesController extends AppController {
 		}
         $this->Recipe->recursive = -1;
         $recipe = $this->Recipe->findById($id);
-        $related = $this->Recipe->ProductsForRecipe->findByRecipeId($id);
+        $this->Paginator->settings = $this->paginate['ProductsForRecipe'];
+        $related = $this->Paginator->paginate('ProductsForRecipe', array('ProductsForRecipe.recipe_id' => $id));
         $this->set(array('recipe' => $recipe, 'related' => $related));
-        $this->Paginator->paginate();
     }
 
 /**
@@ -54,16 +84,16 @@ class RecipesController extends AppController {
 			$this->Recipe->create();
             $this->request->data['Recipe']['name'] = ucfirst($this->request->data['Recipe']['name']);
             $this->request->data['Recipe']['code'] = strtoupper($this->request->data['Recipe']['code']);
-            $this->request->data['Recipe']['status'] = 1;
+            $this->request->data['Recipe']['status'] = 0;
             $this->request->data['Recipe']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Recipe->save($this->request->data)) {
-				$this->Session->setFlash(__('Sua receita foi salva com sucesso.'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('Sua receita foi salva com sucesso à lista de receitas desativadas, edite-a e quando pronta mude seu estado para ativo.'));
+				return $this->redirect(array('action' => 'view', $this->Recipe->id));
 			} else {
 				$this->Session->setFlash(__('Sua receita não pode ser salva, tente novamente.'));
 			}
 		}
-        $categories = array('Entrada', 'Prato base', 'Prato proteico', 'Guarnição', 'Sobremesa', 'Suco');
+        $categories = array('Entrada' => 'Entrada', 'Prato base' => 'Prato base', 'Prato proteico' => 'Prato proteico', 'Guarnição' => 'Guarnição', 'Sobremesa' => 'Sobremesa', 'Suco' => 'Suco');
         $this->set(array('categories' => $categories));
 	}
 
@@ -124,18 +154,23 @@ class RecipesController extends AppController {
     public function logical_delete($id = null) {
         $this->Recipe->id = $id;
         $recipe = $this->Recipe->findById($id);
-        if (!$this->Recipe->exists()) {
-            throw new NotFoundException(__('Invalid Recipe'));
-        }
-        $this->request->onlyAllow('post', 'logical_delete');
-        if ($this->Recipe->updateStatus($id)) {
-            $this->Session->setFlash(__("'%s' foi desativada com sucesso", $recipe['Recipe']['code']));
-            return $this->redirect(array('action' => 'deleted_index'));
+        $ingredients = $this->Recipe->countRecipeIngredients($id);
+        if($ingredients) {
+            if (!$this->Recipe->exists()) {
+                throw new NotFoundException(__('Receita inválida.'));
+            }
+            $this->request->onlyAllow('post', 'logical_delete');
+            if ($this->Recipe->updateStatus($id)) {
+                $this->Session->setFlash(__("'%s' foi desativada com sucesso", $recipe['Recipe']['code']));
+                return $this->redirect(array('action' => 'deleted_index'));
+            } else {
+                $this->Session->setFlash(__("'%s' foi reativada com sucesso", $recipe['Recipe']['code']));
+                return $this->redirect(array('action' => 'index'));
+            }
         } else {
-            $this->Session->setFlash(__("'%s' foi reativada com sucesso", $recipe['Recipe']['code']));
+            $this->Session->setFlash(__("'%s' não tem nenhum ingrediente ainda, portanto não pode ser ativada.", $recipe['Recipe']['code']));
             return $this->redirect(array('action' => 'index'));
         }
-
     }
 
 /**

@@ -24,7 +24,7 @@ class Recipe extends AppModel {
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve ser preenchido.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -34,7 +34,7 @@ class Recipe extends AppModel {
 		'code' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve ser preenchido.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -42,7 +42,7 @@ class Recipe extends AppModel {
 			),
 			'alphaNumeric' => array(
 				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo permite apenas letras e números.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -50,7 +50,7 @@ class Recipe extends AppModel {
 			),
             'isUnique' => array(
                 'rule' => array('isUnique'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este código de receita já se encontra em uso.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
@@ -69,7 +69,7 @@ class Recipe extends AppModel {
 		),
         'category' => array(
             'inList' => array(
-                'rule' => array('inList', array('0', '1', '2', '3', '4', '5')),
+                'rule' => array('inList', array('Entrada', 'Prato base', 'Prato proteico', 'Salada', 'Sobremesa', 'Suco')),
                 'message' => 'selecione uma categoria válida.',
                 //'allowEmpty' => false,
                 //'required' => false,
@@ -78,7 +78,7 @@ class Recipe extends AppModel {
             ),
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este campo deve ser preenchido.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
@@ -88,7 +88,7 @@ class Recipe extends AppModel {
         'income' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este campo deve ser preenchido.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
@@ -96,7 +96,7 @@ class Recipe extends AppModel {
             ),
             'naturalNumber' => array(
                 'rule' => array('naturalNumber'),
-                //'message' => 'Your custom message here',
+                'message' => 'Este campo deve ser um número inteiro.',
                 //'allowEmpty' => false,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
@@ -162,28 +162,6 @@ class Recipe extends AppModel {
         )
     );
 
-    public function beforeSave($options = array()) {
-        if ($this->data['Recipe']['category'] == 0) {
-            $this->data['Recipe']['category'] = 'Entrada';
-        }
-        if ($this->data['Recipe']['category'] == 1) {
-            $this->data['Recipe']['category'] = 'Prato base';
-        }
-        if ($this->data['Recipe']['category'] == 2) {
-            $this->data['Recipe']['category'] = 'Prato proteico';
-        }
-        if ($this->data['Recipe']['category'] == 3) {
-            $this->data['Recipe']['category'] = 'Guarnição';
-        }
-        if ($this->data['Recipe']['category'] == 4) {
-            $this->data['Recipe']['category'] = 'Sobremesa';
-        }
-        if ($this->data['Recipe']['category'] == 5) {
-            $this->data['Recipe']['category'] = 'Suco';
-        }
-        return true;
-    }
-
 /**
  *
  *  função para trocar o valor booleano do campo "status"
@@ -210,21 +188,12 @@ class Recipe extends AppModel {
         return $this->find( 'first', $options);
     }
 
-    public function getMyRecipeIngredients($id = null){
+    public function countRecipeIngredients($id = null){
         $options = array(
             'recursive' => 0,
-            'contain' => array(
-                'ProductsForRecipe' => array(
-                    'Product' => array(
-                        'MeasureUnit' => array(
-                            'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
-                        ),
-                        'fields' => array('Product.name'),
-                    )
-                )
-            ),
+            'conditions' => array('ProductsForRecipe.recipe_id' => $id),
             'fields' => array('id', 'name', 'code', 'income', 'category')
         );
-        return $this->find('first', $options);
+        return $this->ProductsForRecipe->find('count', $options);
     }
 }

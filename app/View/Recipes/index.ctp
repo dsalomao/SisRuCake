@@ -12,7 +12,7 @@ $this->Html->addCrumb('Receitas');
 <div class="row">
     <div class="col-xs-12">
         <div class="table-header">
-            Livro de receitas
+            Livro de receitas.
         </div>
 
         <!-- <div class="table-responsive"> -->

@@ -17,7 +17,6 @@ $this->Html->addCrumb('Adicionar receita');
             <div class="widget-header">
                 <h4 class="widget-title">Nova receita</h4>
             </div>
-
             <div class="widget-body">
                 <div class="widget-main no-padding">
                     <div class="form">
@@ -34,19 +33,15 @@ $this->Html->addCrumb('Adicionar receita');
                         <fieldset style="padding: 16px">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeName"> Preparação </label>
-
                                 <?php echo $this->Form->input(
                                     'Recipe.name',
                                     array(
                                         'div' => 'col-sm-9'
                                     )
                                 ); ?>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeCode"> Código </label>
-
-
                                 <?php echo $this->Form->input(
                                     'Recipe.code',
                                     array(
@@ -54,12 +49,9 @@ $this->Html->addCrumb('Adicionar receita');
 
                                     )
                                 ); ?>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeCategory"> Categoria </label>
-
-
                                 <?php echo $this->Form->input(
                                     'Recipe.category',
                                     array(
@@ -69,12 +61,9 @@ $this->Html->addCrumb('Adicionar receita');
                                         'placeholder' => 'escolha uma UAN'
                                     )
                                 ); ?>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeIncome"> Rendimento </label>
-
-
                                 <?php echo $this->Form->input(
                                     'Recipe.income',
                                     array(
@@ -83,31 +72,24 @@ $this->Html->addCrumb('Adicionar receita');
                                         'type' => 'text'
                                     )
                                 ); ?>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeDescription"> Descri&ccedil;&atilde;o </label>
-
-
                                 <?php echo $this->Form->input(
                                     'Recipe.description',
                                     array(
                                         'div' => 'col-sm-9'
                                     )
                                 ); ?>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeInstructions"> Modo de preparo </label>
-
-
                                 <?php echo $this->Form->input(
                                     'Recipe.instructions',
                                     array(
                                         'div' => 'col-sm-9'
                                     )
                                 ); ?>
-
                             </div>
                         </fieldset>
 
