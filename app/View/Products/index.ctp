@@ -135,28 +135,30 @@ $this->Html->addCrumb('Produtos');
                                        'data-trigger' => 'hover'
                                    )
                                );
-                               echo $this->Html->link(
-                                   $this->Html->tag(
-                                       'i',
-                                       '',
+                               if($product['Product']['load_stock'] > $product['Product']['load_min']) {
+                                   echo $this->Html->link(
+                                       $this->Html->tag(
+                                           'i',
+                                           '',
+                                           array(
+                                               'class' => 'glyphicon glyphicon-minus'
+                                           )
+                                       ),
                                        array(
-                                           'class' => 'glyphicon glyphicon-minus'
+                                           'controller' => 'ProductOutput',
+                                           'action' => 'manual_submit',
+                                           $product['Product']['id']
+                                       ),
+                                       array(
+                                           'escape' => false,
+                                           'class' => 'btn btn-xs btn-danger actions-tooltip tooltip-error',
+                                           'data-toggle' => 'tooltip',
+                                           'data-placement' => 'top',
+                                           'title' => 'retirar quantidade',
+                                           'data-trigger' => 'hover'
                                        )
-                                   ),
-                                   array(
-                                       'controller' => 'ProductOutput',
-                                       'action' => 'manual_submit',
-                                       $product['Product']['id']
-                                   ),
-                                   array(
-                                       'escape' => false,
-                                       'class' => 'btn btn-xs btn-danger actions-tooltip tooltip-error',
-                                       'data-toggle' => 'tooltip',
-                                       'data-placement' => 'top',
-                                       'title' => 'retirar quantidade',
-                                       'data-trigger' => 'hover'
-                                   )
-                               );
+                                   );
+                               }
                                ?>
                            </div>
                            <!-- buttons inside the md, sm and xs cog button -->
@@ -207,7 +209,6 @@ $this->Html->addCrumb('Produtos');
                                            );
                                            ?>
                                        </li>
-
                                        <li>
                                            <?php
                                            echo $this->Html->link(
@@ -236,7 +237,6 @@ $this->Html->addCrumb('Produtos');
                                            );
                                            ?>
                                        </li>
-
                                        <li>
                                            <?php
                                            echo $this->form->postLink(
@@ -297,31 +297,33 @@ $this->Html->addCrumb('Produtos');
                                        </li>
                                        <li>
                                            <?php
-                                           echo $this->Html->link(
-                                               $this->Html->tag(
-                                                   'span',
+                                           if($product['Product']['load_stock'] > $product['Product']['load_min']) {
+                                               echo $this->Html->link(
                                                    $this->Html->tag(
-                                                       'i',
-                                                       '',
-                                                       array('class' => 'glyphicon glyphicon-minus bigger-120')
+                                                       'span',
+                                                       $this->Html->tag(
+                                                           'i',
+                                                           '',
+                                                           array('class' => 'glyphicon glyphicon-minus bigger-120')
+                                                       ),
+                                                       array(
+                                                           'class' => 'red'
+                                                       )
                                                    ),
                                                    array(
-                                                       'class' => 'red'
+                                                       'controller' => 'ProductOutput',
+                                                       'action' => 'manual_submit',
+                                                       $product['Product']['id']
+                                                   ),
+                                                   array(
+                                                       'escape' => false,
+                                                       'class' => ' actions-tooltip tooltip-error',
+                                                       'data-toggle' => 'tooltip',
+                                                       'title' => 'retirar quantidade',
+                                                       'data-trigger' => 'hover'
                                                    )
-                                               ),
-                                               array(
-                                                   'controller' => 'ProductOutput',
-                                                   'action' => 'manual_submit',
-                                                   $product['Product']['id']
-                                               ),
-                                               array(
-                                                   'escape' => false,
-                                                   'class' => ' actions-tooltip tooltip-error',
-                                                   'data-toggle' => 'tooltip',
-                                                   'title' => 'retirar quantidade',
-                                                   'data-trigger' => 'hover'
-                                               )
-                                           );
+                                               );
+                                           }
                                            ?>
                                        </li>
                                    </ul>

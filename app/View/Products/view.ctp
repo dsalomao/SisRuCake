@@ -57,7 +57,6 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                     <span class="label label-sm <?php echo $class = ($product[0]['Product']['status'] == 1) ? 'label-success':'label-danger';?>" id="product_code"><?php echo $status = ($product[0]['Product']['status'] == 1) ? 'Ativo': 'Desativado';?></span>
                 </div>
             </div>
-
             <div class="profile-info-row">
                 <div class="profile-info-name"> Criado </div>
 
@@ -65,7 +64,6 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                     <span class="editable" id="product_created"><?php echo h(date("d-m-Y", strtotime($product[0]['Product']['created']))); ?></span>
                 </div>
             </div>
-
             <div class="profile-info-row">
                 <div class="profile-info-name"> Modificado </div>
 
@@ -73,10 +71,8 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                     <span class="editable" id="product_modified"><?php echo h(date("d-m-Y", strtotime($product[0]['Product']['modified']))); ?>&nbsp;</span>
                 </div>
             </div>
-
             <div class="profile-info-row">
                 <div class="profile-info-name"> Unidade UNESP </div>
-
                 <div class="profile-info-value">
                     <?php
                         echo $this->Html->link(
@@ -95,17 +91,17 @@ $this->Html->addCrumb($product[0]['Product']['name']);
     <div class="col-sm-7">
         <h3 class="header smaller lighter purple"> Quantidades em estoque </h3>
         <div class="col-sm-12 infobox-container">
-            <!-- #section:pages/dashboard.infobox -->
             <div class="infobox infobox-red">
                 <div class="infobox-icon">
                     <i class="ace-icon fa fa-heart-o"></i>
                 </div>
 
                 <div class="infobox-data">
-                    <span class="infobox-data-number"><?php echo h($product[0]['Product']['load_min']); ?></span>
+                    <span class="infobox-data-number"><?php $infobox = ($product[0]['Product']['load_min']) ? h($product[0]['Product']['load_min']) : $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-ban-circle')); echo $infobox; ?></span>
                     <div class="infobox-content">estoque m&iacute;nimo</div>
                 </div>
-                <div class="badge"><?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
+
+                <div class="badge">&nbsp;<?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
             </div>
             <div class="infobox infobox-green">
                 <div class="infobox-icon">
@@ -117,7 +113,7 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                     <div class="infobox-content">Quantidade estocada</div>
                 </div>
 
-                <div class="badge"><?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
+                <div class="badge">&nbsp;<?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
             </div>
             <div class="infobox infobox-blue">
                 <div class="infobox-icon">
@@ -125,30 +121,20 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                 </div>
 
                 <div class="infobox-data">
-                    <span class="infobox-data-number"><?php echo h($product[0]['Product']['load_max']); ?></span>
+                    <span class="infobox-data-number"><?php $infobox = ($product[0]['Product']['load_min']) ? h($product[0]['Product']['load_max']) : $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-ban-circle')); echo $infobox; ?></span>
                     <div class="infobox-content">Estoque m&aacute;ximo</div>
                 </div>
 
-                <!-- #section:pages/dashboard.infobox.stat -->
-                <div class="badge"><?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
-
-                <!-- /section:pages/dashboard.infobox.stat -->
+                <div class="badge">&nbsp;<?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
             </div>
-
-            <!-- /section:pages/dashboard.infobox -->
-            <div class="space-6"></div>
-
         </div>
     </div>
 </div>
 
-<div class="space-24"></div>
+<div class="space-12"></div>
 
 <div class="row">
     <div class="col-sm-12 widget-container-col ui-sortable" style="min-height: 184px;">
-        <!-- #section:custom/widget-box.options.transparent -->
-
-        <!-- /section:custom/widget-box.options.transparent -->
         <div class="widget-box transparent" style="opacity: 1; z-index: 0;">
             <div class="widget-header">
                 <h4 class="widget-title lighter"> Últimas entradas em estoque & Fornecedores </h4>
@@ -171,98 +157,99 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                     </a>
                 </div>
             </div>
-
             <div class="widget-body">
                 <div class="widget-body-inner" style="display: block;">
                     <div class="widget-main padding-6 no-padding-left no-padding-right">
+                        <?php if($lastEntrys): ?>
                         <!-- <div class="table-responsive"> -->
 
                         <!-- <div class="dataTables_borderWrap"> -->
-                        <div id="productsIncome">
-                            <table id="last-entrys" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
-                                    <th class="hidden-480"><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
-                                    <th class="hidden-480"><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
-                                    <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de validade'); ?></th>
-                                    <th class="hidden-480"><?php echo $this->Paginator->sort('supplier_id', 'Fornecedor'); ?></th>
-                                </tr>
-                                </thead>
+                        <table id="last-entrys" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
+                                <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
+                                <th class="hidden-480"><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
+                                <th class="hidden-480"><?php echo $this->Paginator->sort('price', 'Preço'); ?></th>
+                                <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de entrada'); ?></th>
+                                <th><?php echo $this->Paginator->sort('date_of_entry', 'Data de validade'); ?></th>
+                                <th class="hidden-480"><?php echo $this->Paginator->sort('supplier_id', 'Fornecedor'); ?></th>
+                            </tr>
+                            </thead>
 
-                                <tbody>
-                                <?php foreach ($lastEntrys as $lastEntry): ?>
-                                    <tr>
-                                        <td style="text-align: right"><?php echo h($lastEntry['SuppliesProduct']['quantity']); ?>&nbsp;</td>
-                                        <td>
-                                            <?php echo $this->Html->link($product[0]['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product[0]['MeasureUnit']['id'])); ?>
-                                        </td>
-                                        <td class="hidden-480">
-                                            <?php echo $this->Html->link($product[0]['Product']['name'], array('controller' => 'products', 'action' => 'view', $product[0]['Product']['id'])); ?>
-                                        </td>
-                                        <td class="hidden-480"><?php
-                                            $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
-                                            echo $this->Number->currency($lastEntry['SuppliesProduct']['price'], 'BRL');
-                                            ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h(date("d-m-Y", strtotime($lastEntry['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
-                                        <td><?php echo h(date("d-m-Y", strtotime($lastEntry['SuppliesProduct']['expiration']))); ?>&nbsp;</td>
-                                        <td class="hidden-480">
-                                            <?php echo $this->Html->link($lastEntry['Supplier']['name'], array('controller' => 'suppliers', 'action' => 'view', $lastEntry['Supplier']['id'])); ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="dataTables_info products-list-info">
-                                        <?php
-                                        echo $this->Paginator->counter(array(
-                                            'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
-                                        ));
-                                        ?>
-                                    </div>
+                            <tbody>
+                            <?php foreach ($lastEntrys as $lastEntry): ?>
+                                <tr>
+                                    <td style="text-align: right"><?php echo h($lastEntry['SuppliesProduct']['quantity']); ?>&nbsp;</td>
+                                    <td>
+                                        <?php echo $this->Html->link($product[0]['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $product[0]['MeasureUnit']['id'])); ?>
+                                    </td>
+                                    <td class="hidden-480">
+                                        <?php echo $this->Html->link($product[0]['Product']['name'], array('controller' => 'products', 'action' => 'view', $product[0]['Product']['id'])); ?>
+                                    </td>
+                                    <td class="hidden-480"><?php
+                                        $this->Number->addFormat('BRL', array('before' => 'R$', 'thousands' => '.', 'decimals' => ','));
+                                        echo $this->Number->currency($lastEntry['SuppliesProduct']['price'], 'BRL');
+                                        ?>&nbsp;
+                                    </td>
+                                    <td><?php echo h(date("d-m-Y", strtotime($lastEntry['SuppliesProduct']['date_of_entry']))); ?>&nbsp;</td>
+                                    <td><?php echo h(date("d-m-Y", strtotime($lastEntry['SuppliesProduct']['expiration']))); ?>&nbsp;</td>
+                                    <td class="hidden-480">
+                                        <?php echo $this->Html->link($lastEntry['Supplier']['name'], array('controller' => 'suppliers', 'action' => 'view', $lastEntry['Supplier']['id'])); ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="dataTables_info products-list-info">
+                                    <?php
+                                    echo $this->Paginator->counter(array(
+                                        'format' => __('Página {:page} de {:pages}, mostrando {:current} tuplas de {:count} totais, começando na tupla {:start}, terminando em {:end}.')
+                                    ));
+                                    ?>
                                 </div>
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="dataTables_paginate paging_bootstrap products-list-pagging">
-                                        <ul class="pagination">
-                                            <?php
-                                            echo $this->Paginator->prev(
-                                                $this->Html->tag('i', '', array('class' => 'fa fa-angle-double-left')),
-                                                array(
-                                                    'model' => 'SuppliesProduct',
-                                                    'tag' => 'li',
-                                                    'escape' => false,
-                                                ),
-                                                $this->Html->link($this->Html->tag('i', '', array('class' => 'fa fa-angle-double-left')), '', array('escape' => false)),
-                                                array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false,)
-                                            );
-                                            echo $this->Paginator->numbers(array(
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="dataTables_paginate paging_bootstrap products-list-pagging">
+                                    <ul class="pagination">
+                                        <?php
+                                        echo $this->Paginator->prev(
+                                            $this->Html->tag('i', '', array('class' => 'fa fa-angle-double-left')),
+                                            array(
                                                 'model' => 'SuppliesProduct',
-                                                'separator' => '',
                                                 'tag' => 'li',
-                                                'currentClass' => 'active',
-                                                'currentTag' => 'a'
-                                            ));
-                                            echo $this->Paginator->next(
-                                                $this->Html->tag('i', '', array('class' => 'fa fa-angle-double-right')),
-                                                array(
-                                                    'model' => 'SuppliesProduct',
-                                                    'tag' => 'li',
-                                                    'escape' => false,
-                                                ),
-                                                $this->Html->link($this->Html->tag('i', '', array('class' => 'fa fa-angle-double-right')), '', array('escape' => false)),
-                                                array('class' => 'next disabled', 'tag' => 'li', 'escape' => false,)
-                                            );
-                                            ?>
-                                        </ul>
-                                    </div>
+                                                'escape' => false,
+                                            ),
+                                            $this->Html->link($this->Html->tag('i', '', array('class' => 'fa fa-angle-double-left')), '', array('escape' => false)),
+                                            array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false,)
+                                        );
+                                        echo $this->Paginator->numbers(array(
+                                            'model' => 'SuppliesProduct',
+                                            'separator' => '',
+                                            'tag' => 'li',
+                                            'currentClass' => 'active',
+                                            'currentTag' => 'a'
+                                        ));
+                                        echo $this->Paginator->next(
+                                            $this->Html->tag('i', '', array('class' => 'fa fa-angle-double-right')),
+                                            array(
+                                                'model' => 'SuppliesProduct',
+                                                'tag' => 'li',
+                                                'escape' => false,
+                                            ),
+                                            $this->Html->link($this->Html->tag('i', '', array('class' => 'fa fa-angle-double-right')), '', array('escape' => false)),
+                                            array('class' => 'next disabled', 'tag' => 'li', 'escape' => false,)
+                                        );
+                                        ?>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
+                        <?php else: ?>
+                            <h3 class="lighter smaller red">Este produto ainda não teve nenhuma quantidade adicionada em estoque. Certifique se de que ele está ativo para adicionar novas quantidades.</h3>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -272,24 +259,6 @@ $this->Html->addCrumb($product[0]['Product']['name']);
         <h3 class="header smaller lighter blue"> A&ccedil;&otilde;es </h3>
         <div class="btn-group">
             <?php
-            if($product[0]['Product']['status']){
-                echo $this->Html->link(
-                    $this->Html->tag(
-                        'i',
-                        '',
-                        array('class' => 'glyphicon glyphicon-plus')
-                    ).' Adicionar quantidade',
-                    array(
-                        'controller' => 'suppliesProducts',
-                        'action' => 'add_load_stock',
-                        $product[0]['Product']['id']
-                    ),
-                    array(
-                        'escape' => false,
-                        'class' => 'btn btn-lg btn-success btn-products'
-                    )
-                );
-            }
             echo $this->Html->link(
                 $this->Html->tag(
                     'i',
@@ -307,6 +276,22 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                 )
             );
             if($product[0]['Product']['status']){
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-plus')
+                    ).' Adicionar quantidade',
+                    array(
+                        'controller' => 'suppliesProducts',
+                        'action' => 'add_load_stock',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-success btn-products'
+                    )
+                );
                 echo $this->Form->postlink(
                     $this->Html->tag(
                         'i',
@@ -330,7 +315,7 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                         'i',
                         '',
                         array('class' => 'glyphicon glyphicon-ok')
-                    ).' Reativar',
+                    ).' Ativar',
                     array(
                         'action' => 'logical_delete',
                         $product[0]['Product']['id']
@@ -339,7 +324,23 @@ $this->Html->addCrumb($product[0]['Product']['name']);
                         'escape' => false,
                         'class' => 'btn btn-lg btn-success btn-products'
                     ),
-                    __('Ao ser desativado este produto perderá qualquer informação sobre quantidade em estoque. Deseja continuar com a operação?')
+                    __('As informações deste produto estão corretas? Ativá-lo permitirá que ele possa ser utilizado em outras partes do SisRuCake.')
+                );
+                echo $this->Form->postlink(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'ace-icon fa fa-trash-o')
+                    ).' Deletar produto',
+                    array(
+                        'action' => 'delete',
+                        $product[0]['Product']['id']
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-danger btn-products'
+                    ),
+                    __('Tem certeza que deseja deletar permanentemente o produto: %s?', $product[0]['Product']['name'])
                 );
             }
             if($product[0]['Product']['load_stock'] > $product[0]['Product']['load_min']){

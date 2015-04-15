@@ -64,37 +64,21 @@ class Product extends AppModel {
 			'numeric' => array(
 				'rule' => array('numeric'),
 				'message' => 'Apenas números neste campo.',
-				//'allowEmpty' => false,
+				'allowEmpty' => true,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Este campo não pode estar vazio.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			)
 		),
 		'load_max' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				'message' => 'Apenas números neste campo.',
-				//'allowEmpty' => false,
+				'allowEmpty' => true,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Este campo não pode estar vazio.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			)
 		),
 		'load_stock' => array(
 			'numeric' => array(
@@ -191,7 +175,7 @@ class Product extends AppModel {
 
 /**
  *
- *  função para trocar o valor booleano do campo "status"
+ *  Change product state function
  *
  */
     public function updateStatus($id = null){

@@ -87,10 +87,10 @@ class ProductsController extends AppController {
             $this->request->data['Product']['name'] = ucfirst($this->request->data['Product']['name']);
             $this->request->data['Product']['code'] = strtoupper($this->request->data['Product']['code']);
             $this->request->data['Product']['load_stock'] = 0;
-            $this->request->data['Product']['status'] = 1;
+            $this->request->data['Product']['status'] = 0;
             $this->request->data['Product']['restaurant_id'] = $this->Auth->user('restaurant_id');
             if ($this->Product->save($this->request->data)) {
-				$this->Session->setFlash(__('O produto foi adicionado com sucesso.'));
+				$this->Session->setFlash(__('O produto foi adicionado a lista de "produtos desativados", ative-o para poder adicioná-lo a uma receita.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('O produto não pode ser adicionado, tente novamente.'));

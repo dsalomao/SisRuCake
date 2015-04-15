@@ -82,6 +82,25 @@ $this->Html->addCrumb('Produtos desativados');
                                         'data-trigger' => 'hover'
                                     )
                                 );
+                                echo $this->Html->link(
+                                    $this->Html->tag(
+                                        'i',
+                                        '',
+                                        array('class' => 'ace-icon fa fa-pencil bigger-130')
+                                    ),
+                                    array(
+                                        'action' => 'edit',
+                                        $product['Product']['id']
+                                    ),
+                                    array(
+                                        'escape' => false,
+                                        'class' => 'btn btn-xs btn-warning actions-tooltip tooltip-warning',
+                                        'data-toggle' => 'tooltip',
+                                        'data-placement' => 'top',
+                                        'title' => 'editar produto',
+                                        'data-trigger' => 'hover'
+                                    )
+                                );
                                 echo $this->Form->postLink(
                                     $this->Html->tag(
                                         'i',
@@ -102,9 +121,6 @@ $this->Html->addCrumb('Produtos desativados');
                                     ),
                                     __('Esta operação irá restaurar este produto entre os produtos em estoque. Deseja continuar?', $product['Product']['name'])
                                 );
-                                ?>
-                                &nbsp;
-                                <?php
                                 echo $this->Form->postLink(
                                     $this->Html->tag(
                                         'i',
@@ -171,6 +187,32 @@ $this->Html->addCrumb('Produtos desativados');
                                                     'class' => 'actions-tooltip tooltip-info',
                                                     'data-toggle' => 'tooltip',
                                                     'title' => 'ver produto',
+                                                    'data-trigger' => 'hover'
+                                                )
+                                            );
+                                            ?>
+                                        </li>
+                                        <li>
+                                            <?php
+                                            echo $this->Html->link(
+                                                $this->Html->tag(
+                                                    'span',
+                                                    $this->Html->tag(
+                                                        'i',
+                                                        '',
+                                                        array('class' => 'ace-icon fa fa-pencil bigger-130')
+                                                    ),
+                                                    array('class' => 'orange')
+                                                ),
+                                                array(
+                                                    'action' => 'edit',
+                                                    $product['Product']['id']
+                                                ),
+                                                array(
+                                                    'escape' => false,
+                                                    'class' => 'actions-tooltip tooltip-warning',
+                                                    'data-toggle' => 'tooltip',
+                                                    'title' => 'editar produto',
                                                     'data-trigger' => 'hover'
                                                 )
                                             );

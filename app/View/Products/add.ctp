@@ -65,7 +65,6 @@ $this->Html->addCrumb('Adicionar produto');
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ProductMeasureUnitId"> Unidade de medida </label>
 
-
                                 <?php echo $this->Form->input(
                                     'Product.measure_unit_id',
                                     array(
@@ -80,7 +79,6 @@ $this->Html->addCrumb('Adicionar produto');
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ProductLoadMin"> Estoque m&iacute;nimo </label>
 
-
                                 <?php echo $this->Form->input(
                                     'Product.load_min',
                                     array(
@@ -93,7 +91,6 @@ $this->Html->addCrumb('Adicionar produto');
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ProductLoadMax"> Estoque m&aacute;ximo </label>
-
 
                                 <?php echo $this->Form->input(
                                     'Product.load_max',

@@ -14,6 +14,8 @@ $this->Html->script('products', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
 $this->Html->addCrumb('Produtos', '/products');
+$this->Html->addCrumb('Produtos desativados', '/products/deleted_index');
+$this->Html->addCrumb($this->data['Product']['name'], '/products/view/'.$this->data['Product']['id']);
 $this->Html->addCrumb('Editar produto');
 ?>
 
@@ -92,22 +94,6 @@ $this->Html->addCrumb('Editar produto');
                                 ); ?>
 
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ProductMeasureUnitId"> Unidade de medida </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'Product.measure_unit_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma unidade'
-                                    )
-                                ); ?>
-
-                            </div>
-
                         </fieldset>
 
                         <div class="form-actions center">
