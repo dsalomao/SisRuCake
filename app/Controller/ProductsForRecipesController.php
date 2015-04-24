@@ -17,52 +17,6 @@ class ProductsForRecipesController extends AppController {
 	public $components = array('Paginator', 'Session');
 
 /**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->ProductsForRecipe->recursive = 0;
-		$this->set('productsForRecipes', $this->Paginator->paginate());
-	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->ProductsForRecipe->exists($id)) {
-			throw new NotFoundException(__('Invalid products for recipe'));
-		}
-		$options = array('conditions' => array('ProductsForRecipe.' . $this->ProductsForRecipe->primaryKey => $id));
-		$this->set('productsForRecipe', $this->ProductsForRecipe->find('first', $options));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->ProductsForRecipe->create();
-			if ($this->ProductsForRecipe->save($this->request->data)) {
-				$this->Session->setFlash(__('The products for recipe has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The products for recipe could not be saved. Please, try again.'));
-			}
-		}
-		$products = $this->ProductsForRecipe->Product->find('list');
-		$recipes = $this->ProductsForRecipe->Recipe->find('list');
-		$measureUnits = $this->ProductsForRecipe->MeasureUnit->find('list');
-		$this->set(compact('products', 'recipes', 'measureUnits'));
-	}
-
-/**
  * edit method
  *
  * @throws NotFoundException
@@ -84,12 +38,24 @@ class ProductsForRecipesController extends AppController {
 			$options = array('conditions' => array('ProductsForRecipe.' . $this->ProductsForRecipe->primaryKey => $id));
 			$this->request->data = $this->ProductsForRecipe->find('first', $options);
 		}
-		$products = $this->ProductsForRecipe->Product->find('list');
-		$recipes = $this->ProductsForRecipe->Recipe->find('list');
+        $products = $this->ProductsForRecipe->Product->find(
+            'all',
+            array(
+                'conditions' => array('Product.status' => 1),
+                'fields' => array('Product.id', 'Product.name'),
+                'order' => array('Product.name' => 'asc'),
+                'recursive' => 0,
+                'contain' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                    )
+                ),
+            )
+        );
         $this->ProductsForRecipe->Recipe->recursive = -1;
         //find related recipe been posted
         $thisRecipe = $this->ProductsForRecipe->Recipe->findById($this->request->data['Recipe']['id']);
-		$this->set(compact('products', 'recipes', 'measureUnits', 'thisRecipe'));
+		$this->set(compact('products', 'thisRecipe'));
 	}
 
 /**
@@ -106,20 +72,20 @@ class ProductsForRecipesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->ProductsForRecipe->delete()) {
-			$this->Session->setFlash(__('The products for recipe has been deleted.'));
+			$this->Session->setFlash(__('O ingrediente foi retirado com sucesso.'));
 		} else {
 			$this->Session->setFlash(__('The products for recipe could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('controller' => 'Recipes','action' => 'index'));
+		return $this->redirect(array('controller' => 'Recipes','action' => 'deleted_index'));
 	}
 
-    /**
-     * add_ingredient method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
+/**
+ * add_ingredient method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
     public function add_ingredient($id = null) {
 
         if ($this->request->is('post')) {
@@ -143,14 +109,23 @@ class ProductsForRecipesController extends AppController {
                 $this->Session->setFlash(__('Seu ingrediente não pode ser salvo, tente novamente.'));
             }
         }
-        //Loading the MeasureUnits model THIS NEEDS TO BE CHANGED
-        $this->loadModel('MeasureUnit');
-        //Acess the newly created relationship
-        $measure_units = $this->MeasureUnit->getMeasureUnits();
 
-        $products = $this->ProductsForRecipe->Product->findAllByStatus('1',array('Product.id', 'Product.name', 'Product.measure_unit_id'),array('Product.name' => 'asc'));
+        $products = $this->ProductsForRecipe->Product->find(
+            'all',
+            array(
+                'conditions' => array('Product.status' => 1),
+                'fields' => array('Product.id', 'Product.name'),
+                'order' => array('Product.name' => 'asc'),
+                'recursive' => 0,
+                'contain' => array(
+                    'MeasureUnit' => array(
+                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
+                    )
+                ),
+            )
+        );
 
         $thisRecipe = $this->ProductsForRecipe->Recipe->findMyRecipe($id);
-        $this->set(compact('thisRecipe', 'products', 'measure_units'));
+        $this->set(compact('thisRecipe', 'products'));
     }
 }

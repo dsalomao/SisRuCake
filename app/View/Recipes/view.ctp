@@ -267,7 +267,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                             </li>
                                                             <li>
                                                                 <?php
-                                                                echo $this->Html->link(
+                                                                echo $this->Form->postlink(
                                                                     $this->Html->tag(
                                                                         'span',
                                                                         $this->Html->tag(

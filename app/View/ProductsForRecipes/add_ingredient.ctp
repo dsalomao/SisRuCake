@@ -21,7 +21,12 @@
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title col-sm-6">Adicionar ingrediente a receita de: <?php echo $thisRecipe['Recipe']['name']; ?></h4><h4 class="widget-title col-sm-6" style="text-align: right">Código receita: <?php echo $thisRecipe['Recipe']['code']; ?></h4>
+                <div class="col-sm-6">
+                    <h4 class="widget-title">Adicionar ingrediente</h4>
+                </div>
+                <div class="col-sm-6">
+                    <h4 class="widget-title" style="text-align: right;">Código receita: <?php echo $thisRecipe['Recipe']['code']; ?></h4>
+                </div>
             </div>
 
             <div class="widget-body">
@@ -39,42 +44,45 @@
                         ); ?>
                         <fieldset style="padding: 16px">
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
 
-                                    <?php echo $this->Form->input(
-                                        'quantity',
-                                        array(
-                                            'type' => 'text',
-                                            'div' => 'col-sm-1',
-                                            'class' => 'input-mini'
-                                        )
-                                    ); ?>
-                                    <div class="col-sm-8">
-                                        <?php foreach($measure_units as $measure_unit): ?>
-                                            <?php echo $this->Html->tag(
+                                <?php echo $this->Form->input(
+                                    'quantity',
+                                    array(
+                                        'type' => 'text',
+                                        'div' => 'col-xs-6 col-sm-2',
+                                        'class' => 'input-mini'
+                                    )
+                                ); ?>
+                                <div class="col-xs-6 col-sm-7">
+                                    <?php
+                                    $control[] = null;
+                                    foreach($products as $product){
+                                        if(!in_array($product['MeasureUnit']['id'], $control)){
+                                            echo $this->Html->tag(
                                                 'span',
-                                                $measure_unit['MeasureUnit']['name'],
+                                                $product['MeasureUnit']['name'],
                                                 array(
                                                     'class' => 'label label-lg label-info arrowed-right hidden',
-                                                    'id' => 'tag_'.$measure_unit['MeasureUnit']['id']
+                                                    'id' => 'tag_'.$product['MeasureUnit']['id']
                                                 )
-                                            ); ?>
-                                        <?php endforeach; ?>
-                                    </div>
-
+                                            );
+                                            $control[] = $product['MeasureUnit']['id'];
+                                        }
+                                    }
+                                    ?>
                                 </div>
+                            </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ProductsForRecipeProductId"> Produto </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="ProductsForRecipeProductId"> Produto </label>
 
                                 <div class="col-sm-9">
-                                    <select name="data[ProductsForRecipe][product_id]" class="chosen-select" placeholder="Escolha um produto" id="ProductsForRecipeProductId" style="display: none;">
+                                    <select name="data[ProductsForRecipe][product_id]" class="chosen-select" placeholder="Escolha um produto" id="ProductsForRecipeProductId">
                                         <?php foreach($products as $product): ?>
-                                            <option value="<?php echo $product['Product']['id']; ?>" data-measure-unit-id="<?php echo $product['Product']['measure_unit_id']?>"><?php echo $product['Product']['name']; ?></option>
+                                            <option value="<?php echo $product['Product']['id']; ?>" data-measure-unit-id="<?php echo $product['MeasureUnit']['id']?>"><?php echo $product['Product']['name']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-
                             </div>
                         </fieldset>
 
@@ -94,7 +102,6 @@
                                 )
                             ); ?>
                         </div>
-
                     </div>
                 </div>
             </div>

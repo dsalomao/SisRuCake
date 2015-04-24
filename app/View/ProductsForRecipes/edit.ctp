@@ -22,7 +22,12 @@ $this->Html->addCrumb('Editar ingrediente');
     <div class="col-xs-12">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title">Editar ingredienteda receita de: <?php echo $this->data['Recipe']['name']?></h4>
+                <div class="col-sm-6">
+                    <h4 class="widget-title">Editar ingrediente</h4>
+                </div>
+                <div class="col-sm-6">
+                    <h4 class="widget-title" style="text-align: right;">Código receita: <?php echo $thisRecipe['Recipe']['code']; ?></h4>
+                </div>
             </div>
 
             <div class="widget-body">
@@ -42,47 +47,45 @@ $this->Html->addCrumb('Editar ingrediente');
                             <?php echo $this->Form->input('id'); ?>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipeName"> Quantidade </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="SuppliesProductQuantity"> Quantidade </label>
 
                                 <?php echo $this->Form->input(
-                                    'ProductsForRecipe.quantity',
+                                    'quantity',
                                     array(
                                         'type' => 'text',
-                                        'div' => 'col-sm-9',
+                                        'div' => 'col-xs-6 col-sm-2',
                                         'class' => 'input-mini'
                                     )
                                 ); ?>
-
+                                <div class="col-xs-6 col-sm-7">
+                                    <?php
+                                    $control[] = null;
+                                    foreach($products as $product){
+                                        if(!in_array($product['MeasureUnit']['id'], $control)){
+                                            echo $this->Html->tag(
+                                                'span',
+                                                $product['MeasureUnit']['name'],
+                                                array(
+                                                    'class' => 'label label-lg label-info arrowed-right hidden',
+                                                    'id' => 'tag_'.$product['MeasureUnit']['id']
+                                                )
+                                            );
+                                            $control[] = $product['MeasureUnit']['id'];
+                                        }
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipeDescription"> Produto </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="ProductsForRecipeProductId"> Produto </label>
 
-
-                                <?php echo $this->Form->input(
-                                    'ProductsForRecipe.product_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha um produto'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipeInstructions"> Receita </label>
-
-
-                                <?php echo $this->Form->input(
-                                    'ProductsForRecipe.recipe_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma receita'
-                                    )
-                                ); ?>
-
+                                <div class="col-sm-9">
+                                    <select name="data[ProductsForRecipe][product_id]" class="chosen-select" placeholder="Escolha um produto" id="ProductsForRecipeProductId" style="display: none;">
+                                        <?php foreach($products as $product): ?>
+                                            <option value="<?php echo $product['Product']['id']; ?>" data-measure-unit-id="<?php echo $product['MeasureUnit']['id']?>"><?php echo $product['Product']['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
                         </fieldset>
 
@@ -97,7 +100,7 @@ $this->Html->addCrumb('Editar ingrediente');
                                 ),
                                 array(
                                     'type' => 'submit',
-                                    'class' => 'btn btn-sm btn-success',
+                                    'class' => 'btn btn-sm btn-warning',
                                     'escape' => false
                                 )
                             ); ?>

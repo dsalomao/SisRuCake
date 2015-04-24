@@ -87,7 +87,7 @@ class RecipesController extends AppController {
             $this->request->data['Recipe']['status'] = 0;
             $this->request->data['Recipe']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Recipe->save($this->request->data)) {
-				$this->Session->setFlash(__('Sua receita foi salva com sucesso à lista de receitas desativadas, edite-a e quando pronta mude seu estado para ativo.'));
+				$this->Session->setFlash(__('Sua receita foi salva com sucesso à lista de receitas desativadas. Edite-a e quando pronta, mude seu estado para ativo.'));
 				return $this->redirect(array('action' => 'view', $this->Recipe->id));
 			} else {
 				$this->Session->setFlash(__('Sua receita não pode ser salva, tente novamente.'));
