@@ -91,6 +91,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
         <h4 class="header smaller lighter blue"> Receitas </h4>
 
         <div id="accordion" class="accordion-style1 panel-group">
+        <?php if($related): ?>
             <?php foreach($related as $related): ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -135,6 +136,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                             Ações&nbsp;<i class="ace-icon fa fa-caret-down bigger-110 width-auto"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-info">
+                                            <?php if(!$meal['Meal']['status']): ?>
                                             <li>
                                                 <?php
                                                 echo $this->Form->postLink(
@@ -154,6 +156,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                                 );
                                                 ?>
                                             </li>
+                                            <?php endif; ?>
                                         </ul>
                                     </li>
                                 </ul>
@@ -337,6 +340,11 @@ $this->Html->addCrumb($meal['Meal']['code']);
                     </div>
                 </div>
             <?php endforeach; ?>
+        <?php
+        else:
+           echo "<h4 class='lighter smaller red'>Nenhuma receita adicionada a esta refeição.</h4>";
+        ?>
+        <?php endif; ?>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@ $this->Html->addCrumb('adicionar receita');
 
             <div class="widget-body">
                 <div class="widget-main no-padding">
-                    <div class="suppliesProducts form">
+                    <div class="RecipesForMeal form">
                         <?php echo $this->Form->create(
                             'RecipesForMeal',
                             array(
@@ -40,35 +40,68 @@ $this->Html->addCrumb('adicionar receita');
                         <fieldset style="padding: 16px">
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipesForMealRecipeId"> Receita </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="RecipesForMealRecipeId"> Receitas </label>
 
-
-                                <?php echo $this->Form->input(
-                                    'recipe_id',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma unidade'
-
-                                    )
-                                ); ?>
-
+                                <div class="col-xs-12 col-sm-9">
+                                    <select name="data[RecipesForMeal][recipe_id]" class="chosen-select" placeholder="Escolha um produto" id="RecipesForMealRecipeId">
+                                        <?php foreach($recipes as $recipe): ?>
+                                            <option value="<?php echo $recipe['Recipe']['id']; ?>" data-options-income="<?php echo $recipe['Recipe']['income']?>"><?php echo $recipe['Recipe']['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipesForMealQuantity"> Quantidade </label>
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="RecipesForMealRecipeIncome"> Rendimento </label>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <?php
+                                    $control[] = null;
+                                    foreach($recipes as $recipe){
+                                        if(!in_array($recipe['Recipe']['id'], $control)){
+                                            echo $this->Html->tag(
+                                                'span',
+                                                $recipe['Recipe']['income'].' pessoas',
+                                                array(
+                                                    'class' => 'label label-lg label-info arrowed-right hidden',
+                                                    'id' => 'tag_'.$recipe['Recipe']['id']
+                                                )
+                                            );
+                                            $control[] = $recipe['Recipe']['id'];
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="RecipesForMealPortionMultiplier"> Quantidade </label>
 
 
                                 <?php echo $this->Form->input(
                                     'portion_multiplier',
                                     array(
-                                        'type' => 'text',
-                                        'div' => 'col-sm-1',
+                                        'type' => 'number',
+                                        'div' => 'col-xs-12 col-sm-1',
                                         'class' => 'input-mini'
                                     )
                                 ); ?>
-                                <div  class="col-sm-8">
-                                <h4><small><i class="ace-icon fa fa-angle-double-right"></i> multiplicador de porcionamento da receita</small></h4>
+                                <div  class="col-xs-12 col-sm-8">
+                                    <h4><small><i class="ace-icon fa fa-angle-double-right"></i> multiplicador de porcionamento da receita</small></h4>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="ExpectedIncome"> Rendimento esperado </label>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <?php
+                                    echo $this->Html->tag(
+                                        'span',
+                                        '',
+                                        array(
+                                            'class' => 'label label-lg label-success arrowed-right hidden',
+                                            'id' => 'ExpectedIncome'
+                                        )
+                                    );
+                                    ?>
                                 </div>
                             </div>
                         </fieldset>

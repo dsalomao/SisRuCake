@@ -24,7 +24,7 @@ class Meal extends AppModel {
 		'code' => array(
 			'alphaNumeric' => array(
 				'rule' => array('alphaNumeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve conter apenas letras e números.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -32,12 +32,20 @@ class Meal extends AppModel {
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve ser preenchido.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este código de refeição já existe, tente outro.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
 		),
 		'status' => array(
 			'boolean' => array(

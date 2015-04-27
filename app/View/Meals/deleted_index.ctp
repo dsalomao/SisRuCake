@@ -29,10 +29,10 @@ $this->Html->addCrumb('Refeições desativadas');
             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th><?php echo $this->Paginator->sort('code'); ?></th>
-                    <th><?php echo $this->Paginator->sort('description'); ?></th>
-                    <th><?php echo $this->Paginator->sort('created'); ?></th>
-                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('modified'); ?></th>
+                    <th><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
+                    <th><?php echo $this->Paginator->sort('description', 'Descrição '); ?></th>
+                    <th><?php echo $this->Paginator->sort('created', 'Criado'); ?></th>
+                    <th class="hidden-sm hidden-xs"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?></th>
                     <th class="actions"><?php echo __('Ações'); ?></th>
                 </tr>
                 </thead>

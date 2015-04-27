@@ -17,31 +17,6 @@ class RecipesForMealsController extends AppController {
 	public $components = array('Paginator', 'Session');
 
 /**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->RecipesForMeal->recursive = 0;
-		$this->set('recipesForMeals', $this->Paginator->paginate());
-	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->RecipesForMeal->exists($id)) {
-			throw new NotFoundException(__('Invalid recipes for meal'));
-		}
-		$options = array('conditions' => array('RecipesForMeal.' . $this->RecipesForMeal->primaryKey => $id));
-		$this->set('recipesForMeal', $this->RecipesForMeal->find('first', $options));
-	}
-
-/**
  * add method
  *
  * @return void
@@ -52,7 +27,7 @@ class RecipesForMealsController extends AppController {
             $this->RecipesForMeal->set('meal_id', $meal_id);
 			if ($this->RecipesForMeal->save($this->request->data)) {
 				$this->Session->setFlash(__('Sua receita foi adicionada com sucesso.'));
-				return $this->redirect(array('controller' => 'Meals', 'action' => 'view', $id));
+				return $this->redirect(array('controller' => 'Meals', 'action' => 'view', $meal_id));
 			} else {
 				$this->Session->setFlash(__('Sua receita não pode ser adicionada, tente novamente.'));
 			}
@@ -61,14 +36,16 @@ class RecipesForMealsController extends AppController {
 		$meal = $this->RecipesForMeal->Meal->findById($meal_id);
         $alreadySavedRecipes = $this->RecipesForMeal->getAlreadySavedRecipesForThisMeal($meal_id);
         $options = array(
+            'recursive' => -1,
             'conditions' => array(
                 'NOT' => array(
                     'Recipe.id' => $alreadySavedRecipes
                 ),
-            )
+            ),
+            'fields' => array('Recipe.id', 'Recipe.name', 'Recipe.income')
         );
-		$recipes = $this->RecipesForMeal->Recipe->find('list', $options);
-		$this->set(compact('meal', 'recipes', 'alreadySavedRecipes'));
+		$recipes = $this->RecipesForMeal->Recipe->find('all', $options);
+		$this->set(compact('meal', 'recipes'));
 	}
 
 /**
@@ -118,14 +95,4 @@ class RecipesForMealsController extends AppController {
 		}
 		return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
 	}
-
-    /**
-     * calendar method
-     *
-     * @return void
-     */
-    public function calendar() {
-        $this->RecipesForMeal->recursive = 0;
-        $this->set('recipesForMeals', $this->Paginator->paginate());
-    }
 }
