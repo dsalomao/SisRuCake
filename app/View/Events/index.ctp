@@ -220,6 +220,7 @@ $this->Html->addCrumb('Eventos');
                 array('class' => 'btn btn-lg btn-inverse btn-events', 'escape' => false)
             );
             ?>
+        </div>
         <div class="space"></div>
     </div>
 </div>

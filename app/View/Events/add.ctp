@@ -18,7 +18,7 @@ echo $this->Html->script('libs/bootstrap-datetimepicker.pt-BR');
 echo $this->Html->script('events_add');
 
 $this->Html->addCrumb('Planejamento do cardápio');
-$this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'controller' => 'full_calendar', 'action' => 'index'));
+$this->Html->addCrumb('Calendário', array('controller' => 'events', 'action' => 'calendar'));
 
 ?>
 
@@ -48,17 +48,6 @@ $this->Html->addCrumb('Calendário', array('plugin' => 'full_calendar', 'control
 
                                 <?php echo $this->Form->input(
                                     'Event.event_type_id',
-                                    array(
-                                        'div' => 'col-sm-9'
-                                    )
-                                ); ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="EventTitle"> Título </label>
-
-                                <?php echo $this->Form->input(
-                                    'Event.title',
                                     array(
                                         'div' => 'col-sm-9'
                                     )

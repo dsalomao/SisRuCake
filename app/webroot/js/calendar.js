@@ -1,48 +1,6 @@
 /**
  * Created by daniel on 07/08/14.
  */
-$(document).ready(function() {
-
-    //At the end of the form inside the wizard modal
-    $('#modal-wizard').wizard().on('finished', function(event) {
-
-        var form_data = $('#EventIndexForm').serializeArray();
-        console.log(form_data);
-/*
-        $.post('/SisRuCake/events/post_event', form_data)
-            .done(function (data){
-                var parsedData = jQuery.parseJSON(data);
-                $('#calendar').fullCalendar( 'renderEvent', parsedData[0] , 'stick');
-
-                bootbox.dialog({
-                    message: "Seu novo evento foi salvo com sucesso.",
-                    buttons: {
-                        "success" : {
-                            "label" : "OK",
-                            "className" : "btn-sm btn-primary"
-                        }
-                    }
-                });
-            })
-            .fail(function (){
-                bootbox.dialog({
-                    message: "Algo de errado ocorreu, por favor tente novamente.",
-                    buttons: {
-                        "success" : {
-                            "label" : "OK",
-                            "className" : "btn-sm btn-primary"
-                        }
-                    }
-                });
-            });*/
-
-        $('#modal-wizard').modal('hide');
-
-    });
-
-    $('#modal-wizard .wizard-actions .btn-prev').attr('disabled', true);
-
-});
 
 jQuery(function($) {
 
@@ -50,7 +8,6 @@ jQuery(function($) {
      -----------------------------------------------------------------*/
 
     $.getJSON("/SisRuCake/events/get_all").then(function(data) {
-        console.log(data);
         initializeCalendar(data);
     });
 
@@ -233,10 +190,6 @@ jQuery(function($) {
                 var endhour = enddate.getHours();
                 var endminute = enddate.getMinutes();
 
-
-
-                console.log(calEvent.id);
-
                 var event_start = "<span class='glyphicon glyphicon-calendar'></span> "+startyear+"-"+startmonth+"-"+startday+" <span class='glyphicon glyphicon-time'></span> "+starthour+":"+startminute;
                 var event_end = "<span class='glyphicon glyphicon-calendar'></span> "+endyear+"-"+endmonth+"-"+endday+" <span class='glyphicon glyphicon-time'></span> "+endhour+":"+endminute;
 
@@ -245,12 +198,6 @@ jQuery(function($) {
                                         <div class="profile-info-name"> Tipo </div>\
                                             <div class="profile-info-value">\
                                                 <span class="editable" id="event_type">'+calEvent.type+'</span>\
-                                            </div>\
-                                        </div>\
-                                        <div class="profile-info-row">\
-                                            <div class="profile-info-name"> Título </div>\
-                                            <div class="profile-info-value">\
-                                                <span class="editable" id="event_title">'+calEvent.title+'</span>\
                                             </div>\
                                         </div>\
                                         <div class="profile-info-row">\
@@ -317,38 +264,9 @@ jQuery(function($) {
                 if(calEvent.url){
                     return false;
                 }
-/*
-                modal.find('#EventId').val(calEvent.id);
-                modal.find('#EventEventTypeId').prop("disabled", true);
-                modal.find('#EventTitle').val(calEvent.title);
-                modal.find('#EventDetails').val(calEvent.details);
-                modal.find('#EventStart').prop("disabled", true);
-                modal.find('#EventEnd').prop("disabled", true);
-                modal.find('#EventMealId').prop("disabled", true);
-
-                if(calEvent.allDay == 1)
-                    modal.find('#EventAllDay').prop('checked', true);
-
-                modal.modal('show');
-
-                modal.find('button[data-action=delete]').on('click', function() {
-                    calendar.fullCalendar('removeEvents' , function(ev){
-
-                        return (ev._id == calEvent._id);
-                    })
-                    modal.modal("hide");
-                });
-
-
-
-                //console.log(calEvent);
-                //console.log(jsEvent);
-                //console.log(view);
-*/
             },
             selectable: false,
-            selectHelper: false,
-
+            selectHelper: false
         });
     };
 

@@ -23,27 +23,11 @@ class EventsController extends AppController {
                     'Meal' => array()
                 )
             ),
-            'fields' => array('id', 'title', 'status', 'details', 'start', 'end', 'all_day')
+            'fields' => array('id', 'status', 'details', 'start', 'end', 'all_day')
     );
 
     public function calendar(){
-        $events = $this->Event->find(
-            'all',
-            array(
-                'conditions' => array('Event.restaurant_id' => $this->Auth->user('restaurant_id')),
-                'recursive' => 0,
-                'contain' => array(
-                    'EventType' => array(
-                        'fields' => array('color', 'name')
-                    ),
-                    'MealsForEvent' => array(
-                        'Meal' => array()
-                    )
-                ),
-                'fields' => array('id', 'title', 'status', 'details', 'start', 'end', 'all_day')
-            )
-        );
-        $this->set(array('events' => $events));
+
     }
 
     public function output_meal($meal_id = null, $event_id = null){
@@ -51,31 +35,23 @@ class EventsController extends AppController {
         $event = $this->Event->findById($event_id);
         $meal = $this->Event->MealsForEvent->Meal->findMealToOutput($meal_id);
         $mealIngredients = array();
-        $quantityToOutput = array();
         foreach($meal['RecipesForMeal'] as $recipes):
             foreach($recipes['Recipe']['ProductsForRecipe'] as $product):
                 if(!isset($mealIngredients[$product['Product']['id']])){
                     $mealIngredients[$product['Product']['id']] =  array(
                         'product_id' => $product['Product']['id'],
                         'code' => $product['Product']['code'],
-                        'quantity' => $product['quantity']*$recipes['portion_multiplier'],
+                        'load_stock' => $product['Product']['load_stock'],
+                        'output' => $product['quantity'] * $recipes['portion_multiplier'],
                         'name' => $product['Product']['name'],
                         'measure_unit' => $product['Product']['MeasureUnit']['name'],
                     );
-                }
-
-                if(isset($quantityToOutput[$product['Product']['id']])){
-                    $quantityToOutput[$product['Product']['id']]['quantity'] += $product['quantity']*$recipes['portion_multiplier'];
-                }else{
-                    $quantityToOutput[$product['Product']['id']] =  array(
-                        'product_id' => $product['Product']['id'],
-                        'quantity' => $product['quantity']*$recipes['portion_multiplier'],
-                        'date_of_submission' => $event['Event']['start'],
-                    );
+                }else {
+                    $mealIngredients[$product['Product']['id']]['output'] += ($product['quantity'] * $recipes['portion_multiplier']);
                 }
             endforeach;
         endforeach;
-        $this->set(array('mealIngredients' => $mealIngredients, 'event' => $event, 'quantityToOutput' => $quantityToOutput));
+        $this->set(array('mealIngredients' => $mealIngredients, 'event' => $event));
     }
 
     public function index(){
@@ -99,7 +75,7 @@ class EventsController extends AppController {
                         'Meal' => array()
                     )
                 ),
-                'fields' => array('id', 'title', 'status', 'details', 'start', 'end', 'all_day')
+                'fields' => array('id', 'status', 'details', 'start', 'end', 'all_day')
             )
         );
 
@@ -114,7 +90,6 @@ class EventsController extends AppController {
             $data[] = array(
                 'id' => $event['Event']['id'],
                 'type' => $event['EventType']['name'],
-                'title'=>$event['Event']['title'],
                 'start'=>$event['Event']['start'],
                 'details'=>$event['Event']['details'],
                 'status'=>$event['Event']['status'],
@@ -167,7 +142,7 @@ class EventsController extends AppController {
             }
         }
         $eventTypes = $this->Event->EventType->find('list');
-        $meals = $this->Event->MealsForEvent->Meal->find('list', array('conditions' => array('Meal.restaurant_id' => $this->Auth->user('restaurant_id'))));
+        $meals = $this->Event->MealsForEvent->Meal->find('list', array('conditions' => array('Meal.restaurant_id' => $this->Auth->user('restaurant_id'), 'Meal.status' => 1)));
         $this->set(compact('eventTypes', 'meals'));
     }
 

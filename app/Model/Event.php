@@ -14,7 +14,7 @@ class Event extends AppModel {
  *
  * @var string
  */
-	public $displayField = 'title';
+	public $displayField = 'details';
 
 /**
  * Validation rules
@@ -22,25 +22,33 @@ class Event extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'title' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+        'details' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Este campo deve ser preenchido.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
 		'start' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+                'message' => 'Este campo deve ser preenchido.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'datetime' => array(
+                'rule' => array('datetime'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
 		),
 	);
 

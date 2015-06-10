@@ -12,7 +12,7 @@ $this->Html->css('events', array('inline' => false));
 
 $this->Html->addCrumb('Planejamento de cardápio');
 $this->Html->addCrumb('Eventos', '/events');
-$this->Html->addCrumb($event['Event']['title'], '/events/view/'.+$event['Event']['id']);
+$this->Html->addCrumb('Refeição '.$event['Event']['start'], '/events/view/'.+$event['Event']['id']);
 $this->Html->addCrumb('Retirar em estoque');
 ?>
 
@@ -22,23 +22,38 @@ $this->Html->addCrumb('Retirar em estoque');
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             sumário de produtos a serem retirados para a refeição:
-            <?php echo $this->Html->link($event['Event']['title'], array('controller' => 'events', 'action' => 'view', $event['Event']['id'])); ?>
+            <?php echo $this->Html->link($event['Event']['details'], array('controller' => 'events', 'action' => 'view', $event['Event']['id'])); ?>
         </small>
     </h1>
 </div>
 <div class="row">
-    <div class="col-sm-6">
-        <ul class="list-group">
-            <?php foreach($mealIngredients as $mealIngredient) : ?>
-                <li class="list-group-item" data-id="product_<?php echo $mealIngredient['product_id']; ?>">
-                    <span class="badge"><?php echo $mealIngredient['quantity']; ?> <?php echo $mealIngredient['measure_unit']; ?></span> <?php echo $mealIngredient['name']; ?> <?php echo $mealIngredient['code']; ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-    <div class="col-sm-6">
+    <div class="col-xs-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="hidden-xs"><?php echo 'Nome'; ?></th>
+                <th><?php echo 'Código'; ?></th>
+                <th class="hidden-sm hidden-xs"><?php echo 'Quantidade em estoque'; ?></th>
+                <th><?php echo 'Quantidade a retirar'; ?></th>
+                <th class="actions"><?php echo __('Ações'); ?></th>
+            </tr>
+            </thead>
 
+            <tbody>
+            <?php foreach($mealIngredients as $mealIngredient) : ?>
+                <tr>
+                    <td class="hidden-xs"><?php echo $mealIngredient['name']; ?></td>
+                    <td><?php echo $mealIngredient['code']; ?></td>
+                    <td class="hidden-sm hidden-xs"><?php echo $mealIngredient['load_stock'].' '.$mealIngredient['measure_unit']; ?></td>
+                    <td>
+                        <p class=" <?php echo $class = ($mealIngredient['load_stock'] <= $mealIngredient['output']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['output']; echo $class = ($class == 'green') ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="glyphicon glyphicon-remove"></i>'; ?></p>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
+
     <div class="col-xs-12">
         <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
         <div class="btn-group">

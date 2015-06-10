@@ -15,6 +15,7 @@
     $this->Html->css('events', array('inline' => false));
 
     $this->Html->addCrumb('Planejamento de cardápio');
+$this->Html->addCrumb('Eventos', '/events');
     $this->Html->addCrumb('Calendário');
 ?>
 
@@ -39,7 +40,7 @@
 <div class="row">
     <div class="col-xs-12">
         <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
-        <div class="btn-group"></div>
+        <div class="btn-group">
             <?php
             echo $this->Html->link(
                 $this->Html->tag(

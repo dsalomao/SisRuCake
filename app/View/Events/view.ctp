@@ -13,21 +13,13 @@ $this->Html->css('events', array('inline' => false));
 
 $this->Html->addCrumb('Planejamento de cardápio');
 $this->Html->addCrumb('Eventos', '/events');
-$this->Html->addCrumb($event['Event']['title']);
+$this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
 ?>
 
 <div class="row">
     <div class="col-sm-5">
         <h3 class="header smaller lighter green"> Evento:  <?php echo $this->Html->link($event['EventType']['name'], array('controller' => 'event_types', 'action' => 'view', $event['EventType']['id'])); ?></h3>
         <div class="profile-user-info profile-user-info-striped">
-            <div class="profile-info-row">
-                <div class="profile-info-name"> Título </div>
-
-                <div class="profile-info-value">
-                    <span class="editable" id="event_title"><?php echo $event['Event']['title']; ?></span>
-                </div>
-            </div>
-
             <div class="profile-info-row">
                 <div class="profile-info-name"> Detalhes </div>
 
@@ -88,6 +80,7 @@ $this->Html->addCrumb($event['Event']['title']);
                 </div>
             </div>
 
+            <?php if(!$event['EventType']['id']): ?>
             <div class="profile-info-row">
                 <div class="profile-info-name"> Refeição </div>
 
@@ -97,13 +90,16 @@ $this->Html->addCrumb($event['Event']['title']);
                      </span>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 
+    <?php if(!$event['EventType']['id']): ?>
     <div class="col-sm-7">
         <h4 class="header smaller lighter blue"> Receitas </h4>
 
         <div id="accordion" class="accordion-style1 panel-group">
+        <?php if($event['MealsForEvent'][0]['Meal']['RecipesForMeal']): ?>
             <?php foreach($event['MealsForEvent'][0]['Meal']['RecipesForMeal'] as $relatedRecipe): ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -241,21 +237,12 @@ $this->Html->addCrumb($event['Event']['title']);
                                                                 <th>
                                                                     <i class="ace-icon fa fa-caret-right blue"></i>Quantidade
                                                                 </th>
-
-                                                                <th>
-                                                                    <i class="ace-icon fa fa-caret-right blue"></i>Unidade
-                                                                </th>
-
                                                                 <th class="hidden-480">
-                                                                    <i class="ace-icon fa fa-caret-right blue"></i>Producto
+                                                                    <i class="ace-icon fa fa-caret-right blue"></i>Produto
                                                                 </th>
 
                                                                 <th>
                                                                     <i class="ace-icon fa fa-caret-right blue"></i>Em estoque
-                                                                </th>
-
-                                                                <th class="hidden-480">
-                                                                    <i class="ace-icon fa fa-caret-right blue"></i>Unidade
                                                                 </th>
                                                             </tr>
                                                             </thead>
@@ -263,17 +250,13 @@ $this->Html->addCrumb($event['Event']['title']);
                                                             <tbody>
                                                             <?php foreach($relatedRecipe['Recipe']['ProductsForRecipe'] as $relatedProduct): ?>
                                                                 <tr>
-                                                                    <td style="text-align: right"><?php echo $relatedProduct['quantity']; ?></td>
-
-                                                                    <td><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
+                                                                    <td style="text-align: right"><?php echo $relatedProduct['quantity'].' '; echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
 
                                                                     <td class="hidden-480"><?php echo $relatedProduct['Product']['code']; ?></td>
 
                                                                     <td>
-                                                                        <span class="label label-sm <?php echo $class = ($relatedProduct['quantity'] <= $relatedProduct['Product']['load_stock']) ? 'label-success':'label-danger';?>" id="certify_quantity"><?php echo $relatedProduct['Product']['load_stock']; echo $class = ($class == 'label-success') ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="glyphicon glyphicon-remove"></i>'; ?></span>
+                                                                        <?php echo $relatedProduct['Product']['load_stock'].' '; echo $relatedProduct['Product']['MeasureUnit']['name']; ?>
                                                                     </td>
-
-                                                                    <td class="hidden-480"><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
                                                                 </tr>
                                                             <?php endforeach; ?>
                                                             </tbody>
@@ -305,10 +288,6 @@ $this->Html->addCrumb($event['Event']['title']);
                                                                     <i class="ace-icon fa fa-caret-right blue"></i>Quantidade
                                                                 </th>
 
-                                                                <th>
-                                                                    <i class="ace-icon fa fa-caret-right blue"></i>Unidade
-                                                                </th>
-
                                                                 <th class="hidden-480">
                                                                     <i class="ace-icon fa fa-caret-right blue"></i>Producto
                                                                 </th>
@@ -316,58 +295,21 @@ $this->Html->addCrumb($event['Event']['title']);
                                                                 <th>
                                                                     <i class="ace-icon fa fa-caret-right blue"></i>Em estoque
                                                                 </th>
-
-                                                                <th class="hidden-480">
-                                                                    <i class="ace-icon fa fa-caret-right blue"></i>Unidade
-                                                                </th>
-
-                                                                <th class="actions"><?php echo __('Ações'); ?></th>
                                                             </tr>
                                                             </thead>
 
                                                             <tbody>
                                                             <?php foreach($relatedRecipe['Recipe']['ProductsForRecipe'] as $relatedProduct): ?>
                                                                 <tr>
-                                                                    <?php $portion_quantified = $relatedProduct['quantity']*$relatedRecipe['portion_multiplier']; ?>
-                                                                    <td style="text-align: right"><?php echo $portion_quantified; ?></td>
-
-                                                                    <td><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
+                                                                    <?php $portion_quantified = $relatedProduct['quantity'] * $relatedRecipe['portion_multiplier']; ?>
+                                                                    <td style="text-align: right">
+                                                                        <p class="<?php echo $class = ($portion_quantified <= $relatedProduct['Product']['load_stock']) ? 'green':'red'; ?>"><?php echo $portion_quantified.' '.$relatedProduct['Product']['MeasureUnit']['name']; ?></p>
+                                                                        <span class="label label-sm <?php echo $class = ($portion_quantified <= $relatedProduct['Product']['load_stock']) ? 'label-success':'label-danger';?>" id="certify_quantity"><?php echo $tagI = ($class == 'label-success') ? '<i class="glyphicon glyphicon-ok"></i>':'<i class="glyphicon glyphicon-remove"></i>'; ?></span></td>
 
                                                                     <td class="hidden-480"><?php echo $relatedProduct['Product']['code']; ?></td>
 
                                                                     <td>
-                                                                        <span class="label label-sm <?php echo $class = ($portion_quantified <= $relatedProduct['Product']['load_stock']) ? 'label-success':'label-danger';?>" id="certify_quantity"><?php echo $relatedProduct['Product']['load_stock']; echo $tagI = ($class == 'label-success') ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="glyphicon glyphicon-remove"></i>'; ?></span>
-                                                                    </td>
-
-                                                                    <td class="hidden-480"><?php echo $relatedProduct['Product']['MeasureUnit']['name']; ?></td>
-
-                                                                    <td class="actions">
-                                                                        <div class="btn-group">
-                                                                            <?php
-                                                                            if($class == 'label-success'){
-                                                                                echo $this->Html->link(
-                                                                                    $this->Html->tag(
-                                                                                        'i',
-                                                                                        '',
-                                                                                        array('class' => 'ace-icon fa fa-cog')
-                                                                                    ),
-                                                                                    array(
-                                                                                        'controller' => 'productOutput',
-                                                                                        'action' => 'manual_submit',
-                                                                                        $relatedProduct['Product']['id']
-                                                                                    ),
-                                                                                    array(
-                                                                                        'escape' => false,
-                                                                                        'class' => 'btn btn-xs btn-primary actions-tooltip tooltip-info',
-                                                                                        'data-toggle' => 'tooltip',
-                                                                                        'data-placement' => 'top',
-                                                                                        'title' => 'ver produto',
-                                                                                        'data-trigger' => 'hover'
-                                                                                    )
-                                                                                );
-                                                                            }
-                                                                            ?>
-                                                                        </div>
+                                                                        <?php echo $relatedProduct['Product']['load_stock'].' '.$relatedProduct['Product']['MeasureUnit']['name']; ?>
                                                                     </td>
                                                                 </tr>
                                                             <?php endforeach; ?>
@@ -384,25 +326,44 @@ $this->Html->addCrumb($event['Event']['title']);
                     </div>
                 </div>
             <?php endforeach; ?>
+        <?php else: ?>
+            <?php echo "<h4 class='smaller lighter red'>Esta refeição não contém receitas vinculadas a ela.</h4>"?>
+        <?php endif; ?>
         </div>
     </div>
-
+    <?php endif; ?>
     <div class="col-sm-12">
         <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
         <div class="btn-group">
             <?php
-            echo $this->Html->link(
-                $this->Html->tag(
-                    'i',
-                    '',
-                    array('class' => 'glyphicon glyphicon-minus')
-                ).' Retirar refeição em estoque',
-                '/events/output_meal/'.$event['MealsForEvent'][0]['id'].'/'.+$event['Event']['id'],
-                array(
-                    'escape' => false,
-                    'class' => 'btn btn-lg btn-danger'
-                )
-            );
+            if(!$event['EventType']['id']){
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-minus')
+                    ).' Retirar refeição em estoque',
+                    '/events/output_meal/'.$event['MealsForEvent'][0]['id'].'/'.+$event['Event']['id'],
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-danger'
+                    )
+                );
+            }else {
+                echo $this->Html->link(
+                    $this->Html->tag(
+                        'i',
+                        '',
+                        array('class' => 'glyphicon glyphicon-minus')
+                    ).' Deletar lembrete',
+                    '/events/delete/'.$event['Event']['id'],
+                    array(
+                        'escape' => false,
+                        'class' => 'btn btn-lg btn-danger'
+                    ),
+                    __('Tem certeza que gostaria de deletar este lembrete?')
+                );
+            }
             ?>
         </div>
         <div class="space"></div>
