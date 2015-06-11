@@ -15,7 +15,7 @@
     $this->Html->css('events', array('inline' => false));
 
     $this->Html->addCrumb('Planejamento de cardápio');
-$this->Html->addCrumb('Eventos', '/events');
+    $this->Html->addCrumb('Eventos', '/events');
     $this->Html->addCrumb('Calendário');
 ?>
 

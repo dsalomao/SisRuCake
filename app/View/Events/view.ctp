@@ -86,7 +86,7 @@ $this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
 
                 <div class="profile-info-value">
                      <span class="editable" id="event_all_day">
-                        <?php echo $this->Html->link($event['MealsForEvent'][0]['Meal']['code'], array('plugin' => false, 'controller' => 'meals', 'action' => 'view', $event['MealsForEvent'][0]['Meal']['id'])); ?>
+                        <?php echo $this->Html->link($event['Meal'][0]['code'], array('plugin' => false, 'controller' => 'meals', 'action' => 'view', $event['Meal'][0]['id'])); ?>
                      </span>
                 </div>
             </div>
@@ -99,8 +99,8 @@ $this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
         <h4 class="header smaller lighter blue"> Receitas </h4>
 
         <div id="accordion" class="accordion-style1 panel-group">
-        <?php if($event['MealsForEvent'][0]['Meal']['RecipesForMeal']): ?>
-            <?php foreach($event['MealsForEvent'][0]['Meal']['RecipesForMeal'] as $relatedRecipe): ?>
+        <?php if($event['Meal'][0]['RecipesForMeal']): ?>
+            <?php foreach($event['Meal'][0]['RecipesForMeal'] as $relatedRecipe): ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -343,7 +343,7 @@ $this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
                         '',
                         array('class' => 'glyphicon glyphicon-minus')
                     ).' Retirar refeição em estoque',
-                    '/events/output_meal/'.$event['MealsForEvent'][0]['id'].'/'.+$event['Event']['id'],
+                    '/events/output_meal/'.$event['Meal'][0]['id'].'/'.+$event['Event']['id'],
                     array(
                         'escape' => false,
                         'class' => 'btn btn-lg btn-danger'

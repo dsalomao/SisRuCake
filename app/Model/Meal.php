@@ -79,21 +79,31 @@ class Meal extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		),
-        'MealsForEvent' => array(
-            'className' => 'MealsForEvent',
-            'foreignKey' => 'meal_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        )
+		)
 	);
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+
+    public $hasAndBelongsToMany = array(
+        'Event' =>
+            array(
+                'className' => 'Event',
+                'joinTable' => 'events_meals',
+                'foreignKey' => 'meal_id',
+                'associationForeignKey' => 'event_id',
+                'unique' => true,
+                'conditions' => '',
+                'fields' => '',
+                'order' => '',
+                'limit' => '',
+                'offset' => '',
+                'finderQuery' => ''
+            )
+    );
 
 /**
  * belongsTo associations

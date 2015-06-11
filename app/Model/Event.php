@@ -77,39 +77,39 @@ class Event extends AppModel {
 	);
 
 /**
- * hasMany associations
+ * hasAndBelongsToMany associations
  *
  * @var array
  */
-	public $hasMany = array(
-        'MealsForEvent' => array(
-            'className' => 'MealsForEvent',
-            'foreignKey' => 'event_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-	);
+
+    public $hasAndBelongsToMany = array(
+        'Meal' =>
+            array(
+                'className' => 'Meal',
+                'joinTable' => 'events_meals',
+                'foreignKey' => 'event_id',
+                'associationForeignKey' => 'meal_id',
+                'unique' => true,
+                'conditions' => '',
+                'fields' => '',
+                'order' => '',
+                'limit' => '',
+                'offset' => '',
+                'finderQuery' => ''
+            )
+    );
 
     public function findEvent($id = null){
         $options = array(
             'conditions' => array('Event.id' => $id),
             'recursive' => 0,
             'contain' => array(
-                'MealsForEvent' => array(
-                    'Meal' => array(
-                        'RecipesForMeal' => array(
-                            'Recipe' => array(
-                                'ProductsForRecipe' => array(
-                                    'Product' => array(
-                                        'MeasureUnit' => array()
-                                    )
+                'Meal' => array(
+                    'RecipesForMeal' => array(
+                        'Recipe' => array(
+                            'ProductsForRecipe' => array(
+                                'Product' => array(
+                                    'MeasureUnit' => array()
                                 )
                             )
                         )
