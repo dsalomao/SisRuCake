@@ -35,7 +35,6 @@ $this->Html->addCrumb('Retirar em estoque');
                 <th><?php echo 'Código'; ?></th>
                 <th class="hidden-sm hidden-xs"><?php echo 'Quantidade em estoque'; ?></th>
                 <th><?php echo 'Quantidade a retirar'; ?></th>
-                <th class="actions"><?php echo __('Ações'); ?></th>
             </tr>
             </thead>
 
@@ -43,10 +42,11 @@ $this->Html->addCrumb('Retirar em estoque');
             <?php foreach($mealIngredients as $mealIngredient) : ?>
                 <tr>
                     <td class="hidden-xs"><?php echo $mealIngredient['name']; ?></td>
-                    <td><?php echo $mealIngredient['code']; ?></td>
-                    <td class="hidden-sm hidden-xs"><?php echo $mealIngredient['load_stock'].' '.$mealIngredient['measure_unit']; ?></td>
+                    <td><?php echo $this->Html->link($mealIngredient['code'], array('controller' => 'products', 'action' => 'view', $mealIngredient['product_id'])); ?></td>
+                    <td class="hidden-sm hidden-xs ">
+                        <p class="<?php echo (!$mealIngredient['canOutput']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['load_stock'].' '.$mealIngredient['measure_unit']; echo ($mealIngredient['canOutput']) ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="fa fa-ban"></i>'; ?></td>
                     <td>
-                        <p class=" <?php echo $class = ($mealIngredient['load_stock'] <= $mealIngredient['output']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['output']; echo $class = ($class == 'green') ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="glyphicon glyphicon-remove"></i>'; ?></p>
+                        <p class="<?php echo (!$mealIngredient['canOutput']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['output']; echo ($mealIngredient['canOutput']) ? '&nbsp;&nbsp;<i class="glyphicon glyphicon-tag"></i>':'&nbsp;&nbsp;<i class="fa fa-circle-o"></i>'; ?></p>
                     </td>
                 </tr>
             <?php endforeach; ?>
