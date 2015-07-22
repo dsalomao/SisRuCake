@@ -95,19 +95,6 @@ class Restaurant extends AppModel {
             'finderQuery' => '',
             'counterQuery' => ''
         ),
-        'ProductOutput' => array(
-            'className' => 'ProductOutput',
-            'foreignKey' => 'restaurant_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
         'SuppliesProduct' => array(
             'className' => 'SuppliesProduct',
             'foreignKey' => 'restaurant_id',

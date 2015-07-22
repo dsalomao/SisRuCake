@@ -106,7 +106,7 @@ jQuery(function($) {
                         revertFunc();
                     });
             },
-            droppable: true, // this allows things to be dropped onto the calendar !!!
+            droppable: true, //this allows things to be dropped onto the calendar !!!
             eventDrop: function(event) {
                 var startdate = new Date(event.start);
                 var startyear = startdate.getFullYear();

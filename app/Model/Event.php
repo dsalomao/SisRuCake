@@ -99,6 +99,22 @@ class Event extends AppModel {
             )
     );
 
+    public $hasMany = array(
+        'ProductOutput' => array(
+            'className' => 'ProductOutput',
+            'foreignKey' => 'event_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
+    );
+
     public function findEvent($id = null){
         $options = array(
             'conditions' => array('Event.id' => $id),
@@ -122,4 +138,31 @@ class Event extends AppModel {
         return $event;
     }
 
+    public function constructIngredientsArray($meal_id = null) {
+        $this->recursive = -1;
+        $meal = $this->Meal->findMealToOutput($meal_id);                                            // get related meal
+        $mealIngredients = array();
+
+        foreach($meal['RecipesForMeal'] as $recipes):                                               // for each recipe
+            foreach($recipes['Recipe']['ProductsForRecipe'] as $product):                           // for each productForRecipe
+                if(!isset($mealIngredients[$product['Product']['id']])){                            // if the product has not yet been initialized in mealIngredients array
+                    $mealIngredients[$product['Product']['id']] =  array(                           // initialize the new ingredient
+                        'product_id' => $product['Product']['id'],
+                        'name' => $product['Product']['name'],
+                        'code' => $product['Product']['code'],
+                        'load_stock' => $product['Product']['load_stock'],
+                        'output' => $product['quantity'] * $recipes['portion_multiplier'],
+                        'available' => ($product['Product']['load_stock'] - $product['Product']['load_min'] <= 0) ? 0 : $product['Product']['load_stock'] - $product['Product']['load_min'],
+                        'measure_unit' => $product['Product']['MeasureUnit']['name'],
+                        'canOutput' => (($product['quantity'] * $recipes['portion_multiplier']) <= $product['Product']['load_stock'] - $product['Product']['load_min']) ? true : false,
+                    );
+                }else {
+                    $mealIngredients[$product['Product']['id']]['output'] += ($product['quantity'] * $recipes['portion_multiplier']);
+                    $mealIngredients[$product['Product']['id']]['canOutput'] = ($mealIngredients[$product['Product']['id']]['output'] > $mealIngredients[$product['Product']['id']]['load_stock']) ? false : true ;
+                }
+            endforeach;
+        endforeach;
+
+        return $mealIngredients;
+    }
 }

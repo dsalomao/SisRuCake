@@ -72,7 +72,7 @@ class EventsController extends AppController {
                 $this->Session->setFlash(__('The Event could not be saved. Please, try again.'));
             }
         }
-        $eventTypes = $this->Event->EventType->find('list');
+        $eventTypes = $this->Event->EventType->find('list', array('conditions' => array('EventType.name' => array('Refeição', 'Lembrete'))));
         $meals = $this->Event->Meal->find('list', array('conditions' => array('Meal.restaurant_id' => $this->Auth->user('restaurant_id'), 'Meal.status' => 1)));
         $this->set(compact('eventTypes', 'meals'));
     }
@@ -155,29 +155,68 @@ class EventsController extends AppController {
 	}
 
     public function output_meal($meal_id = null, $event_id = null){
-        $this->Event->recursive = -1;
-        $event = $this->Event->findById($event_id);                                                 // get event
-        $meal = $this->Event->Meal->findMealToOutput($meal_id);                      // get related meal
-        $mealIngredients = array();
-        foreach($meal['RecipesForMeal'] as $recipes):                                               // for each recipe
-            foreach($recipes['Recipe']['ProductsForRecipe'] as $product):                           // for each productForRecipe
-                if(!isset($mealIngredients[$product['Product']['id']])){                            // if the product has not yet been initialized in mealIngredients array
-                    $mealIngredients[$product['Product']['id']] =  array(                           // initialize the new ingredient
-                        'product_id' => $product['Product']['id'],
-                        'code' => $product['Product']['code'],
-                        'load_stock' => $product['Product']['load_stock'],
-                        'output' => $product['quantity'] * $recipes['portion_multiplier'],
-                        'name' => $product['Product']['name'],
-                        'measure_unit' => $product['Product']['MeasureUnit']['name'],
-                        'canOutput' => (($product['quantity'] * $recipes['portion_multiplier']) <= $product['Product']['load_stock']) ? true : false,
-                    );
-                }else {
-                    $mealIngredients[$product['Product']['id']]['output'] += ($product['quantity'] * $recipes['portion_multiplier']);
-                    $mealIngredients[$product['Product']['id']]['canOutput'] = ($mealIngredients[$product['Product']['id']]['output'] > $mealIngredients[$product['Product']['id']]['load_stock']) ? false : true ;
-                }
-            endforeach;
+
+        $mealIngredients = $this->Event->constructIngredientsArray($meal_id);
+        $event = $this->Event->findById($event_id);
+
+        $this->set(array('mealIngredients' => $mealIngredients, 'event' => $event, 'meal_id' => $meal_id));
+    }
+
+    public function output($meal_id = null, $event_id = null) {
+        $this->autoRender = false;
+
+        $mealIngredients = $this->Event->constructIngredientsArray($meal_id);
+
+        $data_product_model = array();
+        $data_output_model = array();
+
+        $timezone = date_default_timezone_get();
+        date_default_timezone_set($timezone);
+        $today = date('Y-m-d');
+
+        foreach($mealIngredients as $ingredient):
+            if(!$ingredient['canOutput']) {
+                $this->Session->setFlash(__('Não pudemos dar baixa, há ingredientes ultrapassando a quantidade disponível em estoque.', true));
+                $this->redirect(array('action' => 'view', $event_id));
+            }
+            $data_product_model[] = array(
+                'id' => $ingredient['product_id'],
+                'load_stock' => $ingredient['load_stock'] - $ingredient['output']
+            );
+            $data_output_model[] = array(
+                'load_stock' => $ingredient['load_stock'] - $ingredient['output'],
+                'quantity' => $ingredient['output'],
+                'date_of_submission' => $today,
+                'product_id' => $ingredient['product_id'],
+                'event_id' => $event_id
+            );
         endforeach;
-        $this->set(array('mealIngredients' => $mealIngredients, 'event' => $event));
+
+        $this->Event->create();
+        $this->Event->id = $event_id;
+        $this->Event->ProductOutput->create();
+
+        if($this->Event->ProductOutput->saveMany($data_output_model)) {
+            if($this->Event->saveField('status', 'completo')) {
+                if($this->Event->ProductOutput->Product->saveMany($data_product_model)) {
+                    $this->Session->setFlash(__('A baixa em estoque desta refeição foi realizada com sucesso.', true));
+                    $this->redirect(array('action' => 'view', $event_id));
+                } else {
+                    $this->Event->ProductOutput->deleteAll(array('ProductOutput.event_id' => $event_id));
+                    $this->Event->saveField('status', 'agendado');
+                    $this->Session->setFlash(__('Algum ou todos os produtos não puderam ter suas quantidades em estoque modificadas.', true));
+                    $this->redirect(array('action' => 'view', $event_id));
+                }
+            }else {
+                $this->Event->ProductOutput->deleteAll(array('ProductOutput.event_id' => $event_id));
+                $this->Session->setFlash(__('O status do evento não pode ser alterado de "agendado" para "completo".', true));
+                $this->redirect(array('action' => 'view', $event_id));
+            }
+        }else {
+            $this->Session->setFlash(__('Algo de errado ocorreu durante a operação, por favor tente novemante.', true));
+            $this->redirect(array('action' => 'view', $event_id));
+        }
+        $this->set(array('data_product_model' => $data_product_model, 'data_output_model' => $data_output_model, 'today' => $today));
     }
 }
 ?>

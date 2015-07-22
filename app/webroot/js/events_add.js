@@ -19,14 +19,13 @@
 
         $('#EventEventTypeId').on('change', function(event){
 
-            var selected = $('#EventEventTypeId option:selected').val();
-
-            if(selected == 0){
+            var selected = $('#EventEventTypeId option:selected').text();
+            if(selected == "Refeição"){
                 console.log('isso ai');
                 $('#EventMealId').prop( "disabled", false );
                 $("div[name='mealIdFormGroup']").removeClass('hidden');
             }
-            else{
+            else if (selected == "Lembrete"){
                 console.log('fudeu');
                 $('#EventMealId').prop( "disabled", true );
                 $("div[name='mealIdFormGroup']").addClass('hidden');

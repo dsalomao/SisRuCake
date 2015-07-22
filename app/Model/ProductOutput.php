@@ -55,9 +55,9 @@ class ProductOutput extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-        'Restaurant' => array(
-            'className' => 'Restaurant',
-            'foreignKey' => 'restaurant_id',
+        'Event' => array(
+            'className' => 'Event',
+            'foreignKey' => 'event_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''

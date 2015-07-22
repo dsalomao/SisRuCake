@@ -33,7 +33,7 @@ $this->Html->addCrumb('Retirar em estoque');
             <tr>
                 <th class="hidden-xs"><?php echo 'Nome'; ?></th>
                 <th><?php echo 'Código'; ?></th>
-                <th class="hidden-sm hidden-xs"><?php echo 'Quantidade em estoque'; ?></th>
+                <th class="hidden-sm hidden-xs"><?php echo 'Quantidade disponível'; ?></th>
                 <th><?php echo 'Quantidade a retirar'; ?></th>
             </tr>
             </thead>
@@ -44,7 +44,7 @@ $this->Html->addCrumb('Retirar em estoque');
                     <td class="hidden-xs"><?php echo $mealIngredient['name']; ?></td>
                     <td><?php echo $this->Html->link($mealIngredient['code'], array('controller' => 'products', 'action' => 'view', $mealIngredient['product_id'])); ?></td>
                     <td class="hidden-sm hidden-xs ">
-                        <p class="<?php echo (!$mealIngredient['canOutput']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['load_stock'].' '.$mealIngredient['measure_unit']; echo ($mealIngredient['canOutput']) ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="fa fa-ban"></i>'; ?></td>
+                        <p class="<?php echo (!$mealIngredient['canOutput']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['available'].' '.$mealIngredient['measure_unit']; echo ($mealIngredient['canOutput']) ? '&nbsp;<i class="glyphicon glyphicon-ok"></i>':'&nbsp;<i class="fa fa-ban"></i>'; ?></td>
                     <td>
                         <p class="<?php echo (!$mealIngredient['canOutput']) ? 'red':'green';?>" id="certify_quantity"><?php echo $mealIngredient['output']; echo ($mealIngredient['canOutput']) ? '&nbsp;&nbsp;<i class="glyphicon glyphicon-tag"></i>':'&nbsp;&nbsp;<i class="fa fa-circle-o"></i>'; ?></p>
                     </td>
@@ -65,8 +65,10 @@ $this->Html->addCrumb('Retirar em estoque');
                     array('class' => 'glyphicon glyphicon-plus')
                 ).' Dar baixa',
                 array(
-                    'controller' => 'products',
-                    'action' => 'add'
+                    'controller' => 'events',
+                    'action' => 'output',
+                    $meal_id,
+                    $event['Event']['id']
                 ),
                 array('class' => 'btn btn-lg btn-primary btn-events', 'escape' => false)
             );

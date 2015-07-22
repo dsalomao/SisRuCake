@@ -24,13 +24,18 @@ class EventType extends AppModel {
 		),
 	);
 
-	var $hasMany = array(
-		'Event' => array(
-			'className' => 'Event',
-			'foreignKey' => 'event_type_id',
-			'dependent' => false,
-		)
-	);
-
-}
+    /**
+     * hasMany associations
+     *
+     * @var array
+     */
+    var $hasMany = array(
+        'Event' => array(
+            'className' => 'Event',
+            'foreignKey' => 'event_type_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        )
+    );}
 ?>
