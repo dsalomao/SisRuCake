@@ -90,10 +90,10 @@ class ProductsController extends AppController {
             $this->request->data['Product']['status'] = 0;
             $this->request->data['Product']['restaurant_id'] = $this->Auth->user('restaurant_id');
             if ($this->Product->save($this->request->data)) {
-				$this->Session->setFlash(__('O produto foi adicionado a lista de "produtos desativados", ative-o para poder adicioná-lo a uma receita.'));
+				$this->Session->setFlash('O produto foi adicionado a lista de "produtos desativados", ative-o para poder adicioná-lo a uma receita.', 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('O produto não pode ser adicionado, tente novamente.'));
+				$this->Session->setFlash('O produto não pode ser adicionado, tente novamente.', 'fail');
 			}
 		}
 		$measureUnits = $this->Product->MeasureUnit->find('list');
@@ -113,18 +113,18 @@ class ProductsController extends AppController {
         }
         $product = $this->Product->findProductById($id);
         if($product[0]['Product']['load_stock']){
-            $this->Session->setFlash(__('Este produto contém itens em estoque e não pode ser editado.'));
-            return $this->redirect(array('action' => 'index'));
+            $this->Session->setFlash('Este produto contém itens em estoque e não pode ser editado.', 'warning');
+            return $this->redirect(array('action' => 'view', $id));
         }
         else{
             if ($this->request->is(array('post', 'put'))) {
                 $this->request->data['Product']['name'] = ucfirst($this->request->data['Product']['name']);
                 $this->request->data['Product']['code'] = strtoupper($this->request->data['Product']['code']);
                 if ($this->Product->save($this->request->data)) {
-                    $this->Session->setFlash(__('O produto foi editado com sucesso.'));
-                    return $this->redirect(array('action' => 'index'));
+                    $this->Session->setFlash('O produto foi editado com sucesso.', 'success');
+                    return $this->redirect(array('action' => 'deleted_index'));
                 } else {
-                    $this->Session->setFlash(__('O produto não pode ser editado, tente novamente.'));
+                    $this->Session->setFlash('O produto não pode ser editado, tente novamente.', 'fail');
                 }
             } else {
                 $options = array('conditions' => array('Product.' . $this->Product->primaryKey => $id));
@@ -150,11 +150,11 @@ class ProductsController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Product->delete()) {
-			$this->Session->setFlash(__('The product has been deleted.'));
+			$this->Session->setFlash('O produto foi deletado com sucesso.', 'success');
 		} else {
-			$this->Session->setFlash(__('The product could not be deleted. Please, try again.'));
+			$this->Session->setFlash('Ocorreu um erro, por favor tente novamente.', 'fail');
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'deleted_index'));
 	}
 
 /**
@@ -171,10 +171,10 @@ class ProductsController extends AppController {
         }
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Product->updateStatus($id)) {
-            $this->Session->setFlash(__('O produto foi desativado'));
+            $this->Session->setFlash('O produto foi desativado, neste estado não pode ser utilizado em receitas e refeições.', 'warning');
             return $this->redirect(array('action' => 'deleted_index'));
         } else {
-            $this->Session->setFlash(__('O produto foi restaurado.'));
+            $this->Session->setFlash('O produto foi restaurado e está pronto para ser utilizado no receituário.', 'success');
             return $this->redirect(array('action' => 'index'));
         }
 
