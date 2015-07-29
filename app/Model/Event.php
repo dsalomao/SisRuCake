@@ -131,7 +131,10 @@ class Event extends AppModel {
                         )
                     )
                 ),
-                'EventType' => array()
+                'EventType' => array(),
+                'ProductOutput' => array(
+                    'Product' => array()
+                )
             )
         );
         $event = $this->find('first', $options);

@@ -18,7 +18,7 @@ $this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
 
 <div class="row">
     <div class="col-sm-5">
-        <h3 class="header smaller lighter green"> Evento:  <?php echo $this->Html->link($event['EventType']['name'], array('controller' => 'event_types', 'action' => 'view', $event['EventType']['id'])); ?></h3>
+        <h3 class="header smaller lighter green"> Evento:  <?php echo $event['EventType']['name']; ?></h3>
         <div class="profile-user-info profile-user-info-striped">
             <div class="profile-info-row">
                 <div class="profile-info-name"> Detalhes </div>
@@ -332,11 +332,75 @@ $this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
         </div>
     </div>
     <?php endif; ?>
+
+    <?php if($event['EventType']['id'] == 2): ?>
+    <div class="col-sm-7">
+        <div class="widget-body transparent" style="padding-top: 12px;">
+            <div class="widget-header widget-header-flat">
+                <h4 class="widget-title lighter">
+                    <i class="ace-icon fa fa-star orange"></i>
+                    Produtos alterados em estoque.
+                </h4>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-body-inner" style="display: block">
+                    <div class="widget-main no-padding">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thin-border-bottom">
+                            <tr>
+                                <th>
+                                    <i class="ace-icon fa fa-caret-right blue"></i>código
+                                </th>
+
+                                <th>
+                                    <i class="ace-icon fa fa-caret-right blue"></i>produto
+                                </th>
+
+                                <th class="hidden-480">
+                                    <i class="ace-icon fa fa-caret-right blue"></i>quantidade retirada
+                                </th>
+                                <th class="hidden-480">
+                                    <i class="ace-icon fa fa-caret-right blue"></i>data
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <?php foreach($event['ProductOutput'] as $product_modified): ?>
+                            <tr>
+                                <td><?php echo $this->html->link($product_modified['Product']['code'], array('controller' => 'products', 'action' => 'view', $product_modified['Product']['id'])); ?></td>
+                                <td><?php echo $product_modified['Product']['name']; ?></td>
+
+                                <td>
+                                    <b class="green"><?php echo $product_modified['quantity']; ?></b>
+                                    <small>
+                                        <b><?php echo $product_modified['Product']['MeasureUnit']['name']; ?></b>
+                                    </small>
+                                </td>
+
+                                <td class="hidden-480">
+                                    <span class="label label-info arrowed-right arrowed-in"><?php echo $product_modified['date_of_submission']; ?></span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
     <div class="col-sm-12">
         <h4 class="header smaller lighter blue"> A&ccedil;&otilde;es </h4>
         <div class="btn-group">
             <?php
-            if(!$event['EventType']['id']){
+            if($event['EventType']['id'] == 0){
                 echo $this->Html->link(
                     $this->Html->tag(
                         'i',
@@ -349,7 +413,7 @@ $this->Html->addCrumb($event['EventType']['name'].' '.$event['Event']['start']);
                         'class' => 'btn btn-lg btn-danger'
                     )
                 );
-            }else {
+            }else if($event['EventType']['id'] == 1){
                 echo $this->Html->link(
                     $this->Html->tag(
                         'i',

@@ -4,6 +4,10 @@
 
 jQuery(function($) {
 
+    $( document ).ready(function() {
+
+    });
+
     /* getting all events with get_all action from EventsController
      -----------------------------------------------------------------*/
 
@@ -190,8 +194,8 @@ jQuery(function($) {
                 var endhour = enddate.getHours();
                 var endminute = enddate.getMinutes();
 
-                var event_start = "<span class='glyphicon glyphicon-calendar'></span> "+startyear+"-"+startmonth+"-"+startday+" <span class='glyphicon glyphicon-time'></span> "+starthour+":"+startminute;
-                var event_end = "<span class='glyphicon glyphicon-calendar'></span> "+endyear+"-"+endmonth+"-"+endday+" <span class='glyphicon glyphicon-time'></span> "+endhour+":"+endminute;
+                var event_start = "<span class='glyphicon glyphicon-calendar'></span> "+startyear+"-"+startmonth+"-"+startday+" <span class='glyphicon glyphicon-time'></span> "+starthour+":"+startminute+":00";
+                var event_end = "<span class='glyphicon glyphicon-calendar'></span> "+endyear+"-"+endmonth+"-"+endday+" <span class='glyphicon glyphicon-time'></span> "+endhour+":"+endminute+":00";
 
                 var message = '<div class="profile-user-info profile-user-info-striped">\
                                     <div class="profile-info-row">\
@@ -234,18 +238,6 @@ jQuery(function($) {
                     title: 'O que faremos com este evento?',
                     message: message,
                     buttons: {
-                        Deletar: {
-                            className: "btn-danger btn-sm",
-                            callback: function(){
-                                bootbox.confirm("Tem certeza que gostaria de deletar este evento?", function(result) {
-                                    if(result){
-                                        $.get('/SisRuCake/events/delete/'+calEvent.id);
-                                        $('#calendar').fullCalendar('removeEvents', calEvent.id);
-                                    }
-                                });
-                                //
-                            }
-                        },
                         Cancelar: {
                             className: "btn-sm"
                         },
@@ -269,6 +261,4 @@ jQuery(function($) {
             selectHelper: false
         });
     };
-
-
 })

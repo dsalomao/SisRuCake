@@ -18,7 +18,10 @@ echo $this->Html->script('libs/bootstrap-datetimepicker.pt-BR');
 echo $this->Html->script('events_add');
 
 $this->Html->addCrumb('Planejamento do cardápio');
+$this->Html->addCrumb('Eventos', array('controller' => 'events', 'action' => 'index'));
 $this->Html->addCrumb('Calendário', array('controller' => 'events', 'action' => 'calendar'));
+$this->Html->addCrumb('Adicionar    ');
+
 
 ?>
 
@@ -74,7 +77,7 @@ $this->Html->addCrumb('Calendário', array('controller' => 'events', 'action' =>
                                         'div' => array(
                                             'class' => 'input-group date col-sm-9',
                                             'style' => 'padding-left:12px;padding-right:12px;',
-                                            'id' => 'start_dtp'
+                                            'id' => 'EventStartWrapper'
                                         ),
                                         'type' => 'text',
                                         'class' => 'form-control',
@@ -92,7 +95,7 @@ $this->Html->addCrumb('Calendário', array('controller' => 'events', 'action' =>
                                         'div' => array(
                                             'class' => 'col-sm-9 input-group date',
                                             'style' => 'padding-left:12px;padding-right:12px;',
-                                            'id' => 'end_dtp'
+                                            'id' => 'EventEndWrapper'
                                         ),
                                         'type' => 'text',
                                         'class' => 'form-control',
@@ -121,11 +124,11 @@ $this->Html->addCrumb('Calendário', array('controller' => 'events', 'action' =>
                                 <?php echo $this->Form->input(
                                     'Event.status',
                                     array(
+                                        'id' => 'EventStatus',
                                         'div' => 'col-sm-9',
                                         'options' => array(
                                             'agendado' => 'Agendado',
                                             'confirmado' => 'Confirmado',
-                                            'Completed' => 'Completo'
                                         )
                                     )
                                 ); ?>

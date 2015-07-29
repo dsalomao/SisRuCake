@@ -46,30 +46,53 @@ class EventsController extends AppController {
 
     public function add() {
         if ($this->request->is('post')) {
+            //resets the model state
             $this->Event->create();
+            //updates the new event data with the user restaurant
             $this->request->data['Event']['restaurant_id'] = $this->Auth->user('restaurant_id');
-            if ($this->Event->save($this->request->data)) {
-                if($this->request->data['Event']['event_type_id'] == 0) {
+            //if its an event "Refeição"
+            if($this->request->data['Event']['event_type_id'] == 0) {
+                //if the event model has been saved
+                if ($this->Event->save($this->request->data)) {
+                    //construct the array of Meals for the event been saved
                     $data = array(
                         'EventsMeal' => array(
                             'meal_id' => $this->request->data['Event']['meal_id'],
                             'event_id' => $this->Event->getLastInsertID()
                         )
                     );
+                    //if the meal of the event has been associated, Everything's OK !!
                     if($this->Event->EventsMeal->save($data)){
                         $this->Session->setFlash(__('Sua refeição foi salva com sucesso.'));
                         return $this->redirect(array('action' => 'index'));
                     }
-                    else{
+                    else{   //if not delete the last event added and message the user
                         $this->Event->delete($this->Event->getLastInsertID());
                         $this->Session->setFlash(__('Esta refeição não pode ser vinculado a este evento, por favor tente novamente.'));
                     }
                 }
-                $this->Session->setFlash(__('Seu Lembrete foi salvo com sucesso.'));
+                $this->Session->setFlash(__('Houve algo de errado ao salvar seu evento, por favor tente novamente.'));
                 return $this->redirect(array('action' => 'index'));
-            }
-            else {
-                $this->Session->setFlash(__('The Event could not be saved. Please, try again.'));
+            //if its an event "Lembrete"
+            } else if($this->request->data['Event']['event_type_id'] == 1) {
+                //creates a php date object from the start value and add 1 hour to it
+                $date = new DateTime($this->request->data['Event']['start']);
+                $date->add(new DateInterval('PT01H'));
+                //resets the model state
+                $this->Event->create();
+                //sets end value as the new date
+                $this->request->data['Event']['end'] = $date->format('Y-m-d H:i:s');
+                //sets status 'confirmado'
+                $this->request->data['Event']['status'] = 'confirmado';
+                //if 'Lembrete' event is saved Everything's OK !!
+                if($this->Event->save($this->request->data)) {
+                    $this->Session->setFlash(__('Seu lembrete foi salvo com sucesso.'));
+                    return $this->redirect(array('action' => 'calendar'));
+                //if not message the user
+                }else {
+                    $this->Session->setFlash(__('Seu lembrete não pode ser salvo, tente novamente.'));
+                    return $this->redirect(array('action' => 'calendar'));
+                }
             }
         }
         $eventTypes = $this->Event->EventType->find('list', array('conditions' => array('EventType.name' => array('Refeição', 'Lembrete'))));
@@ -102,15 +125,29 @@ class EventsController extends AppController {
 
     public function delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid id for event', true));
+            $this->Session->setFlash(__('Este evento não existe!', true));
             $this->redirect(array('action'=>'index'));
         }
+        $event = $this->Event->findById($id);
+
+        if(!$event['Event']['event_type_id']) {
+            if($event['Event']['status'] == 'confirmado'){
+                $this->Session->setFlash(__('Esta refeição já foi concluída e não pode ser deletada dos históricos'));
+                $this->redirect(array('action'=>'view', $id));
+            }
+        }
+
+        if($event['Event']['event_type_id'] == 2) {
+            $this->Session->setFlash(__('Este é um evento de reajuste em estoque e como tal não pode ser deletado.', true));
+            $this->redirect(array('action'=>'view', $id));
+        }
+
         if ($this->Event->delete($id)) {
-            $this->Session->setFlash(__('Event deleted', true));
+            $this->Session->setFlash(__('Evento deletado com sucesso', true));
             $this->redirect(array('action'=>'index'));
         }
-        $this->Session->setFlash(__('Event was not deleted', true));
-        $this->redirect(array('action' => 'index'));
+        $this->Session->setFlash(__('Houve um erro durante o processo, por favor tente novamente.', true));
+        $this->redirect(array('action'=>'view', $id));
     }
 
     public function get_all() {
@@ -146,7 +183,7 @@ class EventsController extends AppController {
                 'end' => $end,
                 'allDay' => $allday,
                 'meal' => ($event['Meal']) ? $event['Meal'][0]['code'] : '',
-                'url' => ($event['EventType']['name']=='Refeição') ? Router::url('/').'events/view/'.$event['Event']['id']:'',
+                'url' => Router::url('/').'events/view/'.$event['Event']['id'],
                 'className' => $event['EventType']['color']
             );
         }
@@ -197,7 +234,7 @@ class EventsController extends AppController {
         $this->Event->ProductOutput->create();
 
         if($this->Event->ProductOutput->saveMany($data_output_model)) {
-            if($this->Event->saveField('status', 'completo')) {
+            if($this->Event->saveField('status', 'confirmado')) {
                 if($this->Event->ProductOutput->Product->saveMany($data_product_model)) {
                     $this->Session->setFlash(__('A baixa em estoque desta refeição foi realizada com sucesso.', true));
                     $this->redirect(array('action' => 'view', $event_id));
@@ -209,7 +246,7 @@ class EventsController extends AppController {
                 }
             }else {
                 $this->Event->ProductOutput->deleteAll(array('ProductOutput.event_id' => $event_id));
-                $this->Session->setFlash(__('O status do evento não pode ser alterado de "agendado" para "completo".', true));
+                $this->Session->setFlash(__('O status do evento não pode ser alterado de "agendado" para "confirmado".', true));
                 $this->redirect(array('action' => 'view', $event_id));
             }
         }else {
