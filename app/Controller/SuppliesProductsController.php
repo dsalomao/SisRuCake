@@ -82,14 +82,14 @@ class SuppliesProductsController extends AppController {
                     $relatedProduct['Product']['load_stock'] = $relatedProduct['Product']['load_stock'] + $this->request->data['SuppliesProduct']['quantity'];
                     $this->SuppliesProduct->Product->id = $id;
                     $this->SuppliesProduct->Product->saveField('load_stock', $relatedProduct['Product']['load_stock']);
-                    $this->Session->setFlash(__('O produto em estoque teve suas quantidades editadas com sucesso.'));
+                    $this->Session->setFlash('O produto em estoque teve suas quantidades editadas com sucesso.', 'success');
                     return $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('Não foi possível editar as quantidades do produto, tente novamente.'));
+                    $this->Session->setFlash('Não foi possível editar as quantidades do produto, tente novamente.', 'fail');
                 }
             }
             else{
-                $this->Session->setFlash(__('Não foi possível editar as quantidades do produto, limite máximo de estoque atingido.'));
+                $this->Session->setFlash('Não foi possível editar as quantidades do produto, limite máximo de estoque atingido.', 'warning');
                 return $this->redirect(array('action' => 'index'));
             }
         }

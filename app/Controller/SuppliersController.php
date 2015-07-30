@@ -61,10 +61,10 @@ class SuppliersController extends AppController {
             $this->request->data['Supplier']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Supplier->save($this->request->data)) {
                 $supplier = $this->Supplier->findById($this->Supplier->getLastInsertID());
-				$this->Session->setFlash(__("O fornecedor '%s' foi salvo com sucesso.", $supplier['Supplier']['name']));
+				$this->Session->setFlash("O fornecedor foi salvo com sucesso.", 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The supplier could not be saved. Please, try again.'));
+				$this->Session->setFlash('Ocorreu um erro ao salvar o fornecedor, tente novamente.', 'fail');
 			}
 		}
 	}
@@ -85,10 +85,10 @@ class SuppliersController extends AppController {
             $this->request->data['Supplier']['name'] = ucfirst($this->request->data['Supplier']['name']);
             $this->request->data['Supplier']['code'] = strtoupper($this->request->data['Supplier']['code']);
 			if ($this->Supplier->save($this->request->data)) {
-				$this->Session->setFlash(__('Este fornecedor foi editado com sucesso.'));
+				$this->Session->setFlash('Este fornecedor foi editado com sucesso.', 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('O fornecedor não pode ser editado, tente novamente.'));
+				$this->Session->setFlash('O fornecedor não pode ser editado, tente novamente.', 'fail');
 			}
 		} else {
 			$options = array('conditions' => array('Supplier.' . $this->Supplier->primaryKey => $id));
@@ -131,10 +131,10 @@ class SuppliersController extends AppController {
         }
         $this->request->onlyAllow('post', 'logical_delete');
         if ($this->Supplier->updateStatus($id)) {
-            $this->Session->setFlash(__('O fornecedor foi desativado.'));
+            $this->Session->setFlash('O fornecedor foi desativado.', 'warning');
             return $this->redirect(array('action' => 'deleted_index'));
         } else {
-            $this->Session->setFlash(__('O fornecedor foi restaurado.'));
+            $this->Session->setFlash('O fornecedor foi restaurado.', 'success');
             return $this->redirect(array('action' => 'index'));
         }
     }
@@ -159,10 +159,10 @@ class SuppliersController extends AppController {
             $this->Supplier->create();
             $this->Supplier->set('id', $this->request->data['Supplier']['supplier_id']);
             if ($this->Supplier->save($this->request->data)) {
-                $this->Session->setFlash(__('Este fornecedor foi avaliado com sucesso.'));
+                $this->Session->setFlash('Este fornecedor foi avaliado com sucesso.', 'success');
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('O fornecedor não pode ser avaliado, tente novamente'));
+                $this->Session->setFlash('O fornecedor não pode ser avaliado, tente novamente', 'fail');
             }
         }
         $this->set('suppliers', $this->Supplier->find('list'));

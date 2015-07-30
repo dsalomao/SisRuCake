@@ -63,25 +63,6 @@ $this->Html->addCrumb('Fornecedores desativados');
                                     $this->Html->tag(
                                         'i',
                                         '',
-                                        array('class' => 'ace-icon fa fa-search-plus  bigger-120')
-                                    ),
-                                    array(
-                                        'action' => 'view',
-                                        $supplier['Supplier']['id']
-                                    ),
-                                    array(
-                                        'escape' => false,
-                                        'class' => 'btn btn-xs btn-info actions-tooltip tooltip-info',
-                                        'data-toggle' => 'tooltip',
-                                        'data-placement' => 'top',
-                                        'title' => 'ver fornecedor',
-                                        'data-trigger' => 'hover'
-                                    )
-                                );
-                                echo $this->Html->link(
-                                    $this->Html->tag(
-                                        'i',
-                                        '',
                                         array('class' => 'ace-icon fa fa-pencil bigger-120')
                                     ),
                                     array(

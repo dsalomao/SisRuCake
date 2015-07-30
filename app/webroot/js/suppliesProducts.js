@@ -4,16 +4,22 @@
 jQuery(function($) {
     $('#date_of_entry_dtp').datetimepicker({
         language: 'pt-BR',
-        format: 'yyyy-mm-dd hh:ii',
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        startView: 'month',
+        maxVIew: 'year',
+        viewSelect: 'month',
         daysOfWeekDisabled:'0,6',
-        minuteStep: 15,
-        todayBtn: true
+        minuteStep: 15
     });
 
     $('#expiration').datetimepicker({
         language: 'pt-BR',
-        format: 'yyyy-mm-dd hh:ii',
-        daysOfWeekDisabled:'0,6',
+        format: 'yyyy-mm-dd',
+        minView: 'month',
+        startView: 'month',
+        maxVIew: 'year',
+        viewSelect: 'month',
         minuteStep: 15
     });
 

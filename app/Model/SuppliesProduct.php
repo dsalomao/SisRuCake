@@ -58,8 +58,8 @@ class SuppliesProduct extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-            'datetime' => array(
-                'rule' => array('datetime'),
+            'date' => array(
+                'rule' => array('date'),
                 'message' => 'Este campo deve ser uma data.',
                 //'allowEmpty' => false,
                 //'required' => false,
@@ -67,6 +67,24 @@ class SuppliesProduct extends AppModel {
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             )
 		),
+        'expiration' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Este campo deve ser preenchido.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'date' => array(
+                'rule' => array('date'),
+                'message' => 'Este campo deve ser uma data.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+        ),
         'invoice' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
