@@ -1,6 +1,8 @@
 <?php
 
 $this->Html->script('ace/bootstrap-tooltip.js', array('inline' => false));
+$this->Html->script('libs/jquery.easy-pie-chart.min.js', array('inline' => false));
+$this->Html->script('products', array('inline' => false));
 $this->Html->css('products', array('inline' => false));
 
 $this->Html->addCrumb('Logística & Suprimentos');
@@ -10,6 +12,9 @@ if(!$product[0]['Product']['status']) {
 }
 $this->Html->addCrumb($product[0]['Product']['name']);
 ?>
+<!--[if lte IE 8]>
+<script src="path/to/assets/js/excanvas.min.js"></script>
+<![endif]-->
 
 <div class="row">
     <div class="col-sm-5">
@@ -127,7 +132,33 @@ $this->Html->addCrumb($product[0]['Product']['name']);
 
                 <div class="badge">&nbsp;<?php echo $product[0]['MeasureUnit']['name']; ?>&nbsp;</div>
             </div>
+
+            <div class="space-6"></div>
+
+            <?php
+            $total = $product[0]['Product']['load_max'] - $product[0]['Product']['load_min'];
+            $available = $product[0]['Product']['load_stock'] - $product[0]['Product']['load_min'];
+            $percent_avail = ($available * 100) / $total;
+            ?>
+
+            <div class="infobox infobox-blue infobox-dark" style="padding-top: 8px;">
+                <div class="infobox-progress" style="margin-right: 8px; margin-left: 8px;">
+                    <!-- #section:pages/dashboard.infobox.easypiechart -->
+                    <div class="easy-pie-chart percentage" data-percent="<?php echo $percent_avail; ?>" data-size="51" data-color="<?php echo $color = ($percent_avail >= 0) ? "" : 'rgba(240,128,128, 0.95)'; ?>" style="height: 51px; width: 51px; line-height: 51px;">
+                        <span class="percent" style="font-size: 12px;"><?php echo $percent_avail; ?></span>%
+                        <canvas height="51" width="51"></canvas>
+                    </div>
+
+                    <!-- /section:pages/dashboard.infobox.easypiechart -->
+                </div>
+
+                <div class="infobox-data">
+                    <div class="infobox-content">do estoque cheio.</div>
+                    <div class="infobox-content"><?php echo $available." ".$product[0]['MeasureUnit']['name'];?></div>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 
