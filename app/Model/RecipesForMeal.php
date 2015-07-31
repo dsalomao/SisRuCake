@@ -32,6 +32,32 @@ class RecipesForMeal extends AppModel {
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
+        'category' => array(
+            'inList' => array(
+                'rule' => array('inList', array('Entrada', 'Prato base', 'Prato proteico', 'Salada', 'Sobremesa', 'Suco')),
+                'message' => 'selecione uma categoria válida.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Este campo deve ser preenchido.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'isUnique' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Podem ser selecionadas apenas uma receita por categoria.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+        ),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

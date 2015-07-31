@@ -32,7 +32,6 @@ $this->Html->addCrumb('Receitas desativadas');
                     <th><?php echo $this->Paginator->sort('name', 'Preparação'); ?></th>
                     <th class="hidden-xs"><?php echo $this->Paginator->sort('code', 'Código'); ?></th>
                     <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('description', 'Descrição'); ?></th>
-                    <th><?php echo $this->Paginator->sort('category', 'Categoria'); ?></th>
                     <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('created', 'Criado'); ?></th>
                     <th class="hidden-xs hidden-sm"><?php echo $this->Paginator->sort('modified', 'Modificado'); ?></th>
                     <th class="actions"><?php echo __('Ações'); ?></th>
@@ -45,11 +44,6 @@ $this->Html->addCrumb('Receitas desativadas');
                         <td><?php echo h($recipe['Recipe']['name']); ?>&nbsp;</td>
                         <td class="hidden-xs"><?php echo h($recipe['Recipe']['code']); ?>&nbsp;</td>
                         <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['description']); ?>&nbsp;</td>
-                        <td>
-                            <span class="label label-md <?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="recipe_status">
-                                    <?php echo $recipe['Recipe']['category']; ?>
-                            </span>
-                        </td>
                         <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['created']); ?>&nbsp;</td>
                         <td class="hidden-xs hidden-sm"><?php echo h($recipe['Recipe']['modified']); ?>&nbsp;</td>
                         <td class="actions">
@@ -137,9 +131,6 @@ $this->Html->addCrumb('Receitas desativadas');
                                         )
                                     );
                                     ?>
-
-
-
                                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                         <li>
                                             <?php

@@ -80,20 +80,10 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                         </div>
 
                         <div class="profile-info-row">
-                            <div class="profile-info-name"> Categoria </div>
-
-                            <div class="profile-info-value">
-                                <span class="label label-md <?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="recipeStatus">
-                                    <?php echo $recipe['Recipe']['category']; ?>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="profile-info-row">
                             <div class="profile-info-name"> Rendimento </div>
 
                             <div class="profile-info-value">
-                                <span class="badge badge-<?php if($recipe['Recipe']['category'] == 'Entrada'){echo $class = 'yellow';}elseif($recipe['Recipe']['category'] == 'Prato base'){}elseif($recipe['Recipe']['category'] == 'Prato proteico'){echo $class = 'danger';}elseif($recipe['Recipe']['category'] == 'Guarnição'){echo $class = 'purple';}elseif($recipe['Recipe']['category'] == 'Sobremesa'){echo $class = 'pink';}elseif($recipe['Recipe']['category'] == 'Suco'){echo $class = 'orange';} ?>" id="recipeIncome">
+                                <span class="badge badge-purple" id="recipeIncome">
                                     <?php echo $recipe['Recipe']['income']; ?><small> pessoas</small>
                                 </span>
                             </div>
@@ -179,7 +169,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                             array('class' => 'ace-icon fa fa-pencil bigger-130')
                                                         ),
                                                         array(
-                                                            'controller' => 'ProductsForRecipes',
+                                                            'controller' => 'productsForRecipes',
                                                             'action' => 'edit',
                                                             $related['ProductsForRecipe']['id']
                                                         ),
@@ -199,7 +189,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                             array('class' => 'glyphicon glyphicon-trash')
                                                         ),
                                                         array(
-                                                            'controller' => 'ProductsForRecipes',
+                                                            'controller' => 'productsForRecipes',
                                                             'action' => 'delete',
                                                             $related['ProductsForRecipe']['id']
                                                         ),
@@ -250,7 +240,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                                         )
                                                                     ),
                                                                     array(
-                                                                        'controller' => 'ProductsForRecipes',
+                                                                        'controller' => 'productsForRecipes',
                                                                         'action' => 'edit',
                                                                         $related['ProductsForRecipe']['id']
                                                                     ),
@@ -280,7 +270,7 @@ $this->Html->addCrumb($recipe['Recipe']['name']);
                                                                         )
                                                                     ),
                                                                     array(
-                                                                        'controller' => 'ProductsForRecipes',
+                                                                        'controller' => 'productsForRecipes',
                                                                         'action' => 'delete',
                                                                         $related['ProductsForRecipe']['id']
                                                                     ),

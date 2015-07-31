@@ -111,6 +111,21 @@ class ProductsForRecipe extends AppModel {
         return $related;
     }
 
+    public function getProductsAndMUnits () {
+        $options = array(
+            'conditions' => array('Product.status' => 1),
+            'fields' => array('Product.id', 'Product.name'),
+            'order' => array('Product.name' => 'asc'),
+            'recursive' => 0,
+            'contain' => array(
+                'MeasureUnit' => array(
+                    'fields' => array('MeasureUnit.name')
+                )
+            ),
+        );
+        return $this->Product->find('all', $options);
+    }
+
     public function getRelatedProduct($id = null) {
         return $this->Product->find(
             'first',

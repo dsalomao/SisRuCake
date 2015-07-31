@@ -24,4 +24,14 @@ jQuery(function($) {
         $('.chosen-select').siblings('.chosen-container').css({'width':w});
     }).triggerHandler('resize.chosen');
 
+
+    $( "#RecipeName" ).on('input', function() {
+        var input = $.trim($(this).val().replace(/\s+/g, ''));
+
+        $("#RecipeCode").val(input + '0000');
+
+        if(!input) {
+            $("#ProductCode").val("");
+        }
+    });
 });

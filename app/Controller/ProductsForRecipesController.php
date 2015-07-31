@@ -27,35 +27,24 @@ class ProductsForRecipesController extends AppController {
 		if (!$this->ProductsForRecipe->exists($id)) {
 			throw new NotFoundException(__('Invalid products for recipe'));
 		}
+        $ingredient = $this->ProductsForRecipe->findById($id, array('contain' => array()));
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->ProductsForRecipe->save($this->request->data)) {
-				$this->Session->setFlash(__('The products for recipe has been saved.'));
-				return $this->redirect(array('controller' => 'Recipes', 'action' => 'index'));
+				$this->Session->setFlash('Seu ingrediente foi salvo com sucesso.', 'success');
+				return $this->redirect(array('controller' => 'recipes', 'action' => 'view', $ingredient['ProductsForRecipe']['recipe_id']));
 			} else {
-				$this->Session->setFlash(__('The products for recipe could not be saved. Please, try again.'));
+				$this->Session->setFlash('Não conseguimos salvar seu ingrediente, tente novamente.', 'fail');
+                return $this->redirect(array('controller' => 'recipes', 'action' => 'view', $ingredient['ProductsForRecipe']['recipe_id']));
 			}
 		} else {
 			$options = array('conditions' => array('ProductsForRecipe.' . $this->ProductsForRecipe->primaryKey => $id));
 			$this->request->data = $this->ProductsForRecipe->find('first', $options);
 		}
-        $products = $this->ProductsForRecipe->Product->find(
-            'all',
-            array(
-                'conditions' => array('Product.status' => 1),
-                'fields' => array('Product.id', 'Product.name'),
-                'order' => array('Product.name' => 'asc'),
-                'recursive' => 0,
-                'contain' => array(
-                    'MeasureUnit' => array(
-                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
-                    )
-                ),
-            )
-        );
+        $products = $this->ProductsForRecipe->getProductsAndMUnits();
         $this->ProductsForRecipe->Recipe->recursive = -1;
         //find related recipe been posted
         $thisRecipe = $this->ProductsForRecipe->Recipe->findById($this->request->data['Recipe']['id']);
-		$this->set(compact('products', 'thisRecipe'));
+		$this->set(compact('products', 'thisRecipe', 'ingredient'));
 	}
 
 /**
@@ -72,9 +61,9 @@ class ProductsForRecipesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->ProductsForRecipe->delete()) {
-			$this->Session->setFlash(__('O ingrediente foi retirado com sucesso.'));
+			$this->Session->setFlash('O ingrediente foi retirado com sucesso.', 'success');
 		} else {
-			$this->Session->setFlash(__('The products for recipe could not be deleted. Please, try again.'));
+			$this->Session->setFlash('O ingrediente não pode sr deletado, tente novamente.', 'fail');
 		}
 		return $this->redirect(array('controller' => 'Recipes','action' => 'deleted_index'));
 	}
@@ -103,27 +92,14 @@ class ProductsForRecipesController extends AppController {
             //this productsForRecipe object created in line 126 = recipe id
             $this->ProductsForRecipe->set('recipe_id', $thisRecipe['Recipe']['id']);
             if ($this->ProductsForRecipe->save($this->request->data)) {
-                $this->Session->setFlash(__('Seu ingrediente foi salvo com sucesso.'));
+                $this->Session->setFlash('Seu ingrediente foi salvo com sucesso.', 'success');
                 return $this->redirect(array('controller' => 'recipes','action' => 'view', $id));
             } else {
-                $this->Session->setFlash(__('Seu ingrediente não pode ser salvo, tente novamente.'));
+                $this->Session->setFlash('Seu ingrediente não pode ser adicionado, tente novamente.', 'fail');
             }
         }
 
-        $products = $this->ProductsForRecipe->Product->find(
-            'all',
-            array(
-                'conditions' => array('Product.status' => 1),
-                'fields' => array('Product.id', 'Product.name'),
-                'order' => array('Product.name' => 'asc'),
-                'recursive' => 0,
-                'contain' => array(
-                    'MeasureUnit' => array(
-                        'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
-                    )
-                ),
-            )
-        );
+        $products = $this->ProductsForRecipe->getProductsAndMUnits();
 
         $thisRecipe = $this->ProductsForRecipe->Recipe->findMyRecipe($id);
         $this->set(compact('thisRecipe', 'products'));

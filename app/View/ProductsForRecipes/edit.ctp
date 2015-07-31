@@ -6,9 +6,6 @@
  * Time: 21:15
  */
 
-$this->html->css('chosen', array('inline' => false));
-
-$this->html->script('ace/chosen.jquery', array('inline' => false));
 $this->Html->script('ace/fuelux.spinner', array('inline' => false));
 $this->Html->script('ProductsForRecipes', array('inline' => false));
 
@@ -80,7 +77,7 @@ $this->Html->addCrumb('Editar ingrediente');
                                 <label class="col-xs-12 col-sm-3 control-label no-padding-right" for="ProductsForRecipeProductId"> Produto </label>
 
                                 <div class="col-sm-9">
-                                    <select name="data[ProductsForRecipe][product_id]" class="chosen-select" placeholder="Escolha um produto" id="ProductsForRecipeProductId" style="display: none;">
+                                    <select name="data[ProductsForRecipe][product_id]" data-ingredient="<?php echo $ingredient['ProductsForRecipe']['product_id']; ?>" class="" placeholder="Escolha um produto" id="ProductsForRecipeProductId" >
                                         <?php foreach($products as $product): ?>
                                             <option value="<?php echo $product['Product']['id']; ?>" data-measure-unit-id="<?php echo $product['MeasureUnit']['id']?>"><?php echo $product['Product']['name']; ?></option>
                                         <?php endforeach; ?>

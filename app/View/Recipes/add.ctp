@@ -51,18 +51,6 @@ $this->Html->addCrumb('Adicionar receita');
                                 ); ?>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="RecipeCategory"> Categoria </label>
-                                <?php echo $this->Form->input(
-                                    'Recipe.category',
-                                    array(
-                                        'type' => 'select',
-                                        'div' => 'col-sm-9',
-                                        'class' => 'chosen-select',
-                                        'placeholder' => 'escolha uma UAN'
-                                    )
-                                ); ?>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="RecipeIncome"> Rendimento </label>
                                 <?php echo $this->Form->input(
                                     'Recipe.income',

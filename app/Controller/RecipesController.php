@@ -87,10 +87,10 @@ class RecipesController extends AppController {
             $this->request->data['Recipe']['status'] = 0;
             $this->request->data['Recipe']['restaurant_id'] = $this->Auth->user('restaurant_id');
 			if ($this->Recipe->save($this->request->data)) {
-				$this->Session->setFlash(__('Sua receita foi salva com sucesso à lista de receitas desativadas. Edite-a e quando pronta, mude seu estado para ativo.'));
+				$this->Session->setFlash('Sua receita foi salva com sucesso à lista de receitas desativadas. Edite-a e quando pronta, mude seu estado para ativo.', 'success');
 				return $this->redirect(array('action' => 'view', $this->Recipe->id));
 			} else {
-				$this->Session->setFlash(__('Sua receita não pode ser salva, tente novamente.'));
+				$this->Session->setFlash('Sua receita não pode ser salva, tente novamente.', 'fail');
 			}
 		}
         $categories = array('Entrada' => 'Entrada', 'Prato base' => 'Prato base', 'Prato proteico' => 'Prato proteico', 'Guarnição' => 'Guarnição', 'Sobremesa' => 'Sobremesa', 'Suco' => 'Suco');
@@ -112,10 +112,10 @@ class RecipesController extends AppController {
             $this->request->data['Recipe']['name'] = ucfirst($this->request->data['Recipe']['name']);
             $this->request->data['Recipe']['code'] = strtoupper($this->request->data['Recipe']['code']);
 			if ($this->Recipe->save($this->request->data)) {
-				$this->Session->setFlash(__('A receita foi salva com sucesso.'));
+				$this->Session->setFlash('A receita foi salva com sucesso.', 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('A receita não pode ser salva, por favor tente novamente.'));
+				$this->Session->setFlash('A receita não pode ser salva, por favor tente novamente.', 'fail');
 			}
 		} else {
 			$options = array('conditions' => array('Recipe.' . $this->Recipe->primaryKey => $id));
@@ -137,9 +137,9 @@ class RecipesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Recipe->delete()) {
-			$this->Session->setFlash(__('The recipe has been deleted.'));
+			$this->Session->setFlash('A receita foi permanentemente deletada com sucesso.', 'success');
 		} else {
-			$this->Session->setFlash(__('The recipe could not be deleted. Please, try again.'));
+			$this->Session->setFlash('A receita não pode ser permanentemente deletada, tente novamente.', 'fail');
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
@@ -161,14 +161,14 @@ class RecipesController extends AppController {
             }
             $this->request->onlyAllow('post', 'logical_delete');
             if ($this->Recipe->updateStatus($id)) {
-                $this->Session->setFlash(__("'%s' foi desativada com sucesso", $recipe['Recipe']['code']));
+                $this->Session->setFlash("Esta receita foi desativada com sucesso", 'warning');
                 return $this->redirect(array('action' => 'deleted_index'));
             } else {
-                $this->Session->setFlash(__("'%s' foi reativada com sucesso", $recipe['Recipe']['code']));
+                $this->Session->setFlash("Esta receita foi reativada com sucesso", 'success');
                 return $this->redirect(array('action' => 'index'));
             }
         } else {
-            $this->Session->setFlash(__("'%s' não tem nenhum ingrediente ainda, portanto não pode ser ativada.", $recipe['Recipe']['code']));
+            $this->Session->setFlash("Esta receita não tem ingrediente cadastrados, portanto não pode ser ativada.", 'warning');
             return $this->redirect(array('action' => 'index'));
         }
     }
