@@ -23,7 +23,7 @@ class ProductOutput extends AppModel {
 		'quantity' => array(
 			'decimal' => array(
 				'rule' => array('decimal'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo precisa ser um número decimal.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -31,13 +31,31 @@ class ProductOutput extends AppModel {
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Este campo deve ser preenchido.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+        'date_of_submission' => array(
+            'date' => array(
+                'rule' => array('date'),
+                'message' => 'Este campo precisa ser uma data válida.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Este campo deve ser preenchido.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+        )
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -76,5 +94,29 @@ class ProductOutput extends AppModel {
         );
         $this->validator()->remove('quantity', 'decimal');
         return false;
+    }
+
+    public function getRestaurantOutputs($restaurant_id = null) {
+        $this->recursive = -1;
+        $outputs = $this->find('all', array(
+            'fields' => array('quantity', 'date_of_submission', 'event_id'),
+            'order' => array('date_of_submission DESC'),
+            'contain' => array(
+                'Product' => array(
+                    'conditions' => array('Product.restaurant_id' => $restaurant_id),
+                    'fields' => array('name'),
+                    'MeasureUnit' => array(
+                        'fields' => 'name'
+                    )
+                ),
+                'Event' => array(
+                    'fields' => array(),
+                    'EventType' => array(
+                        'fields' => array('name')
+                    )
+                ),
+            )
+        ));
+        return $outputs;
     }
 }

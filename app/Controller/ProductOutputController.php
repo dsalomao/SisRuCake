@@ -26,6 +26,9 @@ class ProductOutputController extends AppController {
                 'MeasureUnit' => array(
                     'fields' => array('MeasureUnit.id', 'MeasureUnit.name')
                 )
+            ),
+            'Event' =>array(
+                'EventType' => array('fields' => 'name')
             )
         )
     );
@@ -37,17 +40,9 @@ class ProductOutputController extends AppController {
  */
 	public function index() {
         $this->ProductOutput->recursive = -1;
-        $ProductOutputs = $this->ProductOutput->find('all', array(
-            'conditions' => array('ProductOutput.restaurant_id' => $this->Auth->user('restaurant_id')),
-            'contain' => array(
-                'Product' => array(
-                    'MeasureUnit' => array()
-                )
-            ),
-            'order' => array('ProductOutput.created' => 'desc')
-        ));
+        $outputs = $this->ProductOutput->getRestaurantOutputs($this->Auth->user('restaurant_id'));
         $this->Paginator->paginate();
-        $this->set(array('ProductOutputs' => $ProductOutputs));
+        $this->set(array('outputs' => $outputs));
 	}
 
 /**
@@ -81,8 +76,8 @@ class ProductOutputController extends AppController {
                     $newManualSubmitEvent = array(
                         'Event' => array(
                             'details' => 'Estes detalhes foram adicionados automaticamente durante o cadastro do evento, eles podem ser alterados quando necessário.',
-                            'start' => $this->request->data['ProductOutput']['date_of_submission'].' 12:00:00',
-                            'end' => $this->request->data['ProductOutput']['date_of_submission'].' 12:00:00',
+                            'start' => $this->request->data['ProductOutput']['date_of_submission'],
+                            'end' => $this->request->data['ProductOutput']['date_of_submission'],
                             'all_day' => 1,
                             'status' => 'agendado',
                             'active' => 1,
@@ -93,7 +88,7 @@ class ProductOutputController extends AppController {
                     $this->ProductOutput->Event->create();
                     //if new event has not been saved, reload page a show message
                     if(!$this->ProductOutput->Event->save($newManualSubmitEvent)) {
-                        $this->Session->setFlash(__('Não pudemos criar um novo evento de ajuste manual em estoque.'));
+                        $this->Session->setFlash(__('Não pudemos criar um novo evento de ajuste manual em estoque, tente novamente.', 'fail'));
                         return $this->redirect(array('controller' => 'productOutput', 'action' => 'manual_submit', $product_id));
                     }
 
@@ -106,14 +101,14 @@ class ProductOutputController extends AppController {
                     $target_product['Product']['load_stock'] -= $this->request->data['ProductOutput']['quantity'];
                     $this->ProductOutput->Product->id = $product_id;
                     $this->ProductOutput->Product->saveField('load_stock', $target_product['Product']['load_stock']);
-                    $this->Session->setFlash(__('A baixa em estoque de seu produto foi realizada com sucesso.'));
+                    $this->Session->setFlash(__('A baixa em estoque de seu produto foi realizada com sucesso.', 'success'));
                     return $this->redirect(array('controller' => 'products', 'action' => 'view', $product_id));
                 } else {
-                    $this->Session->setFlash(__('Algo deu errado enquanto o reajuste estava sendo salvo.'));
+                    $this->Session->setFlash(__('Algo deu errado enquanto o reajuste estava sendo salvo.', 'fail'));
                     return $this->redirect(array('controller' => 'products', 'action' => 'view', $product_id));
                 }
             } else {
-                $this->Session->setFlash(__('Esta operação não pode ser realizada, restrição de estoque mínimo quebrada.'));
+                $this->Session->setFlash(__('Esta operação não pode ser realizada, restrição de estoque mínimo quebrada.', 'warning'));
                 return $this->redirect(array('controller' => 'products', 'action' => 'view', $product_id));
             }
         }

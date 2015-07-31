@@ -26,7 +26,7 @@ $this->Html->addCrumb('Histórico de baixa em estoque');
         <thead>
         <tr>
             <th><?php echo $this->Paginator->sort('quantity', 'Qtd. de entrada'); ?></th>
-            <th><?php echo $this->Paginator->sort('measure_unit_id', 'Und. de medida'); ?></th>
+            <th><?php echo $this->Paginator->sort('event_id', 'Evento'); ?></th>
             <th class="hidden-480"><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
             <th><?php echo $this->Paginator->sort('date_of_submission', 'Data de saída'); ?></th>
         </tr>
@@ -35,9 +35,9 @@ $this->Html->addCrumb('Histórico de baixa em estoque');
         <tbody>
         <?php foreach ($ProductOutputs as $productOutput): ?>
             <tr>
-                <td style="text-align: right"><?php echo h($productOutput['ProductOutput']['quantity']); ?>&nbsp;</td>
+                <td style="text-align: right"><?php echo h($productOutput['ProductOutput']['quantity'].' '.$productOutput['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
                 <td>
-                    <?php echo $this->Html->link($productOutput['Product']['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'view', $productOutput['Product']['MeasureUnit']['id'])); ?>
+                    <?php echo $this->Html->link($productOutput['Event']['EventType']['name'], array('controller' => 'events', 'action' => 'view', $productOutput['ProductOutput']['event_id'])); ?>
                 </td>
                 <td class="hidden-480">
                     <?php echo $this->Html->link($productOutput['Product']['code'], array('controller' => 'products', 'action' => 'view', $productOutput['Product']['id'])); ?>

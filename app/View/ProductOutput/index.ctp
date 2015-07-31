@@ -27,21 +27,22 @@ $this->Html->addCrumb('Caderno de saída');
                 <thead>
                 <tr>
                     <th><?php echo $this->Paginator->sort('quantity', 'Quantidade'); ?></th>
-                    <th><?php echo $this->Paginator->sort('measure_unit', 'Unidade'); ?></th>
                     <th><?php echo $this->Paginator->sort('product_id', 'Produto'); ?></th>
+                    <th><?php echo $this->Paginator->sort('event_id', 'Evento'); ?></th>
                     <th><?php echo $this->Paginator->sort('date_of_submission', 'Data de saída'); ?></th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <?php foreach ($ProductOutputs as $productOutput): ?>
+                <?php foreach ($outputs as $output): ?>
                     <tr>
-                        <td style="text-align: right;"><?php echo h($productOutput['ProductOutput']['quantity']); ?>&nbsp;</td>
-                        <td><?php echo $this->Html->link($productOutput['Product']['MeasureUnit']['name'], array('controller' => 'measure_units', 'action' => 'index')); ?>&nbsp;</td>
+                        <td style="text-align: right;"><?php echo h($output['ProductOutput']['quantity'].' '.$output['Product']['MeasureUnit']['name']); ?>&nbsp;</td>
                         <td>
-                            <?php echo $this->Html->link($productOutput['Product']['name'], array('controller' => 'products', 'action' => 'view', $productOutput['Product']['id'])); ?>
+                            <?php echo $this->Html->link($output['Product']['name'], array('controller' => 'products', 'action' => 'view', $output['Product']['id'])); ?>
                         </td>
-                        <td><?php echo h(date("d-m-Y", strtotime($productOutput['ProductOutput']['date_of_submission']))); ?>&nbsp;</td>
+                        <td><?php echo $this->Html->link($output['Event']['EventType']['name'], array('controller' => 'events', 'action' => 'view', $output['ProductOutput']['event_id'])); ?>&nbsp;</td>
+
+                        <td><?php echo h(date("d-m-Y", strtotime($output['ProductOutput']['date_of_submission']))); ?>&nbsp;</td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
