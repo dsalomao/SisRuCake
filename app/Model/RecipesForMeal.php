@@ -34,7 +34,7 @@ class RecipesForMeal extends AppModel {
         ),
         'category' => array(
             'inList' => array(
-                'rule' => array('inList', array('Entrada', 'Prato base', 'Prato proteico', 'Salada', 'Sobremesa', 'Suco')),
+                'rule' => array('inList', array('Entrada', 'Prato Base', 'Prato Proteico', 'Salada', 'Sobremesa', 'Suco')),
                 'message' => 'selecione uma categoria válida.',
                 //'allowEmpty' => false,
                 //'required' => false,
@@ -44,7 +44,7 @@ class RecipesForMeal extends AppModel {
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
                 'message' => 'Este campo deve ser preenchido.',
-                //'allowEmpty' => false,
+                //'allowEmpty' => false ,
                 //'required' => false,
                 //'last' => false, // Stop validation after this rule
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations

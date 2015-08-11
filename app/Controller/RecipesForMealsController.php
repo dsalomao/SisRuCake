@@ -14,7 +14,7 @@ class RecipesForMealsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Session');
+	public $components = array('Paginator', 'Session', 'Auth');
 
 /**
  * add method
@@ -46,6 +46,51 @@ class RecipesForMealsController extends AppController {
         );
 		$recipes = $this->RecipesForMeal->Recipe->find('all', $options);
 		$this->set(compact('meal', 'recipes'));
+	}
+
+/**
+ * addMeal method
+ *
+ * @return void
+ */
+	public function add_meal() {
+		if ($this->request->is('post')) {
+			$meal_code = '';
+			foreach($this->request->data['RecipesForMeal'] as $recipe){
+				$recipe_name = $this->RecipesForMeal->Recipe->find('first', array('conditions' => array('Recipe.id' => $recipe['recipe_id']), 'fields' => array('name')));
+				$meal_code .= '<'.$recipe_name['Recipe']['name'].'>';
+			}
+			$meal = array('code' => $meal_code, 'description' => '', 'status' => 1, 'restaurant_id' => $this->Auth->user('restaurant_id'));
+			if($this->RecipesForMeal->Meal->save($meal)){
+				$last_meal_id = $this->RecipesForMeal->Meal->getLastInsertID();
+				for($i = 0; $i <6; $i++){
+					$this->request->data['RecipesForMeal'][$i]['meal_id'] = $last_meal_id;
+				}
+				if ($this->RecipesForMeal->saveMany($this->request->data['RecipesForMeal'])) {
+					$this->Session->setFlash('Sua nova refeição foi salva com sucesso.', 'success');
+					return $this->redirect(array('controller' => 'Meals', 'action' => 'view', $last_meal_id));
+				} else {
+					$this->set(array('request' => $this->request->data, 'meal_id' => $last_meal_id));
+					$this->RecipesForMeal->Meal->delete($last_meal_id);
+					$this->Session->setFlash('Suas novas receitas não puderam ser vinculadas à nova refeição, tente novamente', 'fail');
+					//return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
+				}
+			} else {
+				$this->Session->setFlash('Sua nova refeição não pode ser criada, tente novamente', 'fail');
+				//return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
+			}
+
+		}
+
+		$options = array(
+			'recursive' => -1,
+			'conditions' => array(
+				'Recipe.status' => 1,
+			),
+			'fields' => array('Recipe.id', 'Recipe.name', 'Recipe.income')
+		);
+		$recipes = $this->RecipesForMeal->Recipe->find('all', $options);
+		$this->set(array('recipes' => $recipes));
 	}
 
 /**
