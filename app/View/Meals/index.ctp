@@ -259,9 +259,8 @@ $this->Html->addCrumb('Refeições');
                     array('class' => 'glyphicon glyphicon-plus')
                 ).' Nova',
                 array(
-                    'controller' => 'meals',
-                    'action' => 'add'
-
+                    'controller' => 'recipesForMeals',
+                    'action' => 'add_meal'
                 ),
                 array('class' => 'btn btn-lg btn-primary btn-meals', 'escape' => false)
             );

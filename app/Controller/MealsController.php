@@ -46,25 +46,6 @@ class MealsController extends AppController {
     }
 
 /**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Meal->create();
-            $this->request->data['Meal']['status'] = 0;
-            $this->request->data['Meal']['restaurant_id'] = $this->Auth->user('restaurant_id');
-			if ($this->Meal->save($this->request->data)) {
-				$this->Session->setFlash(__('Sua refeição foi salva com sucesso a lista de refeições desativadas. Edite-a e quando pronta modifique seu status para ativo.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('Sua refeição não pode ser salva, tente novamente.'));
-			}
-		}
-	}
-
-/**
  * edit method
  *
  * @throws NotFoundException

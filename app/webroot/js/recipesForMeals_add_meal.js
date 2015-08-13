@@ -3,7 +3,13 @@
  */
 jQuery(function($) {
     $( document ).ready(function() {
-
+        var selects = $('select');
+        for(var i = 0; i < 7; i++ ) {
+            var recipe_id = selects[i].options[0].getAttribute("value");
+            var select_id = selects[i].id;
+            var tag_name = select_id+'Tag_'+recipe_id;
+            $('#'+tag_name).toggleClass('hidden');
+        }
     });
 
     $('.chosen-select').chosen();

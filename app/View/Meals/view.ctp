@@ -9,7 +9,7 @@ else{
     $this->Html->addCrumb('Refeições', '/meals');
     $this->Html->addCrumb('Refeições desativadas', '/meals/deleted_index');
 }
-$this->Html->addCrumb($meal['Meal']['code']);
+$this->Html->addCrumb($meal['Meal']['tags']);
 ?>
 <div class="row">
     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
@@ -20,7 +20,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                 <div class="profile-info-name"> Código </div>
 
                 <div class="profile-info-value">
-                    <span class="editable" id="meal_code"><?php echo h($meal['Meal']['code']); ?></span>
+                    <span class="editable" id="meal_code"><?php echo h($meal['Meal']['tags']); ?></span>
                 </div>
             </div>
             <div class="profile-info-row">
@@ -98,7 +98,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                         <h4 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#recipeTabId<?php echo $related['Recipe']['id']; ?>">
                                 <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
-                                <?php echo $related['Recipe']['category']; ?>
+                                <?php echo $related['RecipesForMeal']['category']; ?>
                             </a>
                         </h4>
                     </div>
@@ -208,8 +208,8 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                                 <div class="profile-info-name"> Categoria </div>
 
                                                 <div class="profile-info-value">
-                                                    <span class="label label-md <?php if($related['Recipe']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($related['Recipe']['category'] == 'Prato base'){}elseif($related['Recipe']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($related['Recipe']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($related['Recipe']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($related['Recipe']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="relatedRecipeCategory">
-                                                        <?php echo $related['Recipe']['category']; ?>
+                                                    <span class="label label-md <?php if($related['RecipesForMeal']['category'] == 'Entrada'){echo $class = 'label-yellow';}elseif($related['RecipesForMeal']['category'] == 'Prato base'){}elseif($related['RecipesForMeal']['category'] == 'Prato proteico'){echo $class = 'label-danger';}elseif($related['RecipesForMeal']['category'] == 'Guarnição'){echo $class = 'label-purple';}elseif($related['RecipesForMeal']['category'] == 'Sobremesa'){echo $class = 'labe-pink';}elseif($related['RecipesForMeal']['category'] == 'Suco'){echo $class = 'label-orange';} ?>" id="relatedRecipeCategory">
+                                                        <?php echo $related['RecipesForMeal']['category']; ?>
                                                     </span>
                                                 </div>
                                             </div>
@@ -218,7 +218,7 @@ $this->Html->addCrumb($meal['Meal']['code']);
                                                 <div class="profile-info-name"> Rendimento </div>
 
                                                 <div class="profile-info-value">
-                                                    <span class="badge badge-<?php if($related['Recipe']['category'] == 'Entrada'){echo $class = 'yellow';}elseif($related['Recipe']['category'] == 'Prato base'){}elseif($related['Recipe']['category'] == 'Prato proteico'){echo $class = 'danger';}elseif($related['Recipe']['category'] == 'Guarnição'){echo $class = 'purple';}elseif($related['Recipe']['category'] == 'Sobremesa'){echo $class = 'pink';}elseif($related['Recipe']['category'] == 'Suco'){echo $class = 'orange';} ?>" id="relatedRecipeIncome">
+                                                    <span class="badge badge-<?php if($related['RecipesForMeal']['category'] == 'Entrada'){echo $class = 'yellow';}elseif($related['RecipesForMeal']['category'] == 'Prato base'){}elseif($related['RecipesForMeal']['category'] == 'Prato proteico'){echo $class = 'danger';}elseif($related['RecipesForMeal']['category'] == 'Guarnição'){echo $class = 'purple';}elseif($related['RecipesForMeal']['category'] == 'Sobremesa'){echo $class = 'pink';}elseif($related['RecipesForMeal']['category'] == 'Suco'){echo $class = 'orange';} ?>" id="relatedRecipeIncome">
                                                         <?php echo $related['Recipe']['income']; ?><small> pessoas</small>
                                                     </span>
                                                 </div>

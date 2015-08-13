@@ -8,7 +8,7 @@
 $this->Html->css('chosen', array('inline' => false));
 
 $this->Html->script('ace/chosen.jquery', array('inline' => false));
-$this->Html->script('recipesForMealsAddMeal', array('inline' => false));
+$this->Html->script('recipesForMeals_add_meal', array('inline' => false));
 
 $this->Html->addCrumb('Refeições', '/meals');
 $this->Html->addCrumb('adicionar refeição');

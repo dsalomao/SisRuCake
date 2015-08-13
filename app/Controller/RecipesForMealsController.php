@@ -17,38 +17,6 @@ class RecipesForMealsController extends AppController {
 	public $components = array('Paginator', 'Session', 'Auth');
 
 /**
- * add method
- *
- * @return void
- */
-	public function add($meal_id = null) {
-		if ($this->request->is('post')) {
-			$this->RecipesForMeal->create();
-            $this->RecipesForMeal->set('meal_id', $meal_id);
-			if ($this->RecipesForMeal->save($this->request->data)) {
-				$this->Session->setFlash(__('Sua receita foi adicionada com sucesso.'));
-				return $this->redirect(array('controller' => 'Meals', 'action' => 'view', $meal_id));
-			} else {
-				$this->Session->setFlash(__('Sua receita não pode ser adicionada, tente novamente.'));
-			}
-		}
-        $this->RecipesForMeal->Meal->recursive = -1;
-		$meal = $this->RecipesForMeal->Meal->findById($meal_id);
-        $alreadySavedRecipes = $this->RecipesForMeal->getAlreadySavedRecipesForThisMeal($meal_id);
-        $options = array(
-            'recursive' => -1,
-            'conditions' => array(
-                'NOT' => array(
-                    'Recipe.id' => $alreadySavedRecipes
-                ),
-            ),
-            'fields' => array('Recipe.id', 'Recipe.name', 'Recipe.income')
-        );
-		$recipes = $this->RecipesForMeal->Recipe->find('all', $options);
-		$this->set(compact('meal', 'recipes'));
-	}
-
-/**
  * addMeal method
  *
  * @return void
@@ -60,24 +28,24 @@ class RecipesForMealsController extends AppController {
 				$recipe_name = $this->RecipesForMeal->Recipe->find('first', array('conditions' => array('Recipe.id' => $recipe['recipe_id']), 'fields' => array('name')));
 				$meal_code .= '<'.$recipe_name['Recipe']['name'].'>';
 			}
-			$meal = array('code' => $meal_code, 'description' => '', 'status' => 1, 'restaurant_id' => $this->Auth->user('restaurant_id'));
+			$meal = array('code' => $meal_code, 'description' => '', 'status' => 0, 'restaurant_id' => $this->Auth->user('restaurant_id'));
 			if($this->RecipesForMeal->Meal->save($meal)){
 				$last_meal_id = $this->RecipesForMeal->Meal->getLastInsertID();
 				for($i = 0; $i <6; $i++){
 					$this->request->data['RecipesForMeal'][$i]['meal_id'] = $last_meal_id;
 				}
-				if ($this->RecipesForMeal->saveMany($this->request->data['RecipesForMeal'])) {
+				if ($this->RecipesForMeal->saveMany($this->request->data['RecipesForMeal'], array('validate' => 'first'))) {
 					$this->Session->setFlash('Sua nova refeição foi salva com sucesso.', 'success');
 					return $this->redirect(array('controller' => 'Meals', 'action' => 'view', $last_meal_id));
 				} else {
 					$this->set(array('request' => $this->request->data, 'meal_id' => $last_meal_id));
 					$this->RecipesForMeal->Meal->delete($last_meal_id);
 					$this->Session->setFlash('Suas novas receitas não puderam ser vinculadas à nova refeição, tente novamente', 'fail');
-					//return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
+					return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
 				}
 			} else {
 				$this->Session->setFlash('Sua nova refeição não pode ser criada, tente novamente', 'fail');
-				//return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
+				return $this->redirect(array('controller' => 'Meals', 'action' => 'index'));
 			}
 
 		}

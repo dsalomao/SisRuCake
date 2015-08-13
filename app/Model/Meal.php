@@ -21,7 +21,7 @@ class Meal extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'code' => array(
+		'tags' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Este campo deve ser preenchido.',
